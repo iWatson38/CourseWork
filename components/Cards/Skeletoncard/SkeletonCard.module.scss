@@ -1,0 +1,33 @@
+.SceletonCard {
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.SkeletonImgContainer {
+    width: 100%;
+    text-align: center;
+}
+
+.SkeletonImg {
+    max-width: 150px;
+    height: 200px;
+}
+
+.SkeletonName {
+    width: 100%;
+}
+
+.SkeletonPrice {
+    margin-top: 4px;
+    width: 100%;
+    height: 22px;
+}
+
+@media (max-width: 768px) {
+    .SkeletonImgContainer {
+        height: 100px;
+    }
+    .SkeletonImg {
+        max-width: 90px;
+        height: 100px;
+    }
+}
