@@ -1,0 +1,107 @@
+.Main {
+    max-width: 776px;
+    margin: 0 auto;
+    padding: 0 18px;
+    box-sizing: border-box;
+    min-height: 100vh;
+    color: $main;
+    text-align: center;
+}
+
+.Breadcrumbs {
+    margin: 40px 0 30px 0;
+}
+
+.Title {
+    font: $FM400-28-34;
+    margin: 0 0 50px 0;
+}
+
+.SearchBlock {
+    margin-bottom: 10px;
+}
+
+.SearchBlockTitle {
+    font: $FM400-20-24;
+    margin: 0;
+}
+
+.Steps {
+    margin: 0 auto;
+    text-align: start;
+    max-width: none;
+    h4 {
+        text-align: center;
+    }
+}
+
+.Footer {
+    position: relative;
+    display: grid;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.InformationForUser {
+    padding-top: 30px;
+    padding-bottom: 12px;
+}
+
+.Link {
+    color: $accent;
+    text-decoration: none;
+}
+
+.SpinnerContainer {
+    position: fixed;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    transition: 0.2s;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.Visible {
+    opacity: 1;
+    pointer-events: unset;
+}
+
+.Faq {
+    text-align: start;
+    margin: 52px auto 120px;
+}
+
+@media (max-width: 768px) {
+    .Main {
+        margin: 0 auto 60px;
+    }
+    .Breadcrumbs {
+        margin: 40px 0 20px 0;
+    }
+    .Logo {
+        height: 34px;
+        width: 164px;
+    }
+    .InformationForUser {
+        padding-bottom: 30px;
+    }
+    .Title {
+        font: $FM400-20-24;
+        margin: 0 0 30px 0;
+    }
+    .SearchBlockTitle {
+        font: $FM400-16-20;
+        margin: 0 0 8px 0;
+    }
+    .Steps {
+        background: none;
+        box-shadow: none;
+        padding: 56px 0 0 0;
+    }
+}
