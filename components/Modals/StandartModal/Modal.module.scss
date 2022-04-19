@@ -1,0 +1,78 @@
+.Modal {
+    position: fixed;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: 0.2s;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.Visible {
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: unset;
+}
+
+.Content {
+    width: 293px;
+    background: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    opacity: 0;
+    transition: 0.3s;
+    height: 380px;
+}
+
+.InformationContent {
+    display: grid;
+    grid-template-rows: 1fr max-content;
+    align-items: center;
+    justify-content: center;
+}
+
+.ContentVisible {
+    opacity: 1;
+}
+
+.Image {
+    margin: 48px auto 28px;
+}
+
+.Message {
+    margin: 0 auto 10px;
+    font: $FM400-20-24;
+    color: $main;
+    max-width: 245px;
+}
+
+.Button {
+    width: 245px;
+    margin-top: 46px;
+}
+
+.InformationButton {
+    margin: 0 auto 40px auto;
+}
+
+.Red {
+    color: $error;
+    display: block;
+}
+
+.Green {
+    color: $success;
+}
+
+.Link {
+    display: block;
+    margin: 0 auto;
+    font: $FM400-16-20;
+    color: $accent;
+    text-decoration: none;
+    width: 245px;
+}
