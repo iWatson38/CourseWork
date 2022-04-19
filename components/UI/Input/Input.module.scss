@@ -1,0 +1,67 @@
+.Input {
+    font: $FM400-14-17;
+    border-radius: 10px;
+    box-sizing: border-box;
+    color: $main;
+    border: 1px solid $accent;
+    height: 45px;
+    padding-left: 16px;
+    &::placeholder {
+        color: $gray;
+    }
+}
+
+.Input_Gray {
+    border-color: $gray;
+}
+
+.Input_Error {
+    border-color: $error;
+}
+
+.InputContainer {
+    position: relative;
+}
+
+.IconLeft {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-left: 29px;
+    padding-top: 14px;
+}
+
+.Input_IconLeft {
+    padding-left: 62px;
+    left: 0;
+}
+
+.IconRight {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding-right: 18px;
+    padding-top: 33px;
+    width: 16px;
+    height: 16px;
+}
+
+.ErrorMessage {
+    position: absolute;
+    font: $FM400-12-15;
+    color: $error;
+    left: 0;
+    top: 56px;
+}
+
+@media (max-width: 768px) {
+    .Icon {
+        padding-left: 18px;
+    }
+    .Input_IconLeft {
+        padding-left: 51px;
+    }
+    .IconRight {
+        padding-top: 30px;
+    }
+}
