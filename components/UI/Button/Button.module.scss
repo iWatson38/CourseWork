@@ -1,0 +1,27 @@
+.Button {
+    border-radius: 10px;
+    font: $FM500-16-22;
+    color: white;
+    background-color: $accent;
+    border: none;
+    padding: 14px 8px;
+    height: 45px;
+    cursor: pointer;
+}
+
+.Icon {
+    padding-left: 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.Button_Outlined {
+    color: $main;
+    background-color: white;
+    border: 1px solid $main;
+}
+
+.Button_White {
+    background-color: white;
+    color: $main;
+}
