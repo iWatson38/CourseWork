@@ -1,0 +1,29 @@
+.RequestSurveyContainer {
+    box-sizing: border-box;
+    padding: 10px 18px;
+    background: #dff0ff;
+    text-align: center;
+}
+
+.RequestSurvey {
+    margin: 0;
+    font: $FM400-16-20;
+    color: $main;
+}
+
+.SurveyLink {
+    margin: 0;
+    color: $accent;
+    text-decoration: none;
+}
+
+@media (max-width: 768px) {
+    .RequestSurveyContainer {
+        margin-top: 82px;
+    }
+    .RequestSurvey {
+        position: relative;
+        z-index: 1;
+        font: $FM400-14-17;
+    }
+}
