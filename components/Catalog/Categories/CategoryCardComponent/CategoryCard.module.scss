@@ -1,0 +1,47 @@
+.CategoryCard {
+    grid-template-rows: 1fr 52px max-content;
+}
+
+.Title {
+    margin: 0;
+    font: $FM400-14-17;
+    color: $main;
+    height: 52px;
+}
+
+.Button {
+    margin-top: 12px;
+    width: 100%;
+}
+
+.MobileButton {
+    padding: 0;
+    width: 100%;
+    margin-top: 10px;
+    color: $accent;
+    height: auto;
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .Image {
+        max-width: 90px;
+        max-height: 100px;
+    }
+    .MobileButton {
+        display: block;
+    }
+    .Button {
+        display: none;
+    }
+}
+
+@media (max-width: 375px) {
+    .GroupCard {
+        max-width: 140px;
+    }
+    .Title {
+        overflow-wrap: break-word;
+        max-width: 116px;
+    }
+}
