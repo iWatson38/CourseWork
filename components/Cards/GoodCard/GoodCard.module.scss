@@ -1,0 +1,171 @@
+.Card {
+    background: #ffffff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 42px 20px 20px;
+    position: relative;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: 200px 52px max-content max-content;
+    align-items: center;
+    gap: 8px;
+    max-width: 260px;
+    max-height: 428px;
+    margin: 0 auto;
+}
+
+.ImageContainer {
+    position: relative;
+    margin: 0 auto;
+    height: 200px;
+    display: grid;
+    align-items: center;
+    width: 100%;
+    &:hover {
+        .FrontSide {
+            transform: rotate3d(0, 1, 0, 180deg);
+        }
+        .Description {
+            transform: rotate3d(0, 1, 0, 0);
+        }
+    }
+}
+
+.FrontSide {
+    width: 100%;
+    transition: 0.8s ease;
+    backface-visibility: hidden;
+    display: grid;
+    align-items: center;
+}
+
+.Image {
+    margin: 0 auto;
+    max-width: 150px;
+    max-height: 200px;
+}
+
+.Title {
+    margin: 0;
+    align-self: start;
+    font: $FM400-14-17;
+    color: $main;
+    max-width: 100%;
+}
+
+.Description {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    margin: 0;
+    font: $FM400-14-17;
+    color: $main;
+    text-align: center;
+    transform: rotate3d(0, 1, 0, -180deg);
+    backface-visibility: hidden;
+    transition: 0.8s ease;
+    padding-top: 10px;
+}
+
+.Price {
+    margin: 4px 0 0 0;
+    font: $FM500-16-22;
+    color: $main;
+}
+
+.Button {
+    display: grid;
+    width: 100%;
+    display: grid;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.MobileButton {
+    padding: 0;
+    width: 100%;
+    margin-top: 4px;
+    display: none;
+    color: $accent;
+    height: auto;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.DislikeIcon {
+    position: absolute;
+    top: 16px;
+    left: 20px;
+    cursor: pointer;
+}
+
+.HeartIcon {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .Card {
+        margin: 0 auto;
+        grid-template-rows: 100px 52px max-content max-content;
+        padding: 52px 12px 12px 12px;
+        gap: 12px;
+        align-items: center;
+    }
+    .Description {
+        padding: 0;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .Price {
+        margin: 0;
+    }
+    .ImageContainer {
+        height: 100px;
+    }
+    .Image {
+        max-width: 90px;
+        max-height: 100px;
+    }
+    .MobileButton {
+        display: grid;
+    }
+    .Button {
+        display: none;
+    }
+}
+
+@media (max-width: 425px) {
+    .DislikeIcon {
+        width: 20px;
+        height: 20px;
+    }
+    .HeartIcon {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 375px) {
+    .Title {
+        overflow-wrap: break-word;
+        max-width: 116px;
+    }
+}
+
+@media (max-width: 320px) {
+    .Card {
+        max-width: 140px;
+    }
+}
