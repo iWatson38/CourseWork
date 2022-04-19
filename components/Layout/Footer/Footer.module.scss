@@ -1,0 +1,119 @@
+.Footer {
+    padding-top: 80px;
+    position: relative;
+    background: $main-bg;
+    display: grid;
+}
+
+.FooterBackground {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.FooterContent {
+    position: relative;
+    box-sizing: border-box;
+    padding-bottom: 55px;
+    max-width: 1142px;
+    margin: 0 auto;
+}
+
+.FooterList {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr max-content;
+    justify-items: center;
+}
+
+.FooterTitle {
+    font: $FM400-20-24;
+    color: white;
+    margin: 0;
+}
+
+.Social {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    padding: 0;
+    margin: 30px 0 0 0;
+    width: max-content;
+}
+
+.FooterLink {
+    margin: 0;
+    height: max-content;
+    font: $FM400-16-20;
+    color: white;
+    text-decoration: none;
+    display: block;
+}
+
+.FooterDescription {
+    margin-top: 24px;
+    margin-bottom: 0;
+    font: $FM400-16-20;
+    max-width: 500px;
+    color: white;
+}
+
+.Line {
+    position: relative;
+    height: 2px;
+    background-color: white;
+    width: 100%;
+}
+
+.InformationForUser {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+@media (max-width: 800px) {
+    .FooterContent {
+        padding-bottom: 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .Footer {
+        padding-top: 16px;
+    }
+    .FooterBackground {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .InformationForUser {
+        padding-top: 14px;
+        padding-bottom: 36px;
+    }
+    .FooterContent {
+        margin-top: 0;
+        padding-bottom: 30px;
+    }
+    .FooterLink {
+        margin: 0;
+    }
+    .FooterList {
+        grid-template-columns: auto;
+        gap: 18px;
+    }
+    .FooterTitle {
+        display: none;
+    }
+    .Social {
+        margin: 0;
+    }
+    .FooterDescription {
+        display: none;
+    }
+}
