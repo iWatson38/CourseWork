@@ -1,0 +1,17 @@
+.Container {
+    max-width: 1146px;
+    padding-left: 18px;
+    padding-right: 18px;
+    box-sizing: border-box;
+    margin: auto;
+    position: relative;
+}
+
+.Root {
+    background-color: $main-bg;
+    height: 100vh;
+}
+
+.Hidden {
+    display: none;
+}
