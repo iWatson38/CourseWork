@@ -1,0 +1,84 @@
+.Menu {
+    position: fixed;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    transition: 0.3s;
+    background: linear-gradient(90deg, #305a84 2.53%, #26d0ce 106.92%);
+    pointer-events: none;
+    transform: translate3d(100%, 0, 0);
+}
+
+.Visible {
+    pointer-events: unset;
+    transform: translate3d(0, 0, 0);
+    transition: 0.3s;
+}
+
+.NavListContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    text-align: center;
+    gap: 24px;
+}
+
+.NavList {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    text-align: center;
+    gap: 24px;
+    padding: 0;
+    margin: 0;
+}
+
+.InputContainer {
+    display: grid;
+    grid-template-columns: 16px max-content;
+    gap: 8px;
+    padding: 0;
+    background-color: white;
+    border: none;
+    align-items: center;
+}
+
+.NavLink {
+    text-decoration: none;
+    color: #fdfdfd;
+    font: $FM500-16-22;
+    margin: 0;
+    cursor: pointer;
+}
+
+.CloseButtonContainer {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    background-color: none;
+}
+
+.SingInButton {
+    width: max-content;
+    margin: 0 auto;
+    padding: 0;
+    background: none;
+    border: none;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+}
+
+.CloseButton {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    position: relative;
+    margin: 0 auto;
+}
