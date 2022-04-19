@@ -1,0 +1,17 @@
+.NavLink {
+    text-decoration: none;
+    color: $main;
+    font: $FM500-16-22;
+    margin: 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+
+.NavLinkActive {
+    color: $accent;
+}
+
+.Mobile {
+    color: $main-bg;
+}
