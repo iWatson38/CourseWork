@@ -1,0 +1,63 @@
+.MagicSteps {
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    padding: 24px 32px 32px 32px;
+    max-width: 569px;
+}
+
+.Title {
+    color: $main;
+    font: $FM400-20-24;
+    margin: 0;
+}
+
+.List {
+    margin-top: 32px;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+.ListItem {
+    color: $main;
+    font: $FM400-14-17;
+    display: grid;
+    align-items: center;
+    grid-template-columns: max-content max-content;
+    gap: 19px;
+    &:not(:last-child) {
+        margin-bottom: 19px;
+    }
+}
+
+.SequentialNumber {
+    background-color: $main;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    color: #ffffff;
+    font: $FM400-20-24;
+}
+
+@media (max-width: 768px) {
+    .MagicSteps {
+        padding: 0 18px 0 18px;
+    }
+    .List {
+        margin-top: 24px;
+        background: #ffffff;
+        box-shadow: 0px 4px 4px rgb(0 0 0 / 10%);
+        padding: 28px 20px;
+        border-radius: 10px;
+    }
+    .ListItem {
+        gap: 16px;
+        &:not(:last-child) {
+            margin-bottom: 24px;
+        }
+        grid-template-columns: max-content 1fr;
+    }
+}
