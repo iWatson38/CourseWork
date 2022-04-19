@@ -1,0 +1,79 @@
+.Form {
+    position: relative;
+    max-width: 862px;
+    padding-top: 41px;
+    display: grid;
+    grid-template-areas:
+        'Input Button'
+        'Instruction Instruction';
+    grid-template-columns: 1fr max-content;
+}
+
+.Leaf {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.FormInput {
+    grid-area: Input;
+    width: 100%;
+}
+
+.Button {
+    grid-area: Button;
+    width: 200px;
+    margin-left: 32px;
+}
+
+.Hint {
+    font: $FM400-14-17;
+    margin: 10px 0 0 0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: max-content 1fr;
+    gap: 8px;
+    width: max-content;
+}
+
+.Instruction {
+    grid-area: Instruction;
+    p {
+        margin: 0;
+    }
+}
+
+.ExampleGiftsLink {
+    color: $accent;
+    text-decoration: none;
+    border-bottom: 1px solid;
+}
+
+@media (max-width: 768px) {
+    .Form {
+        grid-template-areas:
+            'Input'
+            'Instruction'
+            'Button'
+            'Example';
+        gap: 10px;
+        grid-template-columns: 1fr;
+    }
+    .Button {
+        width: 284px;
+        margin: 0 auto;
+    }
+    .Hint {
+        margin: 0 auto;
+        font: $FM400-12-15;
+        gap: 6px;
+        text-align: start;
+    }
+}
+
+@media (max-width: 400px) {
+    .Hint {
+        max-width: 260px;
+    }
+}
