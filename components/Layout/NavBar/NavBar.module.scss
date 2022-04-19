@@ -1,0 +1,51 @@
+.HeaderNav {
+    padding-top: 24px;
+    padding-bottom: 24px;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    align-items: center;
+}
+
+.NavList {
+    margin: 0;
+    list-style-type: none;
+    display: grid;
+    grid-gap: 18px;
+    grid-auto-flow: column;
+    grid-auto-columns: max-content;
+    justify-content: end;
+    align-items: start;
+}
+
+.BurgerButton {
+    padding: 0;
+    height: 20px;
+    display: none;
+}
+
+@media (max-width: 980px) {
+    .NavList {
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .DesctopNavLink {
+        display: none;
+    }
+    .HeaderNav {
+        position: fixed;
+        top: 0;
+        z-index: 3;
+        width: 100%;
+        background-color: $main-bg;
+    }
+    .BurgerButton {
+        display: block;
+    }
+    .NavList {
+        grid-template-rows: auto;
+        grid-template-columns: auto;
+    }
+}
