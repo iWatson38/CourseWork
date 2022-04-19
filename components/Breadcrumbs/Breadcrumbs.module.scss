@@ -1,0 +1,37 @@
+.Breadcrumb {
+    display: grid;
+    grid-auto-flow: column;
+    max-width: max-content;
+    list-style: none;
+    padding: 0;
+}
+
+.Crumb {
+    display: flex;
+    flex-direction: row;
+}
+
+.Link {
+    text-decoration: none;
+    font: $FM400-12-15;
+    color: $gray;
+}
+
+.Disabled {
+    cursor: default;
+    pointer-events: none;
+}
+
+.Slash {
+    font: $FM400-12-15;
+    color: $gray;
+    margin-left: 6px;
+    margin-right: 6px;
+    pointer-events: none;
+}
+
+@media (max-width: 768px) {
+    .Breadcrumb {
+        margin: 0 0 20px 0;
+    }
+}
