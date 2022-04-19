@@ -1,5 +1,5 @@
-import { getFaq, useGetFaq } from 'pages/api/queries/Faq/faq.query';
-import { IFaqResponse } from 'pages/api/queries/interfaces/Faq.interface';
+import { useGetFaq } from 'utils/queries/Faq/Faq.query';
+import { IFaqResponse } from 'utils/queries/interfaces/Faq.interface';
 import React, { useState } from 'react';
 import { AccordionItem } from './AccordionItem/AccordionItem.component';
 
