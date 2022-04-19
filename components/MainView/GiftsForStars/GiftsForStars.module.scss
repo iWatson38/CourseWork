@@ -1,0 +1,39 @@
+.TitleContainer {
+    font: $FM400-14-17;
+    margin: 10px 0 0 0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: max-content 1fr;
+    gap: 8px;
+    width: max-content;
+    text-align: start;
+}
+
+.Title {
+    margin: 0;
+    color: $accent;
+}
+
+.StarList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+    list-style: none;
+    padding: 0;
+}
+
+@media (max-width: 768px) {
+    .TitleContainer {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 440px) {
+    .TitleContainer {
+        max-width: 260px;
+    }
+    .StarList {
+        grid-template-columns: 1fr 1fr;
+    }
+}
