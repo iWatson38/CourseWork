@@ -49,7 +49,7 @@ export function AuthProvider({ children }: IAuthProvider) {
         if (!isLoggedIn) {
             const params = {
                 client_id: `${process.env.VK_APP_ID}`,
-                redirect_uri: `${process.env.APP_URL}/signin`,
+                redirect_uri: `${process.env.APP_URL}/signIn`,
                 scope: ['friends', 'email', 'groups', 'offline'].join(','),
                 response_type: 'token',
                 display: 'popup',
@@ -59,8 +59,10 @@ export function AuthProvider({ children }: IAuthProvider) {
             const queryParams = new URLSearchParams(params);
 
             window.location.href = `https://oauth.vk.com/authorize?${queryParams.toString()}`;
+            console.log('Work');
+        } else {
+            router.push('/friends');
         }
-        router.push('/friends');
     };
 
     const context: TAuthContext = {
