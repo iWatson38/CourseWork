@@ -1,13 +1,16 @@
 import SMain from './index.module.scss';
 import SCommon from 'styles/Common.module.scss';
 import {
-    EModalType,
-    ModalComponent,
-} from 'components/Modals/StandartModal/Modal.component';
+    EResponseModalType,
+    ResponseModalComponent,
+} from 'components/Modals/ResponseModal/ResponseModal.component';
 import { useEffect, useState } from 'react';
-import { AuthModalComponent } from 'components/Modals/AuthModal/AuthModal.component';
-import { useAuth } from 'components/Providers/AuthProvider/Auth.provider';
-import { useQuery } from 'react-query';
+import { LogInOfferModalComponent } from 'components/Modals/LogInOfferModal/LogInOfferModal.component';
+import {
+    AuthProvider,
+    useAuth,
+} from 'components/Providers/AuthProvider/Auth.provider';
+import { dehydrate, DehydratedState, QueryClient, useQuery } from 'react-query';
 import {
     getOneFriend,
     useGetOneFriend,
@@ -21,25 +24,29 @@ import { GiftsForStarsComponent } from 'components/MainView/GiftsForStars/GiftsF
 import { MagicStepsComponent } from 'components/MainView/MagicSteps/MagicSteps.component';
 import { FaqComponent } from 'components/Common/Faq/Faq.component';
 import { IFaqResponse } from 'utils/queries/interfaces/Faq.interface';
-import { getFaq } from 'utils/queries/Faq/Faq.query';
+import { getFaq, useGetFaq } from 'utils/queries/Faq/Faq.query';
 import { MainLayoutComponent } from 'components/Layout/MainLayout/MainLayout.component';
 import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
+import { CookiesProvider } from 'react-cookie';
+import { API } from 'utils/api/api.util';
 
-interface IMainView {
-    faq: IFaqResponse;
-}
-
-export async function getStaticProps() {
-    const faq = await getFaq();
+export const getServerSideProps: GetServerSideProps = async (): Promise<{
+    props: { dehydratedState: DehydratedState };
+}> => {
+    const queryClient = new QueryClient();
+    await queryClient.prefetchQuery('faq', getFaq);
 
     return {
         props: {
-            faq,
+            dehydratedState: dehydrate(queryClient),
         },
     };
-}
+};
 
-const MainView: React.FC<IMainView> = ({ faq }) => {
+const MainView: React.FC = () => {
+    const { data: Faq } = useGetFaq();
+
     const router = useRouter();
 
     const { isAuth, signInRedirect } = useAuth();
@@ -105,44 +112,52 @@ const MainView: React.FC<IMainView> = ({ faq }) => {
         'Теперь можешь выбирать подарок!',
     ];
 
+    console.log(API);
+
     return (
-        <MainLayoutComponent>
-            <main className={SMain.Main}>
-                <ModalComponent
-                    type={EModalType.INFORMATION}
-                    visible={visibleModal}
-                    description={'message'}
-                    onClose={toogleVisibleModal}
-                />
-                <AuthModalComponent
-                    startPartMessage="К сожалению, сервис пока не умеет искать подарки по имени, но мы работаем над этим! А пока можешь "
-                    link="авторизоваться"
-                    finishPartMessage="или вставить ссылку на страницу друга в ВК."
-                    visible={visibleAuthModal}
-                    handleAuthClick={signInRedirect}
-                    onClose={toogleVisibleAuthModal}
-                />
-                <BreadcrumbsComponent
-                    crumbList={[]}
-                    className={SMain.Breadcrumbs}
-                />
-                <h1 className={SMain.Title}>
-                    Сервис подбора подарков для ваших друзей
-                </h1>
-                <p className={SMain.SearchBlockTitle}>Кому дарим подарок?</p>
-                <SearchBlockComponent
-                    className={SMain.SearchBlock}
-                    onSearch={handleSearch}
-                />
-                <GiftsForStarsComponent />
-                <MagicStepsComponent
-                    className={SMain.Steps}
-                    title="Как это работает?"
-                    steps={steps}
-                />
-                <FaqComponent faq={faq} className={SMain.Faq} />
-            </main>
-        </MainLayoutComponent>
+        <AuthProvider>
+            <CookiesProvider>
+                <MainLayoutComponent>
+                    <main className={SMain.Main}>
+                        <ResponseModalComponent
+                            type={EResponseModalType.ERROR}
+                            visible={visibleModal}
+                            description={'message'}
+                            onClose={toogleVisibleModal}
+                        />
+                        <LogInOfferModalComponent
+                            startPartMessage="К сожалению, сервис пока не умеет искать подарки по имени, но мы работаем над этим! А пока можешь "
+                            link="авторизоваться"
+                            finishPartMessage="или вставить ссылку на страницу друга в ВК."
+                            visible={visibleAuthModal}
+                            handleAuthClick={signInRedirect}
+                            onClose={toogleVisibleAuthModal}
+                        />
+                        <BreadcrumbsComponent
+                            crumbList={[]}
+                            className={SMain.Breadcrumbs}
+                        />
+                        <h1 className={SMain.Title}>
+                            Сервис подбора подарков для ваших друзей
+                        </h1>
+                        <p className={SMain.SearchBlockTitle}>
+                            Кому дарим подарок?
+                        </p>
+                        <SearchBlockComponent
+                            className={SMain.SearchBlock}
+                            onSearch={handleSearch}
+                        />
+                        <GiftsForStarsComponent />
+                        <MagicStepsComponent
+                            className={SMain.Steps}
+                            title="Как это работает?"
+                            steps={steps}
+                        />
+                        <FaqComponent faq={Faq?.data} className={SMain.Faq} />
+                    </main>
+                </MainLayoutComponent>
+            </CookiesProvider>
+        </AuthProvider>
     );
 };
 
