@@ -1,19 +1,17 @@
 import { useGetFaq } from 'utils/queries/Faq/Faq.query';
-import { IFaqResponse } from 'utils/queries/interfaces/Faq.interface';
+import { IFaq, IFaqResponse } from 'utils/queries/interfaces/Faq.interface';
 import React, { useState } from 'react';
 import { AccordionItem } from './AccordionItem/AccordionItem.component';
 
 import SFaqComponent from './Faq.module.scss';
 
 interface IFaqComponentProps {
-    faq: IFaqResponse;
+    faq?: IFaqResponse['data'];
     className?: string;
 }
 
 export function FaqComponent({ faq, className }: IFaqComponentProps) {
     const [activeItems, setActiveItems] = useState<Array<number>>([]);
-
-    const { data } = useGetFaq(faq);
 
     const handleToggleElement = (element: number) => {
         const index = activeItems.findIndex((item) => item === element);
@@ -33,7 +31,7 @@ export function FaqComponent({ faq, className }: IFaqComponentProps) {
                 Предлагаем посмотреть часто задаваемые вопросы
             </p>
             <ul className={SFaqComponent.Accordion}>
-                {data?.data.map((question, index) => (
+                {faq?.map((question, index) => (
                     <AccordionItem
                         key={question.id}
                         index={index + 1}

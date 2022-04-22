@@ -3,11 +3,13 @@ import { useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
 
 export const getFaq = async (): Promise<IFaqResponse> => {
-    const respose = await API.get<IFaqResponse>('api/v1/faq');
-    const faq = respose.data;
-    return faq;
+    const response = await API.get<IFaqResponse>('api/v1/faq');
+    if (response.data.success) {
+        return response.data;
+    }
+    throw new Error('Network response with Error');
 };
 
-export const useGetFaq = (faq: IFaqResponse) => {
-    return useQuery<IFaqResponse>('faq', getFaq, { initialData: faq });
+export const useGetFaq = () => {
+    return useQuery<IFaqResponse, Error>('faq', getFaq);
 };
