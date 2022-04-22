@@ -1,0 +1,68 @@
+.FeedbackModal {
+    position: fixed;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: 0.3s;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.Visible {
+    background: rgba(0, 0, 0, 0.2);
+    pointer-events: unset;
+}
+
+.Content {
+    position: relative;
+    background: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    opacity: 0;
+    transition: 0.3s;
+    padding: 34px 32px 32px 32px;
+    width: 338px;
+}
+
+.ContentVisible {
+    opacity: 1;
+}
+
+.Cross {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    padding: 0;
+    height: 16px;
+}
+
+.Title {
+    font: $FM500-18-30;
+    color: $main;
+    max-width: 275px;
+    margin: 0;
+    text-align: left;
+}
+
+.Label {
+    color: $main;
+    margin-top: 28px;
+    gap: 16px;
+    text-align: left;
+    font: $FM400-16-20;
+}
+
+.FormInput {
+    border: 1px solid $gray;
+    height: 150px;
+}
+
+.Button {
+    width: 100%;
+    margin-top: 24px;
+}

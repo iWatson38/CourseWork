@@ -1,9 +1,9 @@
 import { ButtonComponent } from 'components/UI/Button/Button.component';
 import React from 'react';
-import SModal from '../StandartModal/Modal.module.scss';
-import SAuthModalComponent from './AuthModal.module.scss';
+import SResponseModal from '../ResponseModal/ResponseModal.module.scss';
+import SLogInOfferModalComponent from './LogInOfferModal.module.scss';
 
-interface IAuthModalComponent {
+interface ILogInOfferModal {
     startPartMessage: string;
     link: string;
     finishPartMessage: string;
@@ -12,7 +12,7 @@ interface IAuthModalComponent {
     onClose?: () => void;
 }
 
-export const AuthModalComponent: React.FC<IAuthModalComponent> = ({
+export const LogInOfferModalComponent: React.FC<ILogInOfferModal> = ({
     startPartMessage,
     link,
     finishPartMessage,
@@ -21,18 +21,23 @@ export const AuthModalComponent: React.FC<IAuthModalComponent> = ({
     onClose,
 }) => {
     return (
-        <div className={[SModal.Modal, visible && SModal.Visible].join(' ')}>
+        <div
+            className={[
+                SResponseModal.Modal,
+                visible && SResponseModal.Visible,
+            ].join(' ')}
+        >
             <div
                 className={[
-                    SModal.Content,
-                    visible && SModal.ContentVisible,
-                    SModal.InformationContent,
+                    SResponseModal.Content,
+                    visible && SResponseModal.ContentVisible,
+                    SResponseModal.InformationContent,
                 ].join(' ')}
             >
-                <p className={SModal.Message}>
+                <p className={SResponseModal.Message}>
                     {startPartMessage}
                     <button
-                        className={SAuthModalComponent.AuthButton}
+                        className={SLogInOfferModalComponent.AuthButton}
                         onClick={handleAuthClick}
                     >
                         {link}
@@ -40,9 +45,10 @@ export const AuthModalComponent: React.FC<IAuthModalComponent> = ({
                     {` ${finishPartMessage}`}
                 </p>
                 <ButtonComponent
-                    className={[SModal.Button, SModal.InformationButton].join(
-                        ' ',
-                    )}
+                    className={[
+                        SResponseModal.Button,
+                        SResponseModal.InformationButton,
+                    ].join(' ')}
                     type="submit"
                     onClick={onClose}
                 >

@@ -28,13 +28,6 @@
     height: 380px;
 }
 
-.InformationContent {
-    display: grid;
-    grid-template-rows: 1fr max-content;
-    align-items: center;
-    justify-content: center;
-}
-
 .ContentVisible {
     opacity: 1;
 }
@@ -53,10 +46,6 @@
 .Button {
     width: 245px;
     margin-top: 46px;
-}
-
-.InformationButton {
-    margin: 0 auto 40px auto;
 }
 
 .Red {
