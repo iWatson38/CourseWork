@@ -1,0 +1,133 @@
+.FriendContainer {
+    max-width: 242px;
+    box-sizing: border-box;
+    padding: 24px 21px 20px;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+    &:hover {
+        .Button {
+            color: white;
+            background-color: $accent;
+            border: none;
+            transition: 0.3s;
+        }
+        .MobileButton {
+            color: $accent;
+        }
+    }
+}
+
+.GiftIcon {
+    opacity: 1;
+    position: relative;
+}
+
+.GiftIconActive {
+    opacity: 0;
+    position: absolute;
+}
+
+.Avatar {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+}
+
+.UserName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+    margin: 18px auto 0;
+    box-sizing: border-box;
+    font: $FM400-16-20;
+}
+
+.UserBirthDay {
+    margin: 9px auto 0;
+}
+
+.Button {
+    margin: 24px auto 0;
+    text-align: center;
+    display: block;
+    width: 100%;
+}
+
+.MobileButton {
+    padding: 0;
+    width: max-content;
+    margin: 32px auto 0;
+    display: none;
+    color: $main;
+    height: auto;
+    grid-template-columns: max-content max-content;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+@media (min-width: 769px) {
+    .FriendContainer {
+        &:hover {
+            .UserName {
+                color: $accent;
+                transition: 0.3s;
+            }
+            .UserBirthDay {
+                color: $accent;
+                transition: 0.3s;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .FriendContainer {
+        padding: 24px 7px 20px;
+        &:hover {
+            .GiftIcon {
+                opacity: 0;
+                position: absolute;
+            }
+            .GiftIconActive {
+                opacity: 1;
+                position: relative;
+            }
+        }
+    }
+    .MobileButton {
+        display: grid;
+    }
+    .Button {
+        display: none;
+    }
+    .UserName {
+        margin-top: 20px;
+    }
+    .UserBirthDay {
+        margin-top: 12px;
+    }
+}
+
+@media (max-width: 550px) {
+    .UserName {
+        font: $FM400-14-17;
+    }
+    .UserBirthDay {
+        font: $FM400-14-17;
+    }
+    .Avatar {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 430px) {
+    .UserName {
+        max-width: 127px;
+    }
+}

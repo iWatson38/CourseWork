@@ -1,0 +1,19 @@
+.FriendsArea {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-auto-rows: auto;
+    gap: 32px 24px;
+}
+
+@media (max-width: 980px) {
+    .FriendsArea {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .FriendsArea {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 4px;
+    }
+}

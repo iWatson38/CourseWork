@@ -1,0 +1,35 @@
+.Leaf {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.Form {
+    position: relative;
+    max-width: 762px;
+    margin: 0 auto;
+    padding-top: 41px;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 0 32px;
+}
+
+.Button {
+    width: 200px;
+}
+
+.FormInput {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .Form {
+        display: block;
+    }
+    .Leaf {
+        top: 7px;
+    }
+    .Button {
+        display: none;
+    }
+}
