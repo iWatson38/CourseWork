@@ -1,4 +1,4 @@
-import { IFaqResponse } from '../interfaces/Faq.interface';
+import { IFaqResponse } from '../interfaces/Faq/Faq.interface';
 import { useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
 
