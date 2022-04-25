@@ -1,7 +1,7 @@
 export interface ISignInInput {
-    accessToken: string;
-    expiresIn: string;
-    userId: string;
+    access_token: string;
+    expires_in: string;
+    user_id: string;
     email: string | null;
 }
 
@@ -12,7 +12,7 @@ export interface IResponse {
     email: string;
 }
 
-export interface ISignInRespon {
+export interface ISignInResponse {
     success: boolean;
     data: IResponse;
     message: string;
