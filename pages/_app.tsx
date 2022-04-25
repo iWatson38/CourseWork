@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import { QueryClientProvider, QueryClient, Hydrate } from 'react-query';
 import { AuthProvider } from 'components/Providers/AuthProvider/Auth.provider';
 import { CookiesProvider } from 'react-cookie';
+import { ModalsProvider } from 'components/Providers/ModalsProvider/Modals.provider';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [queryClient] = React.useState(() => new QueryClient());
@@ -12,7 +13,13 @@ function MyApp({ Component, pageProps }: AppProps) {
     return (
         <QueryClientProvider client={queryClient}>
             <Hydrate state={pageProps.dehydratedState}>
-                <Component {...pageProps} />
+                <CookiesProvider>
+                    <AuthProvider>
+                        <ModalsProvider>
+                            <Component {...pageProps} />
+                        </ModalsProvider>
+                    </AuthProvider>
+                </CookiesProvider>
             </Hydrate>
         </QueryClientProvider>
     );

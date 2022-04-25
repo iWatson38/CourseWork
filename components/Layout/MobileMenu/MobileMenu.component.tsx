@@ -11,17 +11,19 @@ import SMobileMenu from './MobileMenu.module.scss';
 const PersonIcon = '/MobileMenu/Person.svg';
 
 interface IMobilePhoneProps {
+    isAuth: boolean;
     visible: boolean;
     menuItems: Array<IMenuItem>;
     onClose?: () => void;
 }
 
 export const MobileMenu: React.FC<IMobilePhoneProps> = ({
+    isAuth,
     visible,
     menuItems,
     onClose,
 }) => {
-    const { isAuth, logout, signInRedirect } = useAuth();
+    const { logout, signInRedirect } = useAuth();
 
     const handleAuthClick = () => {
         if (isAuth) {

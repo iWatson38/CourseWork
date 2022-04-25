@@ -19,15 +19,17 @@ const PersonIcon = '/NavBar/person.svg';
 const BurgerButton = '/MobileMenu/BurgerButton.svg';
 
 interface INavBarComponentProps {
+    isAuth: boolean;
     menuItems: Array<IMenuItem>;
     className?: string;
 }
 
 export const NavBarComponent: React.FC<INavBarComponentProps> = ({
+    isAuth,
     menuItems,
     className,
 }) => {
-    const { isAuth, logout, signInRedirect } = useAuth();
+    const { logout, signInRedirect } = useAuth();
     const [menuActive, setmenuActive] = useState(false);
 
     const toggleVisibleModileMenu = () => {
@@ -51,7 +53,7 @@ export const NavBarComponent: React.FC<INavBarComponentProps> = ({
             </Link>
 
             <nav>
-                <ul className={SNavBarComponent.NavList}>
+                <div className={SNavBarComponent.NavList}>
                     {menuItems
                         .filter((item) => !item.hidden)
                         .map((menuItem) => (
@@ -82,10 +84,11 @@ export const NavBarComponent: React.FC<INavBarComponentProps> = ({
                     >
                         <img src={BurgerButton} alt="menu" />
                     </ButtonComponent>
-                </ul>
+                </div>
             </nav>
 
             <MobileMenu
+                isAuth={isAuth}
                 visible={!!menuActive}
                 menuItems={menuItems}
                 onClose={toggleVisibleModileMenu}

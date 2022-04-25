@@ -29,7 +29,7 @@ interface IAuthProvider {
 }
 
 export function AuthProvider({ children }: IAuthProvider) {
-    const [cookies, setCookie, removeCookie] = useCookies(['access_token']);
+    const [cookies, setCookie, removeCookie] = useCookies();
     const [isLoggedIn, setIsLoggedIn] = useState(Boolean(cookies.access_token));
     const router = useRouter();
 
@@ -59,7 +59,6 @@ export function AuthProvider({ children }: IAuthProvider) {
             const queryParams = new URLSearchParams(params);
 
             window.location.href = `https://oauth.vk.com/authorize?${queryParams.toString()}`;
-            console.log('Work');
         } else {
             router.push('/friends');
         }
