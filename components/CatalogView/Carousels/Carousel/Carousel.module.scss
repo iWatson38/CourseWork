@@ -1,0 +1,54 @@
+.SwipersContainer {
+    ul {
+        padding: 10px 0;
+    }
+}
+
+.GoodCard {
+    margin: 0;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ControlButton {
+    background: #fbffff;
+    border: 1px solid #f1f3f5;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    position: absolute;
+    top: 184px;
+    z-index: 10;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.ButtonPrev {
+    left: 0;
+}
+
+.ButtonNext {
+    right: 0;
+}
+
+.DisabledButton {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.InvertedArrow {
+    transform: rotate3d(0, 1, 0, 180deg);
+}
+
+@media (max-width: 1140px) {
+    .GoodCard {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .ControlButton {
+        top: 130px;
+    }
+}

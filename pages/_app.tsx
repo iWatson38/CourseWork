@@ -1,6 +1,8 @@
 import React from 'react';
 import 'styles/Globals.scss';
 import 'assets/fonts/Montserrat/Montserrat.font.scss';
+import 'swiper/css';
+import 'swiper/scss/navigation';
 import type { AppProps } from 'next/app';
 import { QueryClientProvider, QueryClient, Hydrate } from 'react-query';
 import { AuthProvider } from 'components/Providers/AuthProvider/Auth.provider';

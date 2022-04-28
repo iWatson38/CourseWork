@@ -1,0 +1,26 @@
+.CategoriesList {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 20px;
+}
+
+.ListItem {
+    width: 100%;
+    max-width: 260px;
+}
+
+@media (max-width: 1139px) {
+    .CategoriesList {
+        grid-template-columns: 1fr 1fr;
+        justify-items: center;
+    }
+}
+
+@media (max-width: 425px) {
+    .CategoriesList {
+        gap: 20px 4px;
+    }
+}

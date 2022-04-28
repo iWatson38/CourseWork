@@ -1,0 +1,112 @@
+.YourfriendsPlace {
+    position: relative;
+    min-width: 260px;
+}
+
+.YourFriendsContainer {
+    width: 100%;
+}
+
+.YourFriendsArea {
+    position: relative;
+    padding: 28px 12px 32px 12px;
+    min-width: 236px;
+    background: #ffffff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    min-height: 607px;
+    max-width: 260px;
+    box-sizing: border-box;
+}
+
+.ActiveYourFriendsArea {
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    right: 0;
+    transition: 0.3s;
+}
+
+.ButtonFriends {
+    display: none;
+    background-color: rgba(0, 0, 0, 0);
+    padding: 8px 16px;
+    position: absolute;
+    max-height: 40px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.SmallArrow {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.Title {
+    position: relative;
+    font: $FM400-24-25;
+    color: $main;
+    margin: 0;
+}
+
+.HiddenContent {
+    margin-top: 18px;
+}
+
+.Button {
+    position: absolute;
+    bottom: 32px;
+    left: 108px;
+    border-radius: 50%;
+    width: 45px;
+}
+
+@media (max-width: 768px) {
+    .YourfriendsPlace {
+        height: 41px;
+    }
+    .YourFriendsContainer {
+        position: absolute;
+    }
+    .YourFriendsArea {
+        padding-top: 7px;
+        padding-bottom: 7px;
+        min-height: unset;
+        max-width: 100%;
+    }
+    .ActiveYourFriendsArea {
+        padding-bottom: 28px;
+    }
+    .ButtonFriends {
+        display: block;
+    }
+    .HiddenContent {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+    }
+    .Visible {
+        position: relative;
+        opacity: 1;
+        pointer-events: unset;
+    }
+    .Button {
+        display: none;
+    }
+    .Title {
+        font: $FM400-16-20;
+    }
+}
+
+@media (max-width: 550px) {
+    .YourfriendsPlace {
+        height: 36px;
+    }
+    .ButtonFriends {
+        max-height: 34px;
+    }
+}

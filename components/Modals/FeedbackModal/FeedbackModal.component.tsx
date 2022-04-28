@@ -88,7 +88,6 @@ export const FeedbackModalComponent: React.FC<IFeedbackModalComponentProps> = ({
                 product_id: id,
                 text: values.text,
             });
-            console.log(data);
         }
     };
 

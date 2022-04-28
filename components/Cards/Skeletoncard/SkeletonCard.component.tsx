@@ -8,7 +8,7 @@ import {
     EButtonStyleType,
 } from 'components/UI/Button/Button.component';
 
-import SCategoryCardComponent from 'views/Catalog/Categories/CategoryCardComponent/CategoryCard.module.scss';
+import SCategoryCardComponent from 'components/CatalogView/Categories/CategoryCardComponent/CategoryCard.module.scss';
 import SSceletonCardComponent from './SkeletonCard.module.scss';
 import SGoodCardComponent from '../GoodCard/GoodCard.module.scss';
 

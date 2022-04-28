@@ -1,0 +1,18 @@
+.Checkbox {
+    display: grid;
+    align-items: center;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #C9D1D1;
+    border-radius: 3px;
+}
+
+.CheckMark {
+    display: block;
+    margin: 0 auto;
+}
+
+.CheckboxActive {
+    background-color: $accent;
+    border: 1px solid $accent;
+}

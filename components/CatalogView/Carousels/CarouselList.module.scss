@@ -1,0 +1,26 @@
+.CarouselListContainer {
+    position: relative;
+    min-height: 934px;
+    ul {
+        margin: 0;
+        list-style: none;
+    }
+}
+
+.CarouselList {
+    position: absolute;
+    width: 100%;
+    padding: 0;
+}
+
+.Title {
+    color: $main;
+    font: $FM400-16-20;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .CarouselListContainer {
+        min-height: 670px;
+    }
+}
