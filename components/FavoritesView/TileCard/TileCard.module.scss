@@ -1,0 +1,52 @@
+.Card {
+    background: #ffffff;
+    box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    padding: 24px;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap: 20px;
+}
+
+.Title {
+    font: $FM400-28-34;
+    color: $main;
+    margin: 0;
+}
+
+.Description {
+    margin-top: 48px;
+    font: $FM400-16-20;
+    color: $main;
+    margin-bottom: 0;
+    max-width: 516px;
+}
+
+.Image {
+    margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+    .Card {
+        padding: 16px 16px 53px 16px;
+    }
+    .Description {
+        margin-top: 18px;
+    }
+    .Image {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+}
+
+@media (max-width: 425px) {
+    .Title {
+        font: $FM600-20-24;
+    }
+    .Description {
+        font: $FM400-14-17;
+    }
+    .Image {
+        width: 78px;
+    }
+}
