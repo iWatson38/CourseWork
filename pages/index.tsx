@@ -23,11 +23,11 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { useCookies } from 'react-cookie';
 
-interface IMainView {
+export interface IView {
     isAuth: boolean;
 }
 
-const MainView: React.FC<IMainView> = ({ isAuth }) => {
+const MainView: React.FC<IView> = ({ isAuth }) => {
     const [cookies] = useCookies();
     const { data: Faq } = useGetFaq();
 
@@ -37,7 +37,7 @@ const MainView: React.FC<IMainView> = ({ isAuth }) => {
 
     const [link, setLink] = useState('');
 
-    const { data: friendData, error } = useGetOneFriend(19235, !!link, link);
+    const { data: friendData } = useGetOneFriend(19235, link);
 
     const handleSearch = (values: ISearchFields) => {
         setLink(values.link);
@@ -72,23 +72,6 @@ const MainView: React.FC<IMainView> = ({ isAuth }) => {
             );
         }
     };
-
-    useEffect(() => {
-        if (
-            sessionStorage.getItem('Tries') &&
-            Number(sessionStorage.getItem('Tries')) === 3 &&
-            !isAuth
-        ) {
-            setModal(
-                'Мы надеемся, что тебе понравился наш сервис, пожалуйста, авторизуйся, чтобы иметь неограниченное количество поисков.',
-            );
-        } else if (friendData?.success) {
-            counterTries();
-            router.push(`/friends/${friendData.data[0].vk_id}`);
-        } else {
-            console.log(friendData);
-        }
-    }, [friendData?.success]);
 
     useEffect(() => {
         if (!cookies.access_token) {

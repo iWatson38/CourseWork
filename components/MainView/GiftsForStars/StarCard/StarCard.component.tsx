@@ -23,7 +23,7 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
 }) => {
     const router = useRouter();
     const groupedGiftsRedirect = () => {
-        router.push(`/friends/${starId}`);
+        router.push(`/catalog/${starId}`);
     };
 
     return (

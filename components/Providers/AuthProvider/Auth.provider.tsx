@@ -1,6 +1,13 @@
-import React, { createContext, ReactNode, useContext, useState } from 'react';
+import React, {
+    createContext,
+    ReactNode,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from 'next/router';
+import { API } from 'utils/api/api.util';
 
 const noop = () => {
     debugger;
@@ -63,6 +70,14 @@ export function AuthProvider({ children }: IAuthProvider) {
             router.push('/friends');
         }
     };
+
+    useEffect(() => {
+        if (cookies.access_token) {
+            API.defaults.headers.common[
+                'Authorization'
+            ] = `Bearer ${cookies.access_token}`;
+        }
+    }, [cookies]);
 
     const context: TAuthContext = {
         isAuth: isLoggedIn,

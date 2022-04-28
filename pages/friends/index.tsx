@@ -20,15 +20,9 @@ import { useRouter } from 'next/router';
 import { dehydrate, DehydratedState, QueryClient } from 'react-query';
 import { getFriends, useGetFriends } from 'utils/queries/Friends/Friends.query';
 import { IFriendsList } from 'utils/queries/interfaces/Friends/Friends.interface';
+import { IView } from 'pages';
 
-interface IFriendsView {
-    isAuth: boolean;
-}
-
-const FriendsView: React.FC<IFriendsView> = ({ isAuth }) => {
-    const router = useRouter();
-    const [cookies] = useCookies();
-
+const FriendsView: React.FC<IView> = ({ isAuth }) => {
     useEffect(() => {
         if (cookies.access_token) {
             API.defaults.headers.common[
@@ -36,6 +30,9 @@ const FriendsView: React.FC<IFriendsView> = ({ isAuth }) => {
             ] = `Bearer ${cookies.access_token}`;
         }
     }, []);
+
+    const router = useRouter();
+    const [cookies] = useCookies();
 
     const { data: userData, error } = useGetUser();
     useErrorHandler(error);
@@ -53,28 +50,21 @@ const FriendsView: React.FC<IFriendsView> = ({ isAuth }) => {
 
     useEffect(() => {
         if (friendsData?.data.items) {
-            console.log('fetching');
             if (fetching) {
-                setFriends(
-                    page === 1
-                        ? friendsData.data.items
-                        : [...friends, ...friendsData.data.items],
-                );
+                if (page === 1) {
+                    setFriends(friendsData.data.items);
+                } else {
+                    setFriends([...friends, ...friendsData.data.items]);
+                }
                 setPage((prev) => prev + 1);
+                setFetching(false);
             }
-            setFetching(false);
-
             if (search) {
-                setFriends(
-                    page === 1
-                        ? friendsData.data.items
-                        : [...friends, ...friendsData.data.items],
-                );
+                setFriends(friendsData.data.items);
+                setSearch(false);
             }
-            setSearch(false);
-            console.log(userData?.first_name);
         }
-    }, [fetching, search]);
+    }, [friendsData, fetching, search]);
 
     useEffect(() => {
         document.addEventListener('scroll', scrollHandler);
