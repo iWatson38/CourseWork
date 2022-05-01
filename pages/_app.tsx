@@ -8,22 +8,25 @@ import { QueryClientProvider, QueryClient, Hydrate } from 'react-query';
 import { AuthProvider } from 'components/Providers/AuthProvider/Auth.provider';
 import { CookiesProvider } from 'react-cookie';
 import { ModalsProvider } from 'components/Providers/ModalsProvider/Modals.provider';
+import SCommon from 'styles/Common.module.scss';
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [queryClient] = React.useState(() => new QueryClient());
 
     return (
-        <QueryClientProvider client={queryClient}>
-            <Hydrate state={pageProps.dehydratedState}>
-                <CookiesProvider>
-                    <AuthProvider>
-                        <ModalsProvider>
-                            <Component {...pageProps} />
-                        </ModalsProvider>
-                    </AuthProvider>
-                </CookiesProvider>
-            </Hydrate>
-        </QueryClientProvider>
+        <div className={SCommon.Root}>
+            <QueryClientProvider client={queryClient}>
+                <Hydrate state={pageProps.dehydratedState}>
+                    <CookiesProvider>
+                        <AuthProvider>
+                            <ModalsProvider>
+                                <Component {...pageProps} />
+                            </ModalsProvider>
+                        </AuthProvider>
+                    </CookiesProvider>
+                </Hydrate>
+            </QueryClientProvider>
+        </div>
     );
 }
 
