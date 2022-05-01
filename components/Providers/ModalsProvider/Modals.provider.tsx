@@ -1,4 +1,5 @@
 import { FeedbackModalComponent } from 'components/Modals/FeedbackModal/FeedbackModal.component';
+import { LogInOfferModalComponent } from 'components/Modals/LogInOfferModal/LogInOfferModal.component';
 import {
     EResponseModalType,
     ResponseModalComponent,
@@ -19,13 +20,19 @@ export type TModalsContext = {
         onSuccess: () => void,
         onError: () => void,
     ) => void;
+    toogleClosedFriendModal: () => void;
+    toogleSearchNameModal: () => void;
     toogleLogInOfferModal: () => void;
+    toogleAddToFavoritesModal: () => void;
 };
 const ModalsContext = createContext<TModalsContext>({
     toggleErrorModal: noop,
     toggleFeedbackModal: noop,
     toggleSuccessModal: noop,
+    toogleClosedFriendModal: noop,
+    toogleSearchNameModal: noop,
     toogleLogInOfferModal: noop,
+    toogleAddToFavoritesModal: noop,
 });
 
 export const useModals = () => {
@@ -41,7 +48,7 @@ interface IFeedbackModalState {
 }
 
 export const ModalsProvider: React.FC = ({ children }) => {
-    const { isAuth } = useAuth();
+    const { isAuth, signInRedirect } = useAuth();
 
     const [errorModal, setErrorModal] = useState(false);
     const toggleErrorModal = () => {
@@ -71,6 +78,20 @@ export const ModalsProvider: React.FC = ({ children }) => {
         }));
     };
 
+    const [closedFriendModal, setClosedFriendModal] = useState(false);
+    const toogleClosedFriendModal = () => {
+        if (!isAuth) {
+            setClosedFriendModal((prev) => !prev);
+        }
+    };
+
+    const [searchNameModal, setSearchNameModal] = useState(false);
+    const toogleSearchNameModal = () => {
+        if (!isAuth) {
+            setSearchNameModal((prev) => !prev);
+        }
+    };
+
     const [logInOfferModal, setLogInOfferModal] = useState(false);
     const toogleLogInOfferModal = () => {
         if (!isAuth) {
@@ -78,11 +99,21 @@ export const ModalsProvider: React.FC = ({ children }) => {
         }
     };
 
+    const [addToFavoritesModal, setAddToFavoritesModal] = useState(false);
+    const toogleAddToFavoritesModal = () => {
+        if (!isAuth) {
+            setAddToFavoritesModal((prev) => !prev);
+        }
+    };
+
     const context = {
         toggleErrorModal,
         toggleSuccessModal,
         toggleFeedbackModal,
+        toogleClosedFriendModal,
+        toogleSearchNameModal,
         toogleLogInOfferModal,
+        toogleAddToFavoritesModal,
     };
 
     return (
@@ -110,6 +141,38 @@ export const ModalsProvider: React.FC = ({ children }) => {
                 title="Упс!"
                 description="Форма не отправилась!"
                 onClose={toggleErrorModal}
+            />
+            <LogInOfferModalComponent
+                startPartMessage="Прости, у твоего друга закрытая страница, чтобы увидеть предложенные подарки, можешь "
+                link="авторизоваться"
+                finishPartMessage=". Или посмотри подарок кому-нибудь ещё."
+                visible={closedFriendModal}
+                handleAuthClick={signInRedirect}
+                onClose={toogleClosedFriendModal}
+            />
+            <LogInOfferModalComponent
+                startPartMessage="К сожалению, сервис пока не умеет искать подарки по имени, но мы работаем над этим! А пока можешь "
+                link="авторизоваться"
+                finishPartMessage="или вставить ссылку на страницу друга в ВК."
+                visible={searchNameModal}
+                handleAuthClick={signInRedirect}
+                onClose={toogleSearchNameModal}
+            />
+            <LogInOfferModalComponent
+                startPartMessage="Мы надеемся, что тебе понравился наш сервис, пожалуйста, "
+                link="авторизуйся"
+                finishPartMessage=", чтобы иметь неограниченное количество поисков."
+                visible={logInOfferModal}
+                handleAuthClick={signInRedirect}
+                onClose={toogleLogInOfferModal}
+            />
+            <LogInOfferModalComponent
+                startPartMessage="Мы надеемся, что тебе понравился наш сервис, пожалуйста, "
+                link="авторизуйся"
+                finishPartMessage=', чтобы иметь возможность добавлять подарки в "Избранное".'
+                visible={addToFavoritesModal}
+                handleAuthClick={signInRedirect}
+                onClose={toogleAddToFavoritesModal}
             />
         </ModalsContext.Provider>
     );

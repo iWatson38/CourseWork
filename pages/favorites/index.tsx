@@ -33,10 +33,10 @@ import { useCookies } from 'react-cookie';
 const FavoritesView: React.FC<IView> = ({ isAuth }) => {
     const router = useRouter();
     const [cookies] = useCookies();
+    const modals = useModals();
 
     const { data: favorites, error, refetch } = useGetFavorites();
     useErrorHandler(error);
-    const modals = useModals();
 
     const { mutate } = useMutation(favoritesMutation, {
         onSuccess: (data) => {
@@ -89,25 +89,24 @@ const FavoritesView: React.FC<IView> = ({ isAuth }) => {
                 />
                 <TileCardComponent className={SFavoritesView.TileCard} />
                 <ul className={SFavoritesView.List}>
-                    {favorites &&
-                        favorites.data.map((favorite) => (
-                            <li
-                                key={favorite.id}
-                                className={SFavoritesView.ListItem}
-                            >
-                                <GoodCardComponent
-                                    title={favorite.name}
-                                    description={favorite.description}
-                                    image={favorite.img}
-                                    price={favorite.price}
-                                    isFavorite
-                                    id={favorite.id}
-                                    link={favorite.link}
-                                    onLike={handleRemoveFromFavorites}
-                                    onDislike={onDislike}
-                                />
-                            </li>
-                        ))}
+                    {favorites?.data.map((favorite) => (
+                        <li
+                            key={favorite.id}
+                            className={SFavoritesView.ListItem}
+                        >
+                            <GoodCardComponent
+                                title={favorite.name}
+                                description={favorite.description}
+                                image={favorite.img}
+                                price={favorite.price}
+                                isFavorite
+                                id={favorite.id}
+                                link={favorite.link}
+                                onLike={handleRemoveFromFavorites}
+                                onDislike={onDislike}
+                            />
+                        </li>
+                    ))}
                 </ul>
             </main>
         </MainLayoutComponent>
