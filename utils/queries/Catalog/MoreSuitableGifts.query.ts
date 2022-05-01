@@ -18,5 +18,8 @@ export const useGetMoreSuitableGifts = (vk_friend_id: number) => {
     return useQuery<IMoreSuitableGiftsResponse, Error>(
         ['moreSuitableGifts', vk_friend_id],
         () => getMoreSuitableGifts(vk_friend_id),
+        {
+            refetchOnWindowFocus: false,
+        },
     );
 };

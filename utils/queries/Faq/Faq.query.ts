@@ -11,5 +11,7 @@ export const getFaq = async (): Promise<IFaqResponse> => {
 };
 
 export const useGetFaq = () => {
-    return useQuery<IFaqResponse, Error>('faq', getFaq);
+    return useQuery<IFaqResponse, Error>('faq', getFaq, {
+        refetchOnWindowFocus: false,
+    });
 };

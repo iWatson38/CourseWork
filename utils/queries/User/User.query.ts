@@ -11,5 +11,7 @@ export const getUser = async (): Promise<IUserResponse> => {
 };
 
 export const useGetUser = () => {
-    return useQuery<IUserResponse, Error>('user', getUser);
+    return useQuery<IUserResponse, Error>('user', getUser, {
+        refetchOnWindowFocus: false,
+    });
 };

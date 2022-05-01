@@ -24,6 +24,9 @@ export const useGetFriends = (name: string, limit: number, page: number) => {
     return useQuery<IFriendsResponse, Error>(
         ['friends', name, limit, page],
         () => getFriends(name, limit, page),
-        { retry: false },
+        {
+            retry: false,
+            refetchOnWindowFocus: false,
+        },
     );
 };

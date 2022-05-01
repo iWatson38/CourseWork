@@ -11,5 +11,7 @@ export const getFavorites = async (): Promise<IFavoritesResponse> => {
 };
 
 export const useGetFavorites = () => {
-    return useQuery<IFavoritesResponse, Error>('favorites', getFavorites);
+    return useQuery<IFavoritesResponse, Error>('favorites', getFavorites, {
+        refetchOnWindowFocus: false,
+    });
 };

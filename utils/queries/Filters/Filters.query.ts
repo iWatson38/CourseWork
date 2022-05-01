@@ -15,7 +15,11 @@ export const getFilters = async (
 };
 
 export const useGetFilters = (vk_friend_id: number) => {
-    return useQuery<IFiltersResponse, Error>(['filters', vk_friend_id], () =>
-        getFilters(vk_friend_id),
+    return useQuery<IFiltersResponse, Error>(
+        ['filters', vk_friend_id],
+        () => getFilters(vk_friend_id),
+        {
+            refetchOnWindowFocus: false,
+        },
     );
 };
