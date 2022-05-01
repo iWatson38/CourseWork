@@ -2,10 +2,10 @@ import React from 'react';
 import {
     ButtonComponent,
     EButtonStyleType,
-} from 'components/UI/Button/Button.components';
-import { useNavigate } from 'react-router-dom';
+} from 'components/UI/Button/Button.component';
 import SGoodCardComponent from 'components/Cards/GoodCard/GoodCard.module.scss';
 import SCategoryCardComponent from './CategoryCard.module.scss';
+import { useRouter } from 'next/router';
 
 export interface ICategoryCardComponentProps {
     vk_friend_id: number;
@@ -24,10 +24,10 @@ export const CategoryCardComponent: React.FC<ICategoryCardComponentProps> = ({
     img,
     className,
 }) => {
-    const navigate = useNavigate();
+    const router = useRouter();
 
     const groupedGiftsRedirect = () => {
-        navigate(`/friends/${vk_friend_id}/${category_id}`);
+        router.push(`/friends/${vk_friend_id}/${category_id}`);
     };
 
     const computeName = (name: string) => {

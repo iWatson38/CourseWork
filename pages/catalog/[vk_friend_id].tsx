@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SCommon from 'styles/Common.module.scss';
 import { GoodCardComponent } from 'components/Cards/GoodCard/GoodCard.component';
 import { FriendsContainerComponent } from 'components/Layout/FriendContainer/FriendsContainer.component';
@@ -12,11 +12,11 @@ import {
     ResponseModalComponent,
 } from 'components/Modals/ResponseModal/ResponseModal.component';
 import { BreadcrumbsComponent } from 'components/Breadcrumbs/Breadcrumbs.component';
-import SCatalog from './Catalog.module.scss';
+import SCatalog from './index.module.scss';
 import { SortingComponent } from 'components/CatalogView/Sorting/Sorting.component';
 import { YourFriendsComponent } from 'components/CatalogView/YourFriends/YourFriends.component';
 import { BarCardComponent } from 'components/CatalogView/BarCards/BarCard.component';
-import { LCatalogView } from './Catalog.logic';
+import { LCatalogView } from 'logics/Catalog/index.logic';
 import { CarouselListComponent } from 'components/CatalogView/Carousels/CarouselList.component';
 import { LogInOfferModalComponent } from 'components/Modals/LogInOfferModal/LogInOfferModal.component';
 import { useRouter } from 'next/router';
@@ -34,10 +34,12 @@ import {
     useGetOneFriend,
 } from 'utils/queries/Friends/OneFriend.query';
 import { useCookies } from 'react-cookie';
+import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
 
 const CatalogView: React.FC<IView> = ({ isAuth }) => {
     const router = useRouter();
     const [cookies] = useCookies();
+    const modals = useModals();
 
     const {
         breadcrumbs,
@@ -55,14 +57,8 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
         onFavoriteToggle,
         handleSearchFriends,
         friendData,
-        handleFiltersSubmited,
-        signInRedirect,
+        handleSetFilters,
     } = LCatalogView(Number(router.query.vk_friend_id));
-
-    const [visibleModal, setVisibleModal] = useState(false);
-    const toogleVisibleModal = () => {
-        setVisibleModal((prev) => !prev);
-    };
 
     // FIX FILTERS ON SMALL DEVICES
     const computeOffsetTop = () => {
@@ -81,15 +77,6 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
     return (
         <MainLayoutComponent isAuth={isAuth}>
             <main className={[SCatalog.Catalog, SCommon.Container].join(' ')}>
-                <LogInOfferModalComponent
-                    startPartMessage="Мы надеемся, что тебе понравился наш сервис, пожалуйста, "
-                    link="авторизуйся"
-                    finishPartMessage=', чтобы иметь возможность добавлять подарки в "Избранное".'
-                    visible={visibleModal}
-                    handleAuthClick={signInRedirect}
-                    onClose={toogleVisibleModal}
-                />
-
                 <StickyBox
                     offsetTop={computeOffsetTop()}
                     className={SCatalog.SidebarContainer}
@@ -126,7 +113,7 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                                     generics: [],
                                 }
                             }
-                            onSubmit={handleFiltersSubmited}
+                            onSubmit={handleSetFilters}
                         />
                         <div className={SCatalog.RequestSurveyContainer}>
                             <p className={SCatalog.RequestSurvey}>
@@ -165,11 +152,13 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                             loading={loadingMoreSuitableGifts}
                             onDislike={onDislike}
                             onLike={
-                                isAuth ? onFavoriteToggle : toogleVisibleModal
+                                isAuth
+                                    ? onFavoriteToggle
+                                    : modals.toogleAddToFavoritesModal
                             }
                         />
                     )}
-                    <p className={SCatalog.Title}>
+                    <p className={SCatalog.Title} id="test">
                         Все подарки, которые мы подобрали:
                     </p>
                     <ul className={SCatalog.List}>
@@ -195,7 +184,7 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                                           onLike={
                                               isAuth
                                                   ? onFavoriteToggle
-                                                  : toogleVisibleModal
+                                                  : modals.toogleAddToFavoritesModal
                                           }
                                       />
                                   </li>
@@ -230,9 +219,8 @@ export const getServerSideProps: GetServerSideProps = async (
     await queryClient.prefetchQuery(['moreSuitableGifts', vk_friend_id], () =>
         getMoreSuitableGifts(vk_friend_id),
     );
-    await queryClient.prefetchQuery(
-        ['getAllGifts', vk_friend_id, ['filters[page]=1']],
-        () => getAllGifts(vk_friend_id, ['filters[page]=1']),
+    await queryClient.prefetchQuery(['getAllGifts', vk_friend_id, 1], () =>
+        getAllGifts(vk_friend_id, 1, []),
     );
     await queryClient.prefetchQuery(['filters', vk_friend_id], () =>
         getFilters(vk_friend_id),
