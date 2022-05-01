@@ -55,8 +55,8 @@ export function AuthProvider({ children }: IAuthProvider) {
     const signInRedirect = () => {
         if (!isLoggedIn) {
             const params = {
-                client_id: `${process.env.VK_APP_ID}`,
-                redirect_uri: `${process.env.APP_URL}/signIn`,
+                client_id: `${process.env.NEXT_PUBLIC_VK_APP_ID}`,
+                redirect_uri: `${process.env.NEXT_PUBLIC_APP_URL}/signIn`,
                 scope: ['friends', 'email', 'groups', 'offline'].join(','),
                 response_type: 'token',
                 display: 'popup',
