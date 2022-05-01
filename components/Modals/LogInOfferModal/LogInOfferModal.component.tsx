@@ -30,8 +30,8 @@ export const LogInOfferModalComponent: React.FC<ILogInOfferModal> = ({
             <div
                 className={[
                     SResponseModal.Content,
+                    SLogInOfferModalComponent.Content,
                     visible && SResponseModal.ContentVisible,
-                    SResponseModal.InformationContent,
                 ].join(' ')}
             >
                 <p className={SResponseModal.Message}>
@@ -45,10 +45,7 @@ export const LogInOfferModalComponent: React.FC<ILogInOfferModal> = ({
                     {` ${finishPartMessage}`}
                 </p>
                 <ButtonComponent
-                    className={[
-                        SResponseModal.Button,
-                        SResponseModal.InformationButton,
-                    ].join(' ')}
+                    className={SLogInOfferModalComponent.Button}
                     type="submit"
                     onClick={onClose}
                 >

@@ -6,3 +6,16 @@
     background: none;
     cursor: pointer;
 }
+
+.Content {
+    display: grid;
+    grid-template-rows: 1fr max-content;
+    align-items: center;
+    justify-items: center;
+    padding: 40px 24px;
+    box-sizing: border-box;
+}
+
+.Button {
+    width: 245px;
+}
