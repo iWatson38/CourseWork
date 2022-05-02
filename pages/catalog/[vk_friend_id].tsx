@@ -143,7 +143,7 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                 <div className={SCatalog.MainContent}>
                     {moreSuitableGifts?.length !== 0 && (
                         <p className={SCatalog.Title}>
-                            Мы думаем это подойдет лучше всего:
+                            Шаман решил, что эти подарки подойдут лучше всего:
                         </p>
                     )}
                     {moreSuitableGifts && (
