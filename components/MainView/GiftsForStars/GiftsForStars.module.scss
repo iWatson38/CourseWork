@@ -1,39 +1,36 @@
-.TitleContainer {
-    font: $FM400-14-17;
-    margin: 10px 0 0 0;
-    display: grid;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: max-content 1fr;
-    gap: 8px;
-    width: max-content;
-    text-align: start;
+.GiftsForStar {
+    margin-bottom: 80px;
 }
 
 .Title {
+    font: $FM400-28-34;
+    color: $main;
     margin: 0;
-    color: $accent;
+    margin-bottom: 40px;
 }
 
 .StarList {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 16px;
+    gap: 24px;
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 
 @media (max-width: 768px) {
-    .TitleContainer {
-        margin: 0 auto;
+    .StarList {
+        grid-template-columns: 1fr 1fr;
+    }
+    .Title {
+        font: $FM300-20-24;
+        margin-bottom: 36px;
     }
 }
 
-@media (max-width: 440px) {
-    .TitleContainer {
-        max-width: 260px;
-    }
+@media (max-width: 768px) {
     .StarList {
-        grid-template-columns: 1fr 1fr;
+        gap: 30px;
+        grid-template-columns: 1fr;
     }
 }

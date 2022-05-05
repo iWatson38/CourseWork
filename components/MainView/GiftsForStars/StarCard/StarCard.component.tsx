@@ -28,20 +28,13 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
 
     return (
         <div className={[className, SStarCardComponent.Card].join(' ')}>
-            <img src={img} alt="group" className={SGoodCardComponent.Image} />
+            <img src={img} alt="group" className={SStarCardComponent.Image} />
             <p className={SStarCardComponent.Title}>{starName}</p>
             <ButtonComponent
                 className={SStarCardComponent.Button}
                 onClick={groupedGiftsRedirect}
             >
-                Посмотреть
-            </ButtonComponent>
-            <ButtonComponent
-                className={SCategoryCardComponent.MobileButton}
-                styleType={EButtonStyleType.WHITE}
-                onClick={groupedGiftsRedirect}
-            >
-                Посмотерть
+                Показать
             </ButtonComponent>
         </div>
     );

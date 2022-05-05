@@ -2,7 +2,6 @@ import React from 'react';
 import SGiftsForStarsComponent from './GiftsForStars.module.scss';
 import { StarCardComponent } from './StarCard/StarCard.component';
 
-const Gift = 'GiftsForStars/Gift.svg';
 const Timothy = 'GiftsForStars/Timothy.svg';
 const Sobchak = 'GiftsForStars/Sobchak.svg';
 const Instosamka = 'GiftsForStars/Instosamka.svg';
@@ -10,12 +9,9 @@ const Instosamka = 'GiftsForStars/Instosamka.svg';
 export const GiftsForStarsComponent: React.FC = () => {
     return (
         <div className={[SGiftsForStarsComponent.GiftsForStar].join(' ')}>
-            <div className={SGiftsForStarsComponent.TitleContainer}>
-                <img src={Gift} alt="gift" />
-                <p className={SGiftsForStarsComponent.Title}>
-                    Посмотри, что шаман подобрал для звёзд:
-                </p>
-            </div>
+            <p className={SGiftsForStarsComponent.Title}>
+                Посмотри, что шаман подобрал для звёзд:
+            </p>
 
             <ul className={SGiftsForStarsComponent.StarList}>
                 <li key={11547416}>

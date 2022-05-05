@@ -2,34 +2,31 @@
     background: #ffffff;
     box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
     border-radius: 10px;
-    padding: 40px 20px 20px;
+    padding: 24px 20px 20px;
     box-sizing: border-box;
     display: grid;
-    grid-template-rows: 200px 34px max-content;
+    grid-template-rows: 1fr max-content max-content;
     align-items: center;
     justify-items: center;
-    gap: 8px;
-    max-width: 248px;
-    max-height: 428px;
+    gap: 18px;
+    max-width: 242px;
+    max-height: 285px;
     margin: 0 auto;
+}
+
+.Image {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
 }
 
 .Title {
     margin: 0;
-    font: $FM400-14-17;
+    font: $FM400-16-20;
     color: $main;
-    height: 34px;
 }
 
 .Button {
-    width: 100%;
-}
-
-@media (max-width: 768px) {
-    .Card {
-        grid-template-rows: 100px 34px max-content;
-        padding: 20px 12px 12px 12px;
-        gap: 12px;
-        align-items: center;
-    }
+    width: 200px;
+    margin-top: 10px;
 }
