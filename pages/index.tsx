@@ -76,11 +76,11 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
         setFetching(true);
     };
 
-    const {
-        data: friendData,
-        refetch,
-        isLoading,
-    } = useGetOneFriend(19235, handleError, link);
+    const { data: friendData, refetch } = useGetOneFriend(
+        19235,
+        handleError,
+        link,
+    );
 
     const [visibleModal, setVisibleModal] = useState(false);
     const toogleVisibleModal = () => {
@@ -128,6 +128,14 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
                     content="Подбор подарков для друзей и знакомых по профилю Вконтакте. Автоматически подберем подарок, который понравится его обладателю."
                 />
                 <meta property="og:image" content={LogoForMeta} />
+
+                <title>
+                    Шаман знает, что подарить другу. Умный поиск подарков.
+                </title>
+                <meta
+                    name="description"
+                    content="Сервис подбора подарков на базе цифрового профиля пользователя. Укажите ник пользователя и получите рекомендуемые подарки с учетом его интересов."
+                ></meta>
             </Head>
             <MainLayoutComponent isAuth={isAuth}>
                 <main className={SMain.Main}>
@@ -144,9 +152,9 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
                     <h1 className={SMain.Title}>
                         Сервис подбора подарков для ваших друзей
                     </h1>
-                    <p className={SMain.SearchBlockTitle}>
+                    <h2 className={SMain.SearchBlockTitle}>
                         Кому дарим подарок?
-                    </p>
+                    </h2>
                     <SearchBlockComponent
                         className={SMain.SearchBlock}
                         onSearch={handleSearch}

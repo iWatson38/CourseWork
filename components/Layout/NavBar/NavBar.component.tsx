@@ -48,7 +48,10 @@ export const NavBarComponent: React.FC<INavBarComponentProps> = ({
         <div className={[SNavBarComponent.HeaderNav, className].join(' ')}>
             <Link href={'/'}>
                 <a className={SComputedLinkComponent.NavLink}>
-                    <img src={LogoIcon} alt="shaman logo" />
+                    <img
+                        src={LogoIcon}
+                        alt="Шаман: умный поиск подарков для друзей"
+                    />
                     <p className={SNavBarComponent.Slogan}>
                         Подберёт лучший подарок
                     </p>
