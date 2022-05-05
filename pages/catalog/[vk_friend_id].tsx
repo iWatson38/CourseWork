@@ -35,6 +35,7 @@ import {
 } from 'utils/queries/Friends/OneFriend.query';
 import { useCookies } from 'react-cookie';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
+import Head from 'next/head';
 
 const CatalogView: React.FC<IView> = ({ isAuth }) => {
     const router = useRouter();
@@ -75,124 +76,145 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
     }, [cookies]);
 
     return (
-        <MainLayoutComponent isAuth={isAuth}>
-            <main className={[SCatalog.Catalog, SCommon.Container].join(' ')}>
-                <StickyBox
-                    offsetTop={computeOffsetTop()}
-                    className={SCatalog.SidebarContainer}
+        <>
+            <Head>
+                <meta
+                    property="og:url"
+                    content={`${process.env.NEXT_PUBLIC_API_URL}${router.asPath}`}
+                />
+                <meta
+                    property="og:title"
+                    content={`Что подарить ${friendData?.first_name} ${friendData?.last_name}? Посмотри, какие подарки подобрал для него Шаман – Сервис умного подбора подарков.`}
+                />
+                <meta
+                    property="og:description"
+                    content="Подбор подарков для друзей и знакомых по профилю Вконтакте. Автоматически подберем подарок, который понравится его обладателю."
+                />
+                <meta property="og:image" content={friendData?.photo_100} />
+            </Head>
+            <MainLayoutComponent isAuth={isAuth}>
+                <main
+                    className={[SCatalog.Catalog, SCommon.Container].join(' ')}
                 >
-                    <div className={SCatalog.Background} />
-                    <div className={SCatalog.Sidebar}>
-                        {isAuth ? (
-                            <YourFriendsComponent
-                                isAuth={isAuth}
-                                onLoadMore={handleFetchMoreFriends}
-                                onSearch={handleSearchFriends}
-                                friends={friends}
-                            />
-                        ) : (
-                            <FriendsContainerComponent isAuth={isAuth}>
-                                <p className={SCatalog.AuthAsking}>
-                                    Здесь будут отображаться Ваши друзья.{' '}
-                                    <button
-                                        className={SCatalog.AuthButton}
-                                        onClick={handleAuthClick}
-                                    >
-                                        Авторизуйся
-                                    </button>{' '}
-                                    и посмотри рекомендуемые подарки для своих
-                                    друзей.
-                                </p>
-                            </FriendsContainerComponent>
-                        )}
-                        <SortingComponent
-                            filters={
-                                filters || {
-                                    min_price: 0,
-                                    max_price: 100,
-                                    generics: [],
+                    <StickyBox
+                        offsetTop={computeOffsetTop()}
+                        className={SCatalog.SidebarContainer}
+                    >
+                        <div className={SCatalog.Background} />
+                        <div className={SCatalog.Sidebar}>
+                            {isAuth ? (
+                                <YourFriendsComponent
+                                    isAuth={isAuth}
+                                    onLoadMore={handleFetchMoreFriends}
+                                    onSearch={handleSearchFriends}
+                                    friends={friends}
+                                />
+                            ) : (
+                                <FriendsContainerComponent isAuth={isAuth}>
+                                    <p className={SCatalog.AuthAsking}>
+                                        Здесь будут отображаться Ваши друзья.{' '}
+                                        <button
+                                            className={SCatalog.AuthButton}
+                                            onClick={handleAuthClick}
+                                        >
+                                            Авторизуйся
+                                        </button>{' '}
+                                        и посмотри рекомендуемые подарки для
+                                        своих друзей.
+                                    </p>
+                                </FriendsContainerComponent>
+                            )}
+                            <SortingComponent
+                                filters={
+                                    filters || {
+                                        min_price: 0,
+                                        max_price: 100,
+                                        generics: [],
+                                    }
                                 }
-                            }
-                            onSubmit={handleSetFilters}
-                        />
-                        <div className={SCatalog.RequestSurveyContainer}>
-                            <p className={SCatalog.RequestSurvey}>
-                                Мы собираем Ваше мнение о сервисе, пожалуйста,
-                                уделите время и пройдите небольшой{' '}
-                                <a
-                                    className={SCatalog.SurveyLink}
-                                    href="https://docs.google.com/forms/d/e/1FAIpQLScdsh3YZkHEuicnPDsxp2ouX_usZ9iVZzXRXRxirxzhuPBTeg/viewform"
-                                >
-                                    опрос
-                                </a>
-                            </p>
+                                onSubmit={handleSetFilters}
+                            />
+                            <div className={SCatalog.RequestSurveyContainer}>
+                                <p className={SCatalog.RequestSurvey}>
+                                    Мы собираем Ваше мнение о сервисе,
+                                    пожалуйста, уделите время и пройдите
+                                    небольшой{' '}
+                                    <a
+                                        className={SCatalog.SurveyLink}
+                                        href="https://docs.google.com/forms/d/e/1FAIpQLScdsh3YZkHEuicnPDsxp2ouX_usZ9iVZzXRXRxirxzhuPBTeg/viewform"
+                                    >
+                                        опрос
+                                    </a>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                </StickyBox>
+                    </StickyBox>
 
-                <BreadcrumbsComponent
-                    crumbList={breadcrumbs}
-                    className={SCatalog.Breadcrumbs}
-                />
-                <BarCardComponent
-                    className={SCatalog.BarCard}
-                    personName={`${friendData?.first_name} ${friendData?.last_name}`}
-                    avatar={friendData?.photo_100}
-                />
+                    <BreadcrumbsComponent
+                        crumbList={breadcrumbs}
+                        className={SCatalog.Breadcrumbs}
+                    />
+                    <BarCardComponent
+                        className={SCatalog.BarCard}
+                        personName={`${friendData?.first_name} ${friendData?.last_name}`}
+                        avatar={friendData?.photo_100}
+                    />
 
-                <div className={SCatalog.MainContent}>
-                    {moreSuitableGifts?.length !== 0 && (
-                        <p className={SCatalog.Title}>
-                            Шаман решил, что эти подарки подойдут лучше всего:
+                    <div className={SCatalog.MainContent}>
+                        {moreSuitableGifts?.length !== 0 && (
+                            <p className={SCatalog.Title}>
+                                Шаман решил, что эти подарки подойдут лучше
+                                всего:
+                            </p>
+                        )}
+                        {moreSuitableGifts && (
+                            <CarouselListComponent
+                                moreSuitableGifts={moreSuitableGifts}
+                                loading={loadingMoreSuitableGifts}
+                                onDislike={onDislike}
+                                onLike={
+                                    isAuth
+                                        ? onFavoriteToggle
+                                        : modals.toogleAddToFavoritesModal
+                                }
+                            />
+                        )}
+                        <p className={SCatalog.Title} id="test">
+                            Все подарки, которые мы подобрали:
                         </p>
-                    )}
-                    {moreSuitableGifts && (
-                        <CarouselListComponent
-                            moreSuitableGifts={moreSuitableGifts}
-                            loading={loadingMoreSuitableGifts}
-                            onDislike={onDislike}
-                            onLike={
-                                isAuth
-                                    ? onFavoriteToggle
-                                    : modals.toogleAddToFavoritesModal
-                            }
-                        />
-                    )}
-                    <p className={SCatalog.Title} id="test">
-                        Все подарки, которые мы подобрали:
-                    </p>
-                    <ul className={SCatalog.List}>
-                        {loadingAllGifts && allGiftsPage === 1
-                            ? skeletonCards.map((_, index) => (
-                                  <li key={`${index}SceletonCardComponent`}>
-                                      <SceletonCardComponent
-                                          type={ESceletonCardType.GOOD}
-                                      />
-                                  </li>
-                              ))
-                            : allGifts?.map((gift) => (
-                                  <li key={`${gift.id}GoodCardComponent`}>
-                                      <GoodCardComponent
-                                          title={gift.name}
-                                          description={gift.description}
-                                          image={gift.img}
-                                          price={gift.price}
-                                          id={gift.id}
-                                          isFavorite={gift.is_favorite}
-                                          link={gift.link}
-                                          onDislike={onDislike}
-                                          onLike={
-                                              isAuth
-                                                  ? onFavoriteToggle
-                                                  : modals.toogleAddToFavoritesModal
-                                          }
-                                      />
-                                  </li>
-                              ))}
-                    </ul>
-                </div>
-            </main>
-        </MainLayoutComponent>
+                        <ul className={SCatalog.List}>
+                            {loadingAllGifts && allGiftsPage === 1
+                                ? skeletonCards.map((_, index) => (
+                                      <li key={`${index}SceletonCardComponent`}>
+                                          <SceletonCardComponent
+                                              type={ESceletonCardType.GOOD}
+                                          />
+                                      </li>
+                                  ))
+                                : allGifts?.map((gift) => (
+                                      <li key={`${gift.id}GoodCardComponent`}>
+                                          <GoodCardComponent
+                                              title={gift.name}
+                                              description={gift.description}
+                                              image={gift.img}
+                                              price={gift.price}
+                                              id={gift.id}
+                                              isFavorite={gift.is_favorite}
+                                              link={gift.link}
+                                              onDislike={onDislike}
+                                              onLike={
+                                                  isAuth
+                                                      ? onFavoriteToggle
+                                                      : modals.toogleAddToFavoritesModal
+                                              }
+                                          />
+                                      </li>
+                                  ))}
+                        </ul>
+                    </div>
+                </main>
+            </MainLayoutComponent>
+        </>
     );
 };
 

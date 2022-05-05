@@ -20,6 +20,9 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { useCookies } from 'react-cookie';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
+import Head from 'next/head';
+
+const LogoForMeta = '/NavBar/LogoForMeta.png';
 
 export interface IView {
     isAuth: boolean;
@@ -43,7 +46,7 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
         }
     };
 
-    const handleResponse = (message: string) => {
+    const handleError = (message?: string) => {
         switch (message) {
             case `the user is deleted, or the user's page is closed or the nickname is not correct`:
                 modals.toogleClosedFriendModal();
@@ -73,11 +76,11 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
         setFetching(true);
     };
 
-    const { data: friendData, refetch } = useGetOneFriend(
-        19235,
-        handleResponse,
-        link,
-    );
+    const {
+        data: friendData,
+        refetch,
+        isLoading,
+    } = useGetOneFriend(19235, handleError, link);
 
     const [visibleModal, setVisibleModal] = useState(false);
     const toogleVisibleModal = () => {
@@ -113,35 +116,51 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
     ];
 
     return (
-        <MainLayoutComponent isAuth={isAuth}>
-            <main className={SMain.Main}>
-                <ResponseModalComponent
-                    type={EResponseModalType.ERROR}
-                    visible={visibleModal}
-                    description={'message'}
-                    onClose={toogleVisibleModal}
+        <>
+            <Head>
+                <meta property="og:url" content="https://www.shaman.to" />
+                <meta
+                    property="og:title"
+                    content="Шаман – Сервис умного подбора подарков. Знаем, что подарить"
                 />
-                <BreadcrumbsComponent
-                    crumbList={[]}
-                    className={SMain.Breadcrumbs}
+                <meta
+                    property="og:description"
+                    content="Подбор подарков для друзей и знакомых по профилю Вконтакте. Автоматически подберем подарок, который понравится его обладателю."
                 />
-                <h1 className={SMain.Title}>
-                    Сервис подбора подарков для ваших друзей
-                </h1>
-                <p className={SMain.SearchBlockTitle}>Кому дарим подарок?</p>
-                <SearchBlockComponent
-                    className={SMain.SearchBlock}
-                    onSearch={handleSearch}
-                />
-                <GiftsForStarsComponent />
-                <MagicStepsComponent
-                    className={SMain.Steps}
-                    title="Как это работает?"
-                    steps={steps}
-                />
-                <FaqComponent faq={Faq?.data} className={SMain.Faq} />
-            </main>
-        </MainLayoutComponent>
+                <meta property="og:image" content={LogoForMeta} />
+            </Head>
+            <MainLayoutComponent isAuth={isAuth}>
+                <main className={SMain.Main}>
+                    <ResponseModalComponent
+                        type={EResponseModalType.ERROR}
+                        visible={visibleModal}
+                        description={'message'}
+                        onClose={toogleVisibleModal}
+                    />
+                    <BreadcrumbsComponent
+                        crumbList={[]}
+                        className={SMain.Breadcrumbs}
+                    />
+                    <h1 className={SMain.Title}>
+                        Сервис подбора подарков для ваших друзей
+                    </h1>
+                    <p className={SMain.SearchBlockTitle}>
+                        Кому дарим подарок?
+                    </p>
+                    <SearchBlockComponent
+                        className={SMain.SearchBlock}
+                        onSearch={handleSearch}
+                    />
+                    <GiftsForStarsComponent />
+                    <MagicStepsComponent
+                        className={SMain.Steps}
+                        title="Как это работает?"
+                        steps={steps}
+                    />
+                    <FaqComponent faq={Faq?.data} className={SMain.Faq} />
+                </main>
+            </MainLayoutComponent>
+        </>
     );
 };
 
