@@ -91,6 +91,12 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                     content="Подбор подарков для друзей и знакомых по профилю Вконтакте. Автоматически подберем подарок, который понравится его обладателю."
                 />
                 <meta property="og:image" content={friendData?.photo_100} />
+
+                <title>{`Что подарить ${friendData?.first_name} ${friendData?.last_name}? Шаман знает. Умный поиск подарков.`}</title>
+                <meta
+                    name="description"
+                    content="Шаман подбирает полезные подарки для людей с учетом их интересов. Достаточно указать профиль ВК."
+                ></meta>
             </Head>
             <MainLayoutComponent isAuth={isAuth}>
                 <main
@@ -162,10 +168,10 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
 
                     <div className={SCatalog.MainContent}>
                         {moreSuitableGifts?.length !== 0 && (
-                            <p className={SCatalog.Title}>
+                            <h2 className={SCatalog.Title}>
                                 Шаман решил, что эти подарки подойдут лучше
                                 всего:
-                            </p>
+                            </h2>
                         )}
                         {moreSuitableGifts && (
                             <CarouselListComponent
@@ -179,9 +185,9 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                                 }
                             />
                         )}
-                        <p className={SCatalog.Title} id="test">
-                            Все подарки, которые мы подобрали:
-                        </p>
+                        <h2 className={SCatalog.Title} id="test">
+                            Все подарки, которые подобрал шаман:
+                        </h2>
                         <ul className={SCatalog.List}>
                             {loadingAllGifts && allGiftsPage === 1
                                 ? skeletonCards.map((_, index) => (

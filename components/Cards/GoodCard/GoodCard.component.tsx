@@ -59,7 +59,7 @@ export const GoodCardComponent: React.FC<IGoodCardComponentProps> = ({
                     <img
                         className={SGoodCardComponent.Image}
                         src={image}
-                        alt="Good"
+                        alt={title}
                     />
                 </div>
                 <p className={SGoodCardComponent.Description}>{description}</p>

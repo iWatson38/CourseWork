@@ -14,7 +14,7 @@ export const BarCardComponent: React.FC<IBarCardComponentProps> = ({
 }) => (
     <div className={[SBarCard.Card, className].join(' ')}>
         <div className={SBarCard.TitleContainer}>
-            <h2 className={SBarCard.Title}>Что подарить {personName}?</h2>
+            <h1 className={SBarCard.Title}>Что подарить {personName}?</h1>
         </div>
         <div className={SBarCard.DescriptionContainer}>
             <p className={SBarCard.Description}>
@@ -27,7 +27,7 @@ export const BarCardComponent: React.FC<IBarCardComponentProps> = ({
                 width={160}
                 height={160}
                 src={avatar}
-                alt="avatar"
+                alt={personName}
             />
         )}
     </div>
