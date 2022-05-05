@@ -75,8 +75,6 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
         }
     }, [cookies]);
 
-    console.log('photo: ', friendData?.photo_100);
-
     return (
         <>
             <Head>
