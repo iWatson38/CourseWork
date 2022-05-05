@@ -62,7 +62,11 @@ export const MobileMenu: React.FC<IMobilePhoneProps> = ({
                         ].join(' ')}
                         onClick={handleAuthClick}
                     >
-                        <img src={PersonIcon} alt="person" />{' '}
+                        <img
+                            className={SMobileMenu.PersonIcon}
+                            src={PersonIcon}
+                            alt="person"
+                        />{' '}
                         {isAuth ? 'Выйти' : 'Войти'}
                     </button>
                     <CloseMenuButton onClick={onClose} />

@@ -62,7 +62,11 @@ export const FooterComponent: React.FC<IFooterComponentProps> = ({
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <img src={VKIcon} alt="vk" />
+                                <img
+                                    className={SFooterComponent.VkIcon}
+                                    src={VKIcon}
+                                    alt="vk"
+                                />
                             </a>
                         </li>
                         <li>
@@ -72,7 +76,11 @@ export const FooterComponent: React.FC<IFooterComponentProps> = ({
                                 target="_blank"
                                 rel="noreferrer"
                             >
-                                <img src={TelegramIcon} alt="telegram" />
+                                <img
+                                    className={SFooterComponent.TelegramIcon}
+                                    src={TelegramIcon}
+                                    alt="telegram"
+                                />
                             </a>
                         </li>
                     </ul>

@@ -49,6 +49,7 @@ export const NavBarComponent: React.FC<INavBarComponentProps> = ({
             <Link href={'/'}>
                 <a className={SComputedLinkComponent.NavLink}>
                     <img
+                        className={SNavBarComponent.Logo}
                         src={LogoIcon}
                         alt="Шаман: умный поиск подарков для друзей"
                     />
@@ -80,7 +81,11 @@ export const NavBarComponent: React.FC<INavBarComponentProps> = ({
                         ].join(' ')}
                         onClick={handleAuthClick}
                     >
-                        <img src={PersonIcon} alt="person" />{' '}
+                        <img
+                            className={SNavBarComponent.PersonIcon}
+                            src={PersonIcon}
+                            alt="person"
+                        />{' '}
                         {isAuth ? 'Выйти' : 'Войти'}
                     </button>
                     <ButtonComponent

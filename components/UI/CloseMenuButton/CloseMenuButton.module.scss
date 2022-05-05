@@ -2,11 +2,16 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    border: 1px solid #FFFFFF;
+    border: 1px solid #ffffff;
     position: relative;
     margin: 0 auto;
     background: none;
     display: grid;
     align-items: center;
     justify-content: center;
+}
+
+.CloseButtonIcon {
+    width: 18px;
+    height: 18px;
 }

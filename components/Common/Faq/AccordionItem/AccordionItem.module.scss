@@ -27,6 +27,11 @@
     color: $main;
 }
 
+.ItemIcon {
+    width: 16px;
+    height: 16px;
+}
+
 @media (max-width: 768px) {
     .AccordionItem {
         padding: 15px 8px;

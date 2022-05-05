@@ -111,7 +111,11 @@ export const FeedbackModalComponent: React.FC<IFeedbackModalComponentProps> = ({
                     styleType={EButtonStyleType.WHITE}
                     onClick={onClose}
                 >
-                    <img src={Cross} alt="close" />
+                    <img
+                        className={SFeedbackModal.CloseIcon}
+                        src={Cross}
+                        alt="close"
+                    />
                 </ButtonComponent>
 
                 <p className={SFeedbackModal.Title}>{title}</p>

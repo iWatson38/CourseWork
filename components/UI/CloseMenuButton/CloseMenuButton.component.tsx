@@ -11,6 +11,10 @@ export const CloseMenuButton: React.FC<ICloseMenuButtonProps> = ({
     onClick,
 }) => (
     <button className={SCloseMenuButton.CloseButton} onClick={onClick}>
-        <img src={Cross} alt="cross" />
+        <img
+            className={SCloseMenuButton.CloseButtonIcon}
+            src={Cross}
+            alt="cross"
+        />
     </button>
 );

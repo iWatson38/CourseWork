@@ -54,7 +54,11 @@ export const SearchBlockComponent: React.FC<ISearchBlockComponentProps> = ({
                     SSearchBlockComponent.Instruction,
                 ].join(' ')}
             >
-                <img src={LogoVK} alt="vk" />
+                <img
+                    className={SSearchBlockComponent.VkLogo}
+                    src={LogoVK}
+                    alt="vk"
+                />
                 <p>Укажите ник друга в ВК или ссылку на его профиль</p>
             </div>
         </form>

@@ -34,7 +34,11 @@ export const AccordionItem: React.FC<IAccordionItemProps> = ({
         >
             <div className={SAccordionItem.AccordionItemTitle}>
                 {index}. {title}
-                <img src={isActive ? Minus : Plus} alt="Toggle Accordion" />
+                <img
+                    className={SAccordionItem.ItemIcon}
+                    src={isActive ? Minus : Plus}
+                    alt="Toggle Accordion"
+                />
             </div>
             <div className={SAccordionItem.AccordionItemDescription}>
                 {value}
