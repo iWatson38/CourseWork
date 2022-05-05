@@ -93,7 +93,11 @@ export const NavBarComponent: React.FC<INavBarComponentProps> = ({
                         onClick={toggleVisibleModileMenu}
                         styleType={EButtonStyleType.WHITE}
                     >
-                        <img src={BurgerButton} alt="menu" />
+                        <img
+                            className={SNavBarComponent.BurgerButtonIcon}
+                            src={BurgerButton}
+                            alt="menu"
+                        />
                     </ButtonComponent>
                 </div>
             </nav>
