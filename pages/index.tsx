@@ -35,36 +35,16 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
 
     const { data: Faq } = useGetFaq();
 
-    const counterTries = () => {
-        if (!localStorage.getItem('Tries')) {
-            localStorage.setItem('Tries', '0');
-        } else if (Number(localStorage.getItem('Tries')) < 3) {
-            localStorage.setItem(
-                'Tries',
-                `${Number(localStorage.getItem('Tries')) + 1}`,
-            );
-        }
-    };
-
-    const handleError = (message?: string) => {
+    const handleError = (message: string) => {
         switch (message) {
-            case `the user is deleted, or the user's page is closed or the nickname is not correct`:
+            case `Request failed with status code 403`:
                 modals.toogleClosedFriendModal();
                 break;
-            case 'error':
+            case 'Request failed with status code 500':
                 modals.toogleSearchNameModal();
                 break;
-            case 'success':
-                if (isAuth) {
-                    localStorage.setItem('Tries', '0');
-                } else {
-                    Number(localStorage.getItem('Tries')) === 3
-                        ? modals.toogleLogInOfferModal()
-                        : counterTries();
-                }
-                break;
             default:
-                modals.toggleErrorModal();
+                console.log(message);
         }
     };
 
@@ -82,16 +62,8 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
         link,
     );
 
-    const [visibleModal, setVisibleModal] = useState(false);
-    const toogleVisibleModal = () => {
-        setVisibleModal((prev) => !prev);
-    };
-
     useEffect(() => {
-        if (
-            friendData?.success &&
-            Number(localStorage.getItem('Tries')) !== 3
-        ) {
+        if (friendData?.success) {
             router.push(`/catalog/${friendData?.data?.vk_id}`);
         }
     }, [friendData]);
@@ -139,12 +111,6 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
             </Head>
             <MainLayoutComponent isAuth={isAuth}>
                 <main className={SMain.Main}>
-                    <ResponseModalComponent
-                        type={EResponseModalType.ERROR}
-                        visible={visibleModal}
-                        description={'message'}
-                        onClose={toogleVisibleModal}
-                    />
                     <BreadcrumbsComponent
                         crumbList={[]}
                         className={SMain.Breadcrumbs}

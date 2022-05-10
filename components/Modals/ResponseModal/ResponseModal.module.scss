@@ -26,6 +26,8 @@
     opacity: 0;
     transition: 0.3s;
     height: 380px;
+    padding: 48px 22px 40px;
+    box-sizing: border-box;
 }
 
 .ContentVisible {
@@ -35,19 +37,22 @@
 .Image {
     width: 116px;
     height: 116px;
-    margin: 48px auto 28px;
+    margin: 0 auto 28px;
 }
 
 .Message {
     margin: 0 auto 10px;
     font: $FM400-20-24;
     color: $main;
-    max-width: 245px;
+    width: 100%;
+    &:last-child {
+        margin: 0 auto;
+    }
 }
 
 .Button {
-    width: 245px;
-    margin-top: 46px;
+    width: 100%;
+    margin-top: 40px;
 }
 
 .Red {

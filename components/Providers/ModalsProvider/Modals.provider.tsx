@@ -80,23 +80,17 @@ export const ModalsProvider: React.FC = ({ children }) => {
 
     const [closedFriendModal, setClosedFriendModal] = useState(false);
     const toogleClosedFriendModal = () => {
-        if (!isAuth) {
-            setClosedFriendModal((prev) => !prev);
-        }
+        setClosedFriendModal((prev) => !prev);
     };
 
     const [searchNameModal, setSearchNameModal] = useState(false);
     const toogleSearchNameModal = () => {
-        if (!isAuth) {
-            setSearchNameModal((prev) => !prev);
-        }
+        setSearchNameModal((prev) => !prev);
     };
 
     const [logInOfferModal, setLogInOfferModal] = useState(false);
     const toogleLogInOfferModal = () => {
-        if (!isAuth) {
-            setLogInOfferModal((prev) => !prev);
-        }
+        setLogInOfferModal((prev) => !prev);
     };
 
     const [addToFavoritesModal, setAddToFavoritesModal] = useState(false);
