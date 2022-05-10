@@ -74,10 +74,6 @@ const FavoritesView: React.FC<IView> = ({ isAuth }) => {
         }
     }, [cookies]);
 
-    useEffect(() => {
-        console.log(favorites);
-    }, []);
-
     return (
         <MainLayoutComponent isAuth={isAuth}>
             <main
