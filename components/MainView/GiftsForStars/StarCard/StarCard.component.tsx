@@ -1,12 +1,8 @@
 import React from 'react';
-import {
-    ButtonComponent,
-    EButtonStyleType,
-} from 'components/UI/Button/Button.component';
+import { ButtonComponent } from 'components/UI/Button/Button.component';
 import { useRouter } from 'next/router';
-import SGoodCardComponent from 'components/Cards/GoodCard/GoodCard.module.scss';
-import SCategoryCardComponent from 'components/Catalog/Categories/CategoryCardComponent/CategoryCard.module.scss';
 import SStarCardComponent from './StarCard.module.scss';
+import Link from 'next/link';
 
 export interface ICategoryCardComponentProps {
     starId: number;
@@ -28,8 +24,18 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
 
     return (
         <div className={[className, SStarCardComponent.Card].join(' ')}>
-            <img src={img} alt="group" className={SStarCardComponent.Image} />
-            <p className={SStarCardComponent.Title}>{starName}</p>
+            <Link href={`/catalog/${starId}`}>
+                <a>
+                    <img
+                        src={img}
+                        alt="group"
+                        className={SStarCardComponent.Image}
+                    />
+                </a>
+            </Link>
+            <Link href={`/catalog/${starId}`}>
+                <a className={SStarCardComponent.Title}>{starName}</a>
+            </Link>
             <ButtonComponent
                 className={SStarCardComponent.Button}
                 onClick={groupedGiftsRedirect}
