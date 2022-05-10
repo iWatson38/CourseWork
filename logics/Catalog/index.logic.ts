@@ -171,10 +171,6 @@ export const LCatalogView = (friendId: number) => {
         refetchFavorites();
     };
 
-    useEffect(() => {
-        console.log(data);
-    }, [favorites]);
-
     const onDislike = (id: number) => {
         modals?.toggleFeedbackModal(
             id,
