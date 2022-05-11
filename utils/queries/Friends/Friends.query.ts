@@ -1,32 +1,28 @@
 import { IFriendsResponse } from '../interfaces/Friends/Friends.interface';
-import { useQuery } from 'react-query';
+import { useInfiniteQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
 
-export const getFriends = async (
-    name: string,
-    limit: number,
-    page: number,
-): Promise<IFriendsResponse> => {
-    const response = await API.get<IFriendsResponse>('api/v1/friends', {
-        params: {
-            'filters[name]': name,
-            limit,
-            page,
-        },
-    });
-    if (response.data.success) {
-        return response.data;
-    }
-    throw new Error('Network response with Error');
-};
-
-export const useGetFriends = (name: string, limit: number, page: number) => {
-    return useQuery<IFriendsResponse, Error>(
-        ['friends', name, limit, page],
-        () => getFriends(name, limit, page),
+export const getFriends = async ({ pageParam = 0 }) => {
+    const { data } = await API.get<IFriendsResponse>(
+        `api/v1/friends?page=${pageParam}`,
         {
-            retry: false,
-            refetchOnWindowFocus: false,
+            params: {
+                limit: 16,
+            },
         },
     );
+    return data;
+};
+
+export const useGetFriends = () => {
+    return useInfiniteQuery<IFriendsResponse>('friends', getFriends, {
+        getNextPageParam: (lastPage, _pages) => {
+            console.log;
+            if (lastPage.data.current_page === lastPage.data.last_page) {
+                return undefined;
+            } else {
+                return lastPage.data.current_page + 1;
+            }
+        },
+    });
 };
