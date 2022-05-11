@@ -37,34 +37,21 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
     const { data: userData, error } = useGetUser();
     useErrorHandler(error);
 
-    const [name, setName] = useState<ISearchFields>({ search: '' });
-    const [page, setPage] = useState(1);
-    const [fetching, setFetching] = useState(true);
-    const [search, setSearch] = useState(false);
+    const { data: friendsData, fetchNextPage } = useGetFriends();
 
-    const { data: friendsData } = useGetFriends(name.search, 16, page);
-
-    const [friends, setFriends] = useState<IFriendsList['items']>(
-        friendsData?.data.items || [],
-    );
+    const [friends, setFriends] = useState<IFriendsList['items']>([]);
+    const toogleSetFriends = () => {
+        if (friendsData?.pages) {
+            friendsData.pages.forEach((page) => {
+                setFriends([...friends, ...page.data.items]);
+            });
+        }
+    };
 
     useEffect(() => {
-        if (friendsData?.data.items) {
-            if (fetching) {
-                if (page === 1) {
-                    setFriends(friendsData.data.items);
-                } else {
-                    setFriends([...friends, ...friendsData.data.items]);
-                }
-                setPage((prev) => prev + 1);
-                setFetching(false);
-            }
-            if (search) {
-                setFriends(friendsData.data.items);
-                setSearch(false);
-            }
-        }
-    }, [friendsData, fetching, search]);
+        toogleSetFriends();
+        console.log('Friends: ', friendsData);
+    }, [friendsData]);
 
     useEffect(() => {
         document.addEventListener('scroll', scrollHandler);
@@ -79,14 +66,12 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
                     window.innerHeight) <
             430
         ) {
-            setFetching(true);
+            console.log('loading');
         }
     };
 
     const handleSearch = (values: ISearchFields) => {
-        setName({ search: values.search });
-        setPage(1);
-        setSearch(true);
+        console.log('Search ...');
     };
 
     useEffect(() => {
@@ -122,6 +107,7 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
                             users={friends}
                         />
                     )}
+                    <button onClick={() => fetchNextPage()}>Load more</button>
                 </div>
             </main>
         </MainLayoutComponent>
@@ -145,9 +131,7 @@ export const getServerSideProps: GetServerSideProps = async (
     }
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery('user', getUser);
-    await queryClient.prefetchQuery(['friends', '', 16, 1], () =>
-        getFriends('', 16, 1),
-    );
+    await queryClient.prefetchQuery('friends', getFriends);
     return {
         props: {
             isAuth: !!context.req.cookies.access_token,
