@@ -18,8 +18,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         lastmod: new Date().toISOString(),
     }));
 
-    console.log('FriendsId: ', fields);
-
     return getServerSideSitemap(context, fields);
 };
 
