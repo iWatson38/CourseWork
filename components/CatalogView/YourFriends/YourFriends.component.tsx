@@ -14,6 +14,7 @@ interface IYourFriendsComponentProps {
     friends?: IFriendsList['items'];
     onLoadMore: () => void;
     onSearch: (val: string) => void;
+    setLoader?: () => void;
 }
 
 export const YourFriendsComponent: React.FC<IYourFriendsComponentProps> = ({
@@ -21,6 +22,7 @@ export const YourFriendsComponent: React.FC<IYourFriendsComponentProps> = ({
     friends,
     onLoadMore,
     onSearch,
+    setLoader,
 }) => {
     const router = useRouter();
 
@@ -29,7 +31,8 @@ export const YourFriendsComponent: React.FC<IYourFriendsComponentProps> = ({
     };
 
     const handleChooseFriend = (vk_friend_id: number) => {
-        router.push(`/friends/${vk_friend_id}`);
+        setLoader && setLoader();
+        router.push(`/catalog/${vk_friend_id}`);
     };
 
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {

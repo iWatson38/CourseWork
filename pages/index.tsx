@@ -1,10 +1,6 @@
 import SMain from './index.module.scss';
-import {
-    EResponseModalType,
-    ResponseModalComponent,
-} from 'components/Modals/ResponseModal/ResponseModal.component';
 import { useEffect, useState } from 'react';
-import { dehydrate, DehydratedState, QueryClient, useQuery } from 'react-query';
+import { dehydrate, DehydratedState, QueryClient } from 'react-query';
 import { useGetOneFriend } from 'utils/queries/Friends/OneFriend.query';
 import { BreadcrumbsComponent } from 'components/Breadcrumbs/Breadcrumbs.component';
 import {
@@ -21,6 +17,7 @@ import { GetServerSideProps } from 'next';
 import { useCookies } from 'react-cookie';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
 import Head from 'next/head';
+import { LoaderComponent } from 'components/Loaders/Loader/Loader.component';
 
 const LogoForMeta = '/NavBar/LogoForMeta.png';
 
@@ -64,6 +61,7 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
 
     useEffect(() => {
         if (friendData?.success) {
+            setVisibleLoader((prev) => !prev);
             router.push(`/catalog/${friendData?.data?.vk_id}`);
         }
     }, [friendData]);
@@ -86,6 +84,8 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
         'Шаман проанализирует его интересы',
         'Теперь можешь выбирать подарок!',
     ];
+
+    const [visibleLoader, setVisibleLoader] = useState(false);
 
     return (
         <>
@@ -111,6 +111,7 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
             </Head>
             <MainLayoutComponent isAuth={isAuth}>
                 <main className={SMain.Main}>
+                    <LoaderComponent visible={visibleLoader} />
                     <BreadcrumbsComponent
                         crumbList={[]}
                         className={SMain.Breadcrumbs}
@@ -125,7 +126,9 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
                         className={SMain.SearchBlock}
                         onSearch={handleSearch}
                     />
-                    <GiftsForStarsComponent />
+                    <GiftsForStarsComponent
+                        setLoader={() => setVisibleLoader((prev) => !prev)}
+                    />
                     <MagicStepsComponent
                         className={SMain.Steps}
                         title="Как это работает?"

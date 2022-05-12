@@ -9,6 +9,7 @@ export interface ICategoryCardComponentProps {
     starName: string;
     img: string;
     className?: string;
+    setLoader?: () => void;
 }
 
 export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
@@ -16,9 +17,11 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
     starName,
     img,
     className,
+    setLoader,
 }) => {
     const router = useRouter();
     const groupedGiftsRedirect = () => {
+        setLoader && setLoader();
         router.push(`/catalog/${starId}`);
     };
 

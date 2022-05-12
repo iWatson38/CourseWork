@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SCommon from 'styles/Common.module.scss';
 import { GoodCardComponent } from 'components/Cards/GoodCard/GoodCard.component';
 import { FriendsContainerComponent } from 'components/Layout/FriendContainer/FriendsContainer.component';
@@ -7,10 +7,6 @@ import {
     SceletonCardComponent,
 } from 'components/Cards/Skeletoncard/SkeletonCard.component';
 import StickyBox from 'react-sticky-box';
-import {
-    EResponseModalType,
-    ResponseModalComponent,
-} from 'components/Modals/ResponseModal/ResponseModal.component';
 import { BreadcrumbsComponent } from 'components/Breadcrumbs/Breadcrumbs.component';
 import SCatalog from './index.module.scss';
 import { SortingComponent } from 'components/CatalogView/Sorting/Sorting.component';
@@ -18,7 +14,6 @@ import { YourFriendsComponent } from 'components/CatalogView/YourFriends/YourFri
 import { BarCardComponent } from 'components/CatalogView/BarCards/BarCard.component';
 import { LCatalogView } from 'logics/Catalog/index.logic';
 import { CarouselListComponent } from 'components/CatalogView/Carousels/CarouselList.component';
-import { LogInOfferModalComponent } from 'components/Modals/LogInOfferModal/LogInOfferModal.component';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { dehydrate, DehydratedState, QueryClient } from 'react-query';
@@ -29,13 +24,11 @@ import { getFilters } from 'utils/queries/Filters/Filters.query';
 import { getAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 import { getMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';
 import { getFriends } from 'utils/queries/Friends/Friends.query';
-import {
-    getOneFriend,
-    useGetOneFriend,
-} from 'utils/queries/Friends/OneFriend.query';
+import { getOneFriend } from 'utils/queries/Friends/OneFriend.query';
 import { useCookies } from 'react-cookie';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
 import Head from 'next/head';
+import { LoaderComponent } from 'components/Loaders/Loader/Loader.component';
 
 const CatalogView: React.FC<IView> = ({ isAuth }) => {
     const router = useRouter();
@@ -75,6 +68,12 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
         }
     }, [cookies]);
 
+    const [visibleLoader, setVisibleLoader] = useState(false);
+
+    useEffect(() => {
+        setVisibleLoader(false);
+    }, [friendData]);
+
     return (
         <>
             <Head>
@@ -102,6 +101,7 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                 <main
                     className={[SCatalog.Catalog, SCommon.Container].join(' ')}
                 >
+                    <LoaderComponent visible={visibleLoader} />
                     <StickyBox
                         offsetTop={computeOffsetTop()}
                         className={SCatalog.SidebarContainer}
@@ -114,6 +114,9 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                                     onLoadMore={handleFetchMoreFriends}
                                     onSearch={handleSearchFriends}
                                     friends={friends}
+                                    setLoader={() =>
+                                        setVisibleLoader((prev) => !prev)
+                                    }
                                 />
                             ) : (
                                 <FriendsContainerComponent isAuth={isAuth}>
