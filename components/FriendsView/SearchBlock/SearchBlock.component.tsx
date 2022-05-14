@@ -12,10 +12,12 @@ export interface ISearchFields {
 }
 
 interface ISearchBlockComponentProps {
+    className?: string;
     onSearch: (values: ISearchFields) => void;
 }
 
 export const SearchBlockComponent: React.FC<ISearchBlockComponentProps> = ({
+    className,
     onSearch,
 }) => {
     const { register, handleSubmit } = useForm<ISearchFields>();
@@ -27,7 +29,7 @@ export const SearchBlockComponent: React.FC<ISearchBlockComponentProps> = ({
     };
 
     return (
-        <div>
+        <div className={className}>
             <form
                 className={SSearchBlockComponent.Form}
                 onSubmit={handleSubmit(onSearch)}
@@ -44,10 +46,7 @@ export const SearchBlockComponent: React.FC<ISearchBlockComponentProps> = ({
                         styleType="gray"
                         placeholder="Найти ..."
                         iconLeft={SearchIcon}
-                        {...(typeof window !== 'undefined' &&
-                        window.innerWidth > 768
-                            ? register('search')
-                            : undefined)}
+                        {...register('search')}
                         onChange={
                             typeof window !== 'undefined' &&
                             window.innerWidth > 768

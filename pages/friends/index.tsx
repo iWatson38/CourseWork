@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SCommon from 'styles/Common.module.scss';
 import { useErrorHandler } from 'hooks/ErrorHandler.hook';
 import {
@@ -18,8 +18,10 @@ import { useCookies } from 'react-cookie';
 import { MainLayoutComponent } from 'components/Layout/MainLayout/MainLayout.component';
 import { useRouter } from 'next/router';
 import { dehydrate, DehydratedState, QueryClient } from 'react-query';
-import { getFriends, useGetFriends } from 'utils/queries/Friends/Friends.query';
-import { IFriendsList } from 'utils/queries/interfaces/Friends/Friends.interface';
+import {
+    getInfiniteFriends,
+    useGetInfiniteFriends,
+} from 'utils/queries/Friends/Friends.query';
 import { IView } from 'pages';
 
 const FriendsView: React.FC<IView> = ({ isAuth }) => {
@@ -37,21 +39,21 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
     const { data: userData, error } = useGetUser();
     useErrorHandler(error);
 
-    const { data: friendsData, fetchNextPage } = useGetFriends();
+    const [name, setName] = useState('');
+    const [fetch, setFetch] = useState(false);
 
-    const [friends, setFriends] = useState<IFriendsList['items']>([]);
-    const toogleSetFriends = () => {
-        if (friendsData?.pages) {
-            friendsData.pages.forEach((page) => {
-                setFriends([...friends, ...page.data.items]);
-            });
-        }
-    };
+    const {
+        data: friendsData,
+        isFetchingNextPage,
+        fetchNextPage,
+    } = useGetInfiniteFriends(name, 16);
 
     useEffect(() => {
-        toogleSetFriends();
-        console.log('Friends: ', friendsData);
-    }, [friendsData]);
+        if (fetch && !isFetchingNextPage) {
+            fetchNextPage();
+        }
+        setFetch(false);
+    }, [fetch, isFetchingNextPage]);
 
     useEffect(() => {
         document.addEventListener('scroll', scrollHandler);
@@ -66,12 +68,14 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
                     window.innerHeight) <
             430
         ) {
-            console.log('loading');
+            setFetch(true);
+        } else {
+            setFetch(false);
         }
     };
 
     const handleSearch = (values: ISearchFields) => {
-        console.log('Search ...');
+        setName(values.search);
     };
 
     useEffect(() => {
@@ -99,15 +103,18 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
                         {`Привет, ${userData?.first_name}, кому ищем подарок?`}
                     </h4>
 
-                    <SearchBlockComponent onSearch={handleSearch} />
-
-                    {friends && (
-                        <FriendsAreaComponent
-                            className={SFriendsView.FriendsAreaContainer}
-                            users={friends}
-                        />
-                    )}
-                    <button onClick={() => fetchNextPage()}>Load more</button>
+                    <SearchBlockComponent
+                        className={SFriendsView.SearchBlockComponent}
+                        onSearch={handleSearch}
+                    />
+                    {friendsData?.pages.map((page) => (
+                        <React.Fragment key={page.data.current_page}>
+                            <FriendsAreaComponent
+                                className={SFriendsView.FriendsAreaContainer}
+                                users={page.data.items}
+                            />
+                        </React.Fragment>
+                    ))}
                 </div>
             </main>
         </MainLayoutComponent>
@@ -131,11 +138,14 @@ export const getServerSideProps: GetServerSideProps = async (
     }
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery('user', getUser);
-    await queryClient.prefetchQuery('friends', getFriends);
+    await queryClient.prefetchInfiniteQuery(
+        ['friends', '', 16],
+        getInfiniteFriends('', 16),
+    );
     return {
         props: {
             isAuth: !!context.req.cookies.access_token,
-            dehydratedState: dehydrate(queryClient),
+            dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
         },
     };
 };

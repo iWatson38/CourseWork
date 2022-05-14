@@ -1,5 +1,6 @@
 .Friends {
     min-height: 100vh;
+    margin-bottom: 138px;
 }
 
 .Breadcrumbs {
@@ -7,8 +8,10 @@
 }
 
 .FriendsAreaContainer {
-    margin-top: 64px;
-    margin-bottom: 138px;
+    margin-bottom: 32px;
+    :last-child {
+        margin-bottom: 0;
+    }
 }
 
 .Title {
@@ -16,6 +19,10 @@
     color: $main;
     text-align: center;
     margin: 39px 0 17px;
+}
+
+.SearchBlockComponent {
+    margin-bottom: 64px;
 }
 
 @media (max-width: 768px) {

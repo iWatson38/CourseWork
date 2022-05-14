@@ -8,7 +8,10 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import { ISortingFields } from 'components/CatalogView/Sorting/Sorting.logic';
 import { useRouter } from 'next/router';
-import { useGetFriends } from 'utils/queries/Friends/Friends.query';
+import {
+    useGetFriends,
+    useGetInfiniteFriends,
+} from 'utils/queries/Friends/Friends.query';
 import { useGetOneFriend } from 'utils/queries/Friends/OneFriend.query';
 import { useGetAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 import { useGetMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';

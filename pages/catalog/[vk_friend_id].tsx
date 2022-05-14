@@ -247,6 +247,7 @@ export const getServerSideProps: GetServerSideProps = async (
     await queryClient.prefetchQuery(['friends', '', 5, 1], () =>
         getFriends('', 5, 1),
     );
+
     await queryClient.prefetchQuery(['moreSuitableGifts', vk_friend_id], () =>
         getMoreSuitableGifts(vk_friend_id),
     );
@@ -263,7 +264,7 @@ export const getServerSideProps: GetServerSideProps = async (
     return {
         props: {
             isAuth: !!context.req.cookies.access_token,
-            dehydratedState: dehydrate(queryClient),
+            dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
         },
     };
 };

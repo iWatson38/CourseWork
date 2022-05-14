@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { IFriendsList } from 'utils/queries/interfaces/Friends/Friends.interface';
 import { Friend } from './Friend/Friend.component';
 
