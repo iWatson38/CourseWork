@@ -9,8 +9,13 @@ export interface IAllGifts {
     category: number;
 }
 
+export interface IAllGiftsData {
+    curr_page: number;
+    items: Array<IAllGifts>;
+}
+
 export interface IAllgiftsResponse {
     success: boolean;
-    data: Array<IAllGifts> | [];
+    data: IAllGiftsData;
     message: string;
 }

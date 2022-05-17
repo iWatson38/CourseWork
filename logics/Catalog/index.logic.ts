@@ -1,4 +1,3 @@
-import { useFavoritesMutation } from '../../utils/mutations/Favorites/Favorites.mutation';
 import { useGetFilters } from '../../utils/queries/Filters/Filters.query';
 import { ICrumb } from 'components/Breadcrumbs/Breadcrumbs.component';
 import { useAuth } from 'components/Providers/AuthProvider/Auth.provider';
@@ -13,10 +12,16 @@ import {
     useGetInfiniteFriends,
 } from 'utils/queries/Friends/Friends.query';
 import { useGetOneFriend } from 'utils/queries/Friends/OneFriend.query';
-import { useGetAllGifts } from 'utils/queries/Catalog/AllGifts.query';
+import { useGetInfiniteAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 import { useGetMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';
 import { IAllgiftsResponse } from 'utils/queries/interfaces/Catalog/AllGifts.interface';
 import { useGetFavorites } from 'utils/queries/Favorites/Favorites.query';
+import {
+    useAllGiftsFavoritesMutation,
+    useMoreSuitableGiftsFavoritesMutation,
+} from 'utils/mutations/Favorites/Favorites.mutation';
+import { useQueryClient } from 'react-query';
+import { useInView } from 'react-intersection-observer';
 
 export interface IFiltersRef {
     page: number;
@@ -46,14 +51,13 @@ export const LCatalogView = (friendId: number) => {
     const { data: filtersData } = useGetFilters(friendId);
 
     // ALL GIFTS API STUFF
+    const { ref: endBlockRef, inView } = useInView();
     const [allGiftsPage, setAllGiftsPage] = useState(1);
-    const [fetching, setFetching] = useState(true);
     const [generics, setGenerics] = useState('');
     const [minPrice, setMinPrice] = useState(filtersData?.data.min_price);
     const [maxPrice, setMaxPrice] = useState(filtersData?.data.max_price);
     const [assignFilter, setAssignFilter] = useState(false);
     const [filtersArray, setFiltersArray] = useState<Array<string>>([]);
-    const [filter, setFilter] = useState(false);
 
     const scrollToAllGifts = () => {
         setTimeout(() => {
@@ -64,49 +68,22 @@ export const LCatalogView = (friendId: number) => {
         }, 0);
     };
 
-    const { data: allGiftsData, isLoading: isLoadingAllGifts } = useGetAllGifts(
-        Number(friendId),
-        allGiftsPage,
-        filtersArray,
-    );
-
-    const [allGifts, setAllGifts] = useState(allGiftsData?.data || []);
-
-    useEffect(() => {
-        if (allGiftsData?.data && allGiftsData.data.length > 0) {
-            if (fetching) {
-                if (allGiftsPage === 1) {
-                    setAllGifts(allGiftsData.data);
-                } else {
-                    setAllGifts([...allGifts, ...allGiftsData.data]);
-                }
-                setAllGiftsPage((prev) => prev + 1);
-                setFetching(false);
-            }
-            if (filter) {
-                setAllGifts(allGiftsData.data);
-                setFilter(false);
-                scrollToAllGifts();
-            }
-        }
-    }, [allGiftsData, fetching, filter]);
+    const {
+        data: allGiftsData,
+        isLoading: isLoadingAllGifts,
+        fetchNextPage,
+        isFetchingNextPage,
+    } = useGetInfiniteAllGifts(Number(friendId), filtersArray);
 
     useEffect(() => {
-        document.addEventListener('scroll', scrollHandler);
+        console.log('giftsData: ', allGiftsData);
+    }, [allGiftsData]);
 
-        return removeEventListener('scroll', scrollHandler);
-    }, []);
-
-    const scrollHandler = (event: Event) => {
-        if (
-            (event.target as Document).documentElement.scrollHeight -
-                ((event.target as Document).documentElement.scrollTop +
-                    window.innerHeight) <
-            430
-        ) {
-            setFetching(true);
+    useEffect(() => {
+        if (inView) {
+            fetchNextPage();
         }
-    };
+    }, [inView, fetchNextPage]);
 
     const handleSetFilters = (filters: ISortingFields) => {
         filters.range[0] &&
@@ -143,8 +120,7 @@ export const LCatalogView = (friendId: number) => {
                 }
                 setFiltersArray(parameters);
                 setAssignFilter(false);
-                setAllGiftsPage(1);
-                setFilter(true);
+                scrollToAllGifts();
             }
         }
     }, [filtersData, assignFilter]);
@@ -154,24 +130,22 @@ export const LCatalogView = (friendId: number) => {
         useGetMoreSuitableGifts(Number(friendId));
 
     // FAVORITES API STUFF
-    const [favoriteIdList, setFavoriteIdList] = useState<Array<number>>([]);
+    const queryClient = useQueryClient();
+    const { mutate } = useMoreSuitableGiftsFavoritesMutation(
+        queryClient,
+        friendId,
+    );
+    const onFavoriteMoreSuitableGiftsToggle = (product_id: number) => {
+        mutate(product_id);
+    };
 
-    const {
-        data: favorites,
-        error,
-        refetch: refetchFavorites,
-    } = useGetFavorites();
-
-    const { data, mutate } = useFavoritesMutation();
-    const onFavoriteToggle = (product_id: number) => {
-        mutate(product_id, {
-            onSuccess: () => {
-                refetchFavorites();
-                setFavoriteIdList([...favoriteIdList, product_id]);
-            },
-        });
-        setFavoriteIdList;
-        refetchFavorites();
+    const { mutate: favoriteAllGifts } = useAllGiftsFavoritesMutation(
+        queryClient,
+        friendId,
+        filtersArray,
+    );
+    const onFavoriteAllGiftsToggle = (product_id: number) => {
+        favoriteAllGifts(product_id);
     };
 
     const onDislike = (id: number) => {
@@ -234,16 +208,18 @@ export const LCatalogView = (friendId: number) => {
         moreSuitableGifts: moreSuitableGifts?.data,
         loadingMoreSuitableGifts,
         loadingAllGifts: isLoadingAllGifts,
-        allGiftsPage,
-        allGifts,
+        allGifts: allGiftsData,
+        isFetchingNextPage,
         skeletonCards,
         handleFetchMoreFriends,
         friends: friendsData?.data.items,
         onDislike,
-        onFavoriteToggle,
+        onFavoriteMoreSuitableGiftsToggle,
+        onFavoriteAllGiftsToggle,
         handleSearchFriends,
         friendData: friendData?.data,
         handleSetFilters,
         signInRedirect,
+        endBlockRef,
     };
 };
