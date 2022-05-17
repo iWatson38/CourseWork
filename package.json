@@ -13,16 +13,17 @@
         "@hookform/resolvers": "^2.8.8",
         "axios": "^0.26.1",
         "next": "12.1.4",
+        "next-sitemap": "^2.5.20",
         "react": "18.0.0",
         "react-cookie": "^4.1.1",
         "react-dom": "18.0.0",
         "react-hook-form": "^7.29.0",
+        "react-intersection-observer": "^9.1.0",
         "react-loading-skeleton": "^3.1.0",
         "react-query": "^3.34.19",
         "react-sticky-box": "^1.0.2",
         "swiper": "^8.1.4",
-        "yup": "^0.32.11",
-        "next-sitemap": "^2.5.20"
+        "yup": "^0.32.11"
     },
     "devDependencies": {
         "@types/node": "17.0.23",
