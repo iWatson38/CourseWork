@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SCommon from 'styles/Common.module.scss';
 import { useErrorHandler } from 'hooks/ErrorHandler.hook';
 import {
@@ -9,7 +9,6 @@ import {
     ISearchFields,
     SearchBlockComponent,
 } from 'components/FriendsView/SearchBlock/SearchBlock.component';
-import { FriendsAreaComponent } from 'components/FriendsView/FriendsArea/FriendsArea.component';
 import SFriendsView from './index.module.scss';
 import { getUser, useGetUser } from 'utils/queries/User/User.query';
 import { GetServerSideProps } from 'next';
@@ -18,11 +17,18 @@ import { useCookies } from 'react-cookie';
 import { MainLayoutComponent } from 'components/Layout/MainLayout/MainLayout.component';
 import { useRouter } from 'next/router';
 import { dehydrate, DehydratedState, QueryClient } from 'react-query';
-import { getFriends, useGetFriends } from 'utils/queries/Friends/Friends.query';
-import { IFriendsList } from 'utils/queries/interfaces/Friends/Friends.interface';
+import {
+    getInfiniteFriends,
+    useGetInfiniteFriends,
+} from 'utils/queries/Friends/Friends.query';
 import { IView } from 'pages';
+import { Friend } from 'components/FriendsView/FriendsArea/Friend/Friend.component';
+import { useInView } from 'react-intersection-observer';
 
 const FriendsView: React.FC<IView> = ({ isAuth }) => {
+    const listRef = useRef<HTMLUListElement>(null);
+    const { ref: endBlockRef, inView } = useInView();
+
     useEffect(() => {
         if (cookies.access_token) {
             API.defaults.headers.common[
@@ -37,56 +43,21 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
     const { data: userData, error } = useGetUser();
     useErrorHandler(error);
 
-    const [name, setName] = useState<ISearchFields>({ search: '' });
-    const [page, setPage] = useState(1);
-    const [fetching, setFetching] = useState(true);
-    const [search, setSearch] = useState(false);
+    const [name, setName] = useState('');
 
-    const { data: friendsData } = useGetFriends(name.search, 16, page);
-
-    const [friends, setFriends] = useState<IFriendsList['items']>(
-        friendsData?.data.items || [],
+    const { data: friendsData, fetchNextPage } = useGetInfiniteFriends(
+        name,
+        16,
     );
 
     useEffect(() => {
-        if (friendsData?.data.items) {
-            if (fetching) {
-                if (page === 1) {
-                    setFriends(friendsData.data.items);
-                } else {
-                    setFriends([...friends, ...friendsData.data.items]);
-                }
-                setPage((prev) => prev + 1);
-                setFetching(false);
-            }
-            if (search) {
-                setFriends(friendsData.data.items);
-                setSearch(false);
-            }
+        if (inView) {
+            fetchNextPage();
         }
-    }, [friendsData, fetching, search]);
-
-    useEffect(() => {
-        document.addEventListener('scroll', scrollHandler);
-
-        return removeEventListener('scroll', scrollHandler);
-    }, []);
-
-    const scrollHandler = (event: Event) => {
-        if (
-            (event.target as Document).documentElement.scrollHeight -
-                ((event.target as Document).documentElement.scrollTop +
-                    window.innerHeight) <
-            430
-        ) {
-            setFetching(true);
-        }
-    };
+    }, [inView, fetchNextPage]);
 
     const handleSearch = (values: ISearchFields) => {
-        setName({ search: values.search });
-        setPage(1);
-        setSearch(true);
+        setName(values.search);
     };
 
     useEffect(() => {
@@ -114,14 +85,23 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
                         {`Привет, ${userData?.first_name}, кому ищем подарок?`}
                     </h4>
 
-                    <SearchBlockComponent onSearch={handleSearch} />
-
-                    {friends && (
-                        <FriendsAreaComponent
-                            className={SFriendsView.FriendsAreaContainer}
-                            users={friends}
-                        />
-                    )}
+                    <SearchBlockComponent
+                        className={SFriendsView.SearchBlockComponent}
+                        onSearch={handleSearch}
+                    />
+                    <ul ref={listRef} className={SFriendsView.FriendsArea}>
+                        {friendsData?.pages.map((page) =>
+                            page.data.items.map((friend) => (
+                                <Friend
+                                    id={friend.vk_id}
+                                    key={`${friend.vk_id}${friend.first_name}Friend`}
+                                    userAvatar={friend.photo_100}
+                                    userName={`${friend.first_name} ${friend.last_name}`}
+                                />
+                            )),
+                        )}
+                    </ul>
+                    <div ref={endBlockRef} />
                 </div>
             </main>
         </MainLayoutComponent>
@@ -145,13 +125,14 @@ export const getServerSideProps: GetServerSideProps = async (
     }
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery('user', getUser);
-    await queryClient.prefetchQuery(['friends', '', 16, 1], () =>
-        getFriends('', 16, 1),
+    await queryClient.prefetchInfiniteQuery(
+        ['friends', '', 16],
+        getInfiniteFriends('', 16),
     );
     return {
         props: {
             isAuth: !!context.req.cookies.access_token,
-            dehydratedState: dehydrate(queryClient),
+            dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
         },
     };
 };

@@ -21,7 +21,7 @@ import { API } from 'utils/api/api.util';
 import { IView } from 'pages';
 import { MainLayoutComponent } from 'components/Layout/MainLayout/MainLayout.component';
 import { getFilters } from 'utils/queries/Filters/Filters.query';
-import { getAllGifts } from 'utils/queries/Catalog/AllGifts.query';
+// import { getAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 import { getMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';
 import { getFriends } from 'utils/queries/Friends/Friends.query';
 import { getOneFriend } from 'utils/queries/Friends/OneFriend.query';
@@ -29,6 +29,7 @@ import { useCookies } from 'react-cookie';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
 import Head from 'next/head';
 import { LoaderComponent } from 'components/Loaders/Loader/Loader.component';
+import { getInfiniteAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 
 const CatalogView: React.FC<IView> = ({ isAuth }) => {
     const router = useRouter();
@@ -43,15 +44,17 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
         loadingMoreSuitableGifts,
         allGifts,
         loadingAllGifts,
-        allGiftsPage,
+        isFetchingNextPage,
         skeletonCards,
         friends,
         handleFetchMoreFriends,
         onDislike,
-        onFavoriteToggle,
+        onFavoriteMoreSuitableGiftsToggle,
+        onFavoriteAllGiftsToggle,
         handleSearchFriends,
         friendData,
         handleSetFilters,
+        endBlockRef,
     } = LCatalogView(Number(router.query.vk_friend_id));
 
     // FIX FILTERS ON SMALL DEVICES
@@ -183,7 +186,7 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                                 onDislike={onDislike}
                                 onLike={
                                     isAuth
-                                        ? onFavoriteToggle
+                                        ? onFavoriteMoreSuitableGiftsToggle
                                         : modals.toogleAddToFavoritesModal
                                 }
                             />
@@ -192,34 +195,28 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                             Все подарки, которые подобрал шаман:
                         </h2>
                         <ul className={SCatalog.List}>
-                            {loadingAllGifts && allGiftsPage === 1
-                                ? skeletonCards.map((_, index) => (
-                                      <li key={`${index}SceletonCardComponent`}>
-                                          <SceletonCardComponent
-                                              type={ESceletonCardType.GOOD}
-                                          />
-                                      </li>
-                                  ))
-                                : allGifts?.map((gift) => (
-                                      <li key={`${gift.id}GoodCardComponent`}>
-                                          <GoodCardComponent
-                                              title={gift.name}
-                                              description={gift.description}
-                                              image={gift.img}
-                                              price={gift.price}
-                                              id={gift.id}
-                                              isFavorite={gift.is_favorite}
-                                              link={gift.link}
-                                              onDislike={onDislike}
-                                              onLike={
-                                                  isAuth
-                                                      ? onFavoriteToggle
-                                                      : modals.toogleAddToFavoritesModal
-                                              }
-                                          />
-                                      </li>
-                                  ))}
+                            {allGifts?.pages.map((page) =>
+                                page.data.items.map((gift) => (
+                                    <GoodCardComponent
+                                        key={`${gift.id}GoodCardComponent`}
+                                        title={gift.name}
+                                        description={gift.description}
+                                        image={gift.img}
+                                        price={gift.price}
+                                        id={gift.id}
+                                        isFavorite={gift.is_favorite}
+                                        link={gift.link}
+                                        onDislike={onDislike}
+                                        onLike={
+                                            isAuth
+                                                ? onFavoriteAllGiftsToggle
+                                                : modals.toogleAddToFavoritesModal
+                                        }
+                                    />
+                                )),
+                            )}
                         </ul>
+                        <div ref={endBlockRef} />
                     </div>
                 </main>
             </MainLayoutComponent>
@@ -244,14 +241,16 @@ export const getServerSideProps: GetServerSideProps = async (
     }
     const queryClient = new QueryClient();
     const vk_friend_id = Number(context.query.vk_friend_id);
+    const filters: Array<string> = [];
     await queryClient.prefetchQuery(['friends', '', 5, 1], () =>
         getFriends('', 5, 1),
     );
     await queryClient.prefetchQuery(['moreSuitableGifts', vk_friend_id], () =>
         getMoreSuitableGifts(vk_friend_id),
     );
-    await queryClient.prefetchQuery(['getAllGifts', vk_friend_id, 1], () =>
-        getAllGifts(vk_friend_id, 1, []),
+    await queryClient.prefetchInfiniteQuery(
+        ['getAllGifts', vk_friend_id, filters],
+        getInfiniteAllGifts(vk_friend_id, filters),
     );
     await queryClient.prefetchQuery(['filters', vk_friend_id], () =>
         getFilters(vk_friend_id),
@@ -263,7 +262,7 @@ export const getServerSideProps: GetServerSideProps = async (
     return {
         props: {
             isAuth: !!context.req.cookies.access_token,
-            dehydratedState: dehydrate(queryClient),
+            dehydratedState: JSON.parse(JSON.stringify(dehydrate(queryClient))),
         },
     };
 };

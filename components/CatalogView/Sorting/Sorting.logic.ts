@@ -14,11 +14,7 @@ interface LSortingComponent {
 }
 
 export const LSortingComponent = ({ filters, onSubmit }: LSortingComponent) => {
-    const defaultFilterData: ISortingFields['interests'] =
-        // filters.generics.map((generic) => {
-        //     return { id: generic.id, value: false };
-        // }) || [];
-        [];
+    const defaultFilterData: ISortingFields['interests'] = [];
 
     const { register, handleSubmit, reset, control } = useForm<ISortingFields>({
         defaultValues: {
