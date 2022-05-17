@@ -9,7 +9,6 @@ import {
     ISearchFields,
     SearchBlockComponent,
 } from 'components/FriendsView/SearchBlock/SearchBlock.component';
-import { FriendsAreaComponent } from 'components/FriendsView/FriendsArea/FriendsArea.component';
 import SFriendsView from './index.module.scss';
 import { getUser, useGetUser } from 'utils/queries/User/User.query';
 import { GetServerSideProps } from 'next';
@@ -23,8 +22,13 @@ import {
     useGetInfiniteFriends,
 } from 'utils/queries/Friends/Friends.query';
 import { IView } from 'pages';
+import { Friend } from 'components/FriendsView/FriendsArea/Friend/Friend.component';
+import { useInView } from 'react-intersection-observer';
 
 const FriendsView: React.FC<IView> = ({ isAuth }) => {
+    const listRef = useRef<HTMLUListElement>(null);
+    const { ref: endBlockRef, inView } = useInView();
+
     useEffect(() => {
         if (cookies.access_token) {
             API.defaults.headers.common[
@@ -40,39 +44,17 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
     useErrorHandler(error);
 
     const [name, setName] = useState('');
-    const [fetch, setFetch] = useState(false);
 
-    const {
-        data: friendsData,
-        isFetchingNextPage,
-        fetchNextPage,
-    } = useGetInfiniteFriends(name, 16);
+    const { data: friendsData, fetchNextPage } = useGetInfiniteFriends(
+        name,
+        16,
+    );
 
     useEffect(() => {
-        if (fetch && !isFetchingNextPage) {
+        if (inView) {
             fetchNextPage();
         }
-        setFetch(false);
-    }, [fetch, isFetchingNextPage]);
-
-    useEffect(() => {
-        document.addEventListener('scroll', scrollHandler);
-
-        return removeEventListener('scroll', scrollHandler);
-    }, []);
-
-    const scrollHandler = (event: Event) => {
-        if (
-            (event.target as Document).documentElement.scrollHeight -
-                ((event.target as Document).documentElement.scrollTop +
-                    window.innerHeight) <
-            430
-        ) {
-            setFetch(true);
-        } else {
-            setFetch(false);
-        }
-    };
+    }, [inView, fetchNextPage]);
 
     const handleSearch = (values: ISearchFields) => {
         setName(values.search);
@@ -107,14 +89,19 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
                         className={SFriendsView.SearchBlockComponent}
                         onSearch={handleSearch}
                     />
-                    {friendsData?.pages.map((page) => (
-                        <React.Fragment key={page.data.current_page}>
-                            <FriendsAreaComponent
-                                className={SFriendsView.FriendsAreaContainer}
-                                users={page.data.items}
-                            />
-                        </React.Fragment>
-                    ))}
+                    <ul ref={listRef} className={SFriendsView.FriendsArea}>
+                        {friendsData?.pages.map((page) =>
+                            page.data.items.map((friend) => (
+                                <Friend
+                                    id={friend.vk_id}
+                                    key={`${friend.vk_id}${friend.first_name}Friend`}
+                                    userAvatar={friend.photo_100}
+                                    userName={`${friend.first_name} ${friend.last_name}`}
+                                />
+                            )),
+                        )}
+                    </ul>
+                    <div ref={endBlockRef} />
                 </div>
             </main>
         </MainLayoutComponent>

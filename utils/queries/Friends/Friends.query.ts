@@ -13,14 +13,14 @@ export const getFriends = async (name: string, limit: number, page: number) => {
     return data;
 };
 
-export const getInfiniteFriends = (nameParam: string, limitParam: number) => {
+export const getInfiniteFriends = (name: string, limit: number) => {
     return async ({ pageParam = 1 }) => {
         const { data } = await API.get<IFriendsResponse>(
             `api/v1/friends?page=${pageParam}`,
             {
                 params: {
-                    'filters[name]': nameParam,
-                    limit: limitParam,
+                    'filters[name]': name,
+                    limit: limit,
                 },
             },
         );
@@ -39,13 +39,10 @@ export const useGetFriends = (name: string, limit: number, page: number) => {
     );
 };
 
-export const useGetInfiniteFriends = (
-    nameParam: string,
-    limitParam: number,
-) => {
+export const useGetInfiniteFriends = (name: string, limit: number) => {
     return useInfiniteQuery<IFriendsResponse>(
-        ['friends', nameParam, limitParam],
-        getInfiniteFriends(nameParam, limitParam),
+        ['friends', name, limit],
+        getInfiniteFriends(name, limit),
         {
             getNextPageParam: (lastPage, _pages) => {
                 if (lastPage.data.current_page === lastPage.data.last_page) {
