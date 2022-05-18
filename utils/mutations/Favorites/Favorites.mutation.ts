@@ -21,6 +21,10 @@ export const favoritesMutation = async (
     return false;
 };
 
+export const useFavoritesMutation = () => {
+    return useMutation(favoritesMutation);
+};
+
 export const useMoreSuitableGiftsFavoritesMutation = (
     queryClient: QueryClient,
     vk_friend_id: number,

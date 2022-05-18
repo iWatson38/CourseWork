@@ -85,24 +85,25 @@ const FavoritesView: React.FC<IView> = ({ isAuth }) => {
                 />
                 <TileCardComponent className={SFavoritesView.TileCard} />
                 <ul className={SFavoritesView.List}>
-                    {favorites?.data.map((favorite) => (
-                        <li
-                            key={favorite.id}
-                            className={SFavoritesView.ListItem}
-                        >
-                            <GoodCardComponent
-                                title={favorite.name}
-                                description={favorite.description}
-                                image={favorite.img}
-                                price={favorite.price}
-                                isFavorite
-                                id={favorite.id}
-                                link={favorite.link}
-                                onLike={handleRemoveFromFavorites}
-                                onDislike={onDislike}
-                            />
-                        </li>
-                    ))}
+                    {favorites &&
+                        favorites.data.map((favorite) => (
+                            <li
+                                key={favorite.id}
+                                className={SFavoritesView.ListItem}
+                            >
+                                <GoodCardComponent
+                                    title={favorite.name}
+                                    description={favorite.description}
+                                    image={favorite.img}
+                                    price={favorite.price}
+                                    isFavorite
+                                    id={favorite.id}
+                                    link={favorite.link}
+                                    onLike={handleRemoveFromFavorites}
+                                    onDislike={onDislike}
+                                />
+                            </li>
+                        ))}
                 </ul>
             </main>
         </MainLayoutComponent>
