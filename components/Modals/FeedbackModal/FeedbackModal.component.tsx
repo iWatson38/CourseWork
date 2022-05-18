@@ -5,12 +5,10 @@ import {
 } from 'components/UI/Button/Button.component';
 import { LabelComponent } from 'components/UI/Label/Label.component';
 import { TextAreaComponent } from 'components/UI/TextArea/TextArea.component';
-// import { usePostFeedbackOnGoodMutation } from 'generated/graphql.types';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import SFeedbackModal from './FeedbackModal.module.scss';
-import { UseMutationResult } from 'react-query';
 import { usePostFeedbackOnGoodMutation } from 'utils/mutations/Feedback/FeedbackOnGood.mutation';
 
 const Cross = '/FeedbackModal/Сross.svg';
@@ -49,40 +47,18 @@ export const FeedbackModalComponent: React.FC<IFeedbackModalComponentProps> = ({
     onError,
     onSuccess,
 }) => {
-    // const [mutate] = usePostFeedbackOnGoodMutation();
+    const { mutate, data } = usePostFeedbackOnGoodMutation(
+        onSuccess,
+        onError,
+        onClose,
+    );
 
     const { register, handleSubmit } = useForm<IFormFields>({
         resolver: yupResolver(schema),
     });
 
-    // const submit = async (values: IFormFields) => {
-    //     if (id && friendId) {
-    //         const { data } = await mutate({
-    //             variables: {
-    //                 input: {
-    //                     product_id: id,
-    //                     vk_friend_id: friendId,
-    //                     text: values.text,
-    //                 },
-    //             },
-    //         });
-
-    //         if (data?.feedBackOnGoodMutation) {
-    //             if (onClose) {
-    //                 onClose();
-    //             }
-    //             if (onSuccess) {
-    //                 onSuccess();
-    //             }
-    //         } else if (onError) {
-    //             onError();
-    //         }
-    //     }
-    // };
-
     const submit = (values: IFormFields) => {
         if (id && friendId) {
-            const { mutate, data } = usePostFeedbackOnGoodMutation();
             mutate({
                 vk_friend_id: friendId,
                 product_id: id,
