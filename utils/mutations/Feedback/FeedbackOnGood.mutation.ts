@@ -5,13 +5,40 @@ import { IFeedbackOnGoodPostRespose } from '../interfaces/Feedback/FeedbackOnGoo
 
 const postFeedbackOnGood = async (
     feedbackOnGoodPostInput: IFeedbackOnGoodPostInput,
-) => {
-    return API.post<IFeedbackOnGoodPostRespose>(
+): Promise<boolean> => {
+    const { data } = await API.post<IFeedbackOnGoodPostRespose>(
         `api/v1/feedback/${feedbackOnGoodPostInput.vk_friend_id}/${feedbackOnGoodPostInput.product_id}/dislike`,
         { text: feedbackOnGoodPostInput.text },
     );
+    if (data.success) {
+        return true;
+    }
+    return false;
 };
 
-export const usePostFeedbackOnGoodMutation = () => {
-    return useMutation(postFeedbackOnGood);
+export const usePostFeedbackOnGoodMutation = (
+    onSuccess?: () => void,
+    onError?: () => void,
+    onClose?: () => void,
+) => {
+    return useMutation(postFeedbackOnGood, {
+        onSuccess: (data) => {
+            if (data) {
+                if (onClose) {
+                    onClose();
+                }
+                if (onSuccess) {
+                    onSuccess();
+                }
+            }
+        },
+        onError: () => {
+            if (onClose) {
+                onClose();
+            }
+            if (onError) {
+                onError();
+            }
+        },
+    });
 };

@@ -8,7 +8,6 @@ import {
 } from './../interfaces/Favorites/Favorites.interface';
 import { API } from 'utils/api/api.util';
 import { IMoreSuitableGiftsResponse } from 'utils/queries/interfaces/Catalog/MoreSuitableGifts.interface';
-import { IAllgiftsResponse } from 'utils/queries/interfaces/Catalog/AllGifts.interface';
 
 export const favoritesMutation = async (
     product_id: number,
