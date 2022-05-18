@@ -1,0 +1,65 @@
+.Main {
+    min-height: 100vh;
+    background: linear-gradient(90deg, #305a84 2.53%, #26d0ce 106.92%);
+}
+
+.Header {
+    padding-top: 24px;
+}
+
+.Illustration {
+    padding: 0 35px;
+    display: block;
+    margin: 19px auto 0;
+    width: 100%;
+    max-width: 699px;
+}
+
+.ActionBlock {
+    padding-left: 50px;
+}
+
+.Title {
+    font: $FM600-32-39;
+    color: white;
+    margin: 86px 0 0;
+}
+
+.Button {
+    margin-top: 48px;
+    width: 220px;
+}
+
+@media (max-width: 810px) {
+    .Illustration {
+        padding: unset;
+    }
+}
+
+@media (max-width: 768px) {
+    .Logo {
+        width: 124px;
+        height: 25px;
+    }
+    .Illustration {
+        margin: 40px auto 0;
+    }
+
+    .Title {
+        font: $FM600-20-24;
+        margin-top: 60px;
+    }
+
+    .Button {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 460px) {
+    .Title {
+        max-width: 276px;
+    }
+    .ActionBlock {
+        padding-left: unset;
+    }
+}
