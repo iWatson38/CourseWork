@@ -2,20 +2,13 @@ import { useGetFilters } from '../../utils/queries/Filters/Filters.query';
 import { ICrumb } from 'components/Breadcrumbs/Breadcrumbs.component';
 import { useAuth } from 'components/Providers/AuthProvider/Auth.provider';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
-import { useErrorHandler } from 'hooks/ErrorHandler.hook';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { ISortingFields } from 'components/CatalogView/Sorting/Sorting.logic';
-import { useRouter } from 'next/router';
-import {
-    useGetFriends,
-    useGetInfiniteFriends,
-} from 'utils/queries/Friends/Friends.query';
+import { useGetFriends } from 'utils/queries/Friends/Friends.query';
 import { useGetOneFriend } from 'utils/queries/Friends/OneFriend.query';
 import { useGetInfiniteAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 import { useGetMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';
-import { IAllgiftsResponse } from 'utils/queries/interfaces/Catalog/AllGifts.interface';
-import { useGetFavorites } from 'utils/queries/Favorites/Favorites.query';
 import {
     useAllGiftsFavoritesMutation,
     useMoreSuitableGiftsFavoritesMutation,
@@ -52,12 +45,7 @@ export const LCatalogView = (friendId: number) => {
 
     // ALL GIFTS API STUFF
     const { ref: endBlockRef, inView } = useInView();
-    const [allGiftsPage, setAllGiftsPage] = useState(1);
-    const [generics, setGenerics] = useState('');
-    const [minPrice, setMinPrice] = useState(filtersData?.data.min_price);
-    const [maxPrice, setMaxPrice] = useState(filtersData?.data.max_price);
-    const [assignFilter, setAssignFilter] = useState(false);
-    const [filtersArray, setFiltersArray] = useState<Array<string>>([]);
+    const [filters, setFilters] = useState<Array<string>>([]);
 
     const scrollToAllGifts = () => {
         setTimeout(() => {
@@ -73,11 +61,7 @@ export const LCatalogView = (friendId: number) => {
         isLoading: isLoadingAllGifts,
         fetchNextPage,
         isFetchingNextPage,
-    } = useGetInfiniteAllGifts(Number(friendId), filtersArray);
-
-    useEffect(() => {
-        console.log('giftsData: ', allGiftsData);
-    }, [allGiftsData]);
+    } = useGetInfiniteAllGifts(Number(friendId), filters);
 
     useEffect(() => {
         if (inView) {
@@ -86,44 +70,31 @@ export const LCatalogView = (friendId: number) => {
     }, [inView, fetchNextPage]);
 
     const handleSetFilters = (filters: ISortingFields) => {
-        filters.range[0] &&
-            setMinPrice(Number(filters.range[0].replaceAll(/\s/g, '')));
-
-        filters.range[1] &&
-            setMaxPrice(Number(filters.range[1].replaceAll(/\s/g, '')));
-
-        setGenerics(
-            Object.entries(filters.interests)
-                .filter((item) => item[1])
-                .map((item) => item[0])
-                .join(','),
-        );
-        setAssignFilter(true);
-    };
-
-    useEffect(() => {
-        if (filtersData) {
-            if (assignFilter) {
-                const filters: IParameters = {};
-                if (generics !== '') {
-                    filters['filters[generics_id]'] = generics;
-                }
-                if (minPrice !== filtersData.data.min_price) {
-                    filters['filters[min_price]'] = minPrice;
-                }
-                if (maxPrice !== filtersData.data.max_price) {
-                    filters['filters[max_price]'] = maxPrice;
-                }
-                const parameters = [];
-                for (const key in filters) {
-                    parameters.push(`${key}=${filters[key]}`);
-                }
-                setFiltersArray(parameters);
-                setAssignFilter(false);
-                scrollToAllGifts();
+        const parameters: Array<string> = [];
+        if (filters.range[0]) {
+            const minPrice = Number(filters.range[0].replaceAll(/\s/g, ''));
+            if (minPrice !== filtersData?.data.min_price) {
+                parameters.push(`filters[min_price]=${minPrice}`);
             }
         }
-    }, [filtersData, assignFilter]);
+        if (filters.range[1]) {
+            const maxPrice = Number(filters.range[1].replaceAll(/\s/g, ''));
+            if (maxPrice !== filtersData?.data.max_price) {
+                parameters.push(`filters[max_price]=${maxPrice}`);
+            }
+        }
+        if (filters.interests) {
+            const interestsList = Object.entries(filters.interests)
+                .filter((item) => item[1])
+                .map((item) => item[0])
+                .join(',');
+            if (interestsList !== '') {
+                parameters.push(`filters[generics_id]=${interestsList}`);
+            }
+        }
+        setFilters(parameters);
+        scrollToAllGifts();
+    };
 
     // MORE SUITABLE GIFTS API STUFF
     const { data: moreSuitableGifts, isLoading: loadingMoreSuitableGifts } =
@@ -142,7 +113,7 @@ export const LCatalogView = (friendId: number) => {
     const { mutate: favoriteAllGifts } = useAllGiftsFavoritesMutation(
         queryClient,
         friendId,
-        filtersArray,
+        filters,
     );
     const onFavoriteAllGiftsToggle = (product_id: number) => {
         favoriteAllGifts(product_id);

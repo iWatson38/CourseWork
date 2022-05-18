@@ -8,9 +8,9 @@ export const getInfiniteAllGifts = (
 ) => {
     return async ({ pageParam = 1 }): Promise<IAllgiftsResponse> => {
         const { data } = await API.get<IAllgiftsResponse>(
-            `api/v1/gifts/${vk_friend_id}?filters[page]=${pageParam}&${filters.join(
-                '&',
-            )}`,
+            `api/v1/gifts/${vk_friend_id}?filters[page]=${pageParam || 1}${
+                filters.length !== 0 ? `&${filters.join('&')}` : ''
+            }`,
         );
         return data;
     };
