@@ -10,10 +10,11 @@ module.exports = {
     generateRobotsTxt: true,
     robotsTxtOptions: {
         policies: [
-            { userAgent: '*', disallow: '/singIn' },
-            { userAgent: '*', disallow: '/favorites' },
-            { userAgent: '*', disallow: '/friends' },
-            { userAgent: '*', allow: '/' },
+            {
+                userAgent: '*',
+                allow: '/',
+                disallow: ['/singIn', '/favorites', '/friends'],
+            },
         ],
     },
     additionalPaths: async (config) => {
