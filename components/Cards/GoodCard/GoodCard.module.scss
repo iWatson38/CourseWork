@@ -122,6 +122,12 @@
         gap: 12px;
         align-items: center;
     }
+    .Title {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
     .Description {
         padding: 0;
         display: -webkit-box;
