@@ -11,13 +11,17 @@ import { GiftsForStarsComponent } from 'components/MainView/GiftsForStars/GiftsF
 import { MagicStepsComponent } from 'components/MainView/MagicSteps/MagicSteps.component';
 import { FaqComponent } from 'components/Common/Faq/Faq.component';
 import { getFaq, useGetFaq } from 'utils/queries/Faq/Faq.query';
-import { MainLayoutComponent } from 'components/Layout/MainLayout/MainLayout.component';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { useCookies } from 'react-cookie';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
 import Head from 'next/head';
 import { LoaderComponent } from 'components/Loaders/Loader/Loader.component';
+import { NavBarComponent } from 'components/Layout/NavBar/NavBar.component';
+import { RequestSurveyComponent } from 'components/Layout/RequestSurvey/RequestSurvey.component';
+import SCommon from 'styles/Common.module.scss';
+import { MenuConstant } from 'constants/Menu.constant';
+import { FooterComponent } from 'components/Layout/Footer/Footer.component';
 
 const LogoForMeta = '/NavBar/LogoForMeta.png';
 
@@ -107,36 +111,39 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
                 <meta
                     name="description"
                     content="Сервис подбора подарков на базе цифрового профиля пользователя. Укажите ник пользователя и получите рекомендуемые подарки с учетом его интересов."
-                ></meta>
+                />
             </Head>
-            <MainLayoutComponent isAuth={isAuth}>
-                <main className={SMain.Main}>
-                    <LoaderComponent visible={visibleLoader} />
-                    <BreadcrumbsComponent
-                        crumbList={[]}
-                        className={SMain.Breadcrumbs}
-                    />
-                    <h1 className={SMain.Title}>
-                        Сервис подбора подарков для ваших друзей
-                    </h1>
-                    <h2 className={SMain.SearchBlockTitle}>
-                        Кому дарим подарок?
-                    </h2>
-                    <SearchBlockComponent
-                        className={SMain.SearchBlock}
-                        onSearch={handleSearch}
-                    />
-                    <GiftsForStarsComponent
-                        setLoader={() => setVisibleLoader((prev) => !prev)}
-                    />
-                    <MagicStepsComponent
-                        className={SMain.Steps}
-                        title="Как это работает?"
-                        steps={steps}
-                    />
-                    <FaqComponent faq={Faq?.data} className={SMain.Faq} />
-                </main>
-            </MainLayoutComponent>
+            <NavBarComponent
+                isAuth={isAuth || false}
+                className={SCommon.Container}
+                menuItems={MenuConstant(isAuth || false)}
+            />
+            <RequestSurveyComponent />
+            <main className={SMain.Main}>
+                <LoaderComponent visible={visibleLoader} />
+                <BreadcrumbsComponent
+                    crumbList={[]}
+                    className={SMain.Breadcrumbs}
+                />
+                <h1 className={SMain.Title}>
+                    Сервис подбора подарков для ваших друзей
+                </h1>
+                <h2 className={SMain.SearchBlockTitle}>Кому дарим подарок?</h2>
+                <SearchBlockComponent
+                    className={SMain.SearchBlock}
+                    onSearch={handleSearch}
+                />
+                <GiftsForStarsComponent
+                    setLoader={() => setVisibleLoader((prev) => !prev)}
+                />
+                <MagicStepsComponent
+                    className={SMain.Steps}
+                    title="Как это работает?"
+                    steps={steps}
+                />
+                <FaqComponent faq={Faq?.data} className={SMain.Faq} />
+            </main>
+            <FooterComponent shareBlock />
         </>
     );
 };

@@ -2,6 +2,8 @@ import React from 'react';
 import SCommon from 'styles/Common.module.scss';
 import SFooterComponent from './Footer.module.scss';
 import { LinksRulesProtectionInformation } from 'components/Layout/LinksRulesProtectionInformation/LinksRulesProtectionInformation.component';
+import Script from 'next/script';
+import { ShareBlockComponent } from 'components/UI/ShareBlock/ShareBlock.component';
 
 const VKIcon = '/small/social/Vk.svg';
 const TelegramIcon = '/small/social/Telegram.svg';
@@ -9,10 +11,12 @@ const FooterBackground = '/Footer/FooterBackground.svg';
 
 interface IFooterComponentProps {
     className?: string;
+    shareBlock?: boolean;
 }
 
 export const FooterComponent: React.FC<IFooterComponentProps> = ({
     className,
+    shareBlock,
 }) => (
     <footer className={[className, SFooterComponent.Footer].join(' ')}>
         <img
@@ -50,7 +54,12 @@ export const FooterComponent: React.FC<IFooterComponentProps> = ({
                         info@shaman.to
                     </a>
                 </li>
-                <li className={SFooterComponent.FooterItem}>
+                <li
+                    className={[
+                        SFooterComponent.FooterItem,
+                        SFooterComponent.SocialBlock,
+                    ].join(' ')}
+                >
                     <h4 className={SFooterComponent.FooterTitle}>
                         Подпишитесь
                     </h4>
@@ -84,6 +93,11 @@ export const FooterComponent: React.FC<IFooterComponentProps> = ({
                             </a>
                         </li>
                     </ul>
+                    {shareBlock && (
+                        <ShareBlockComponent
+                            className={SFooterComponent.ShareBlock}
+                        />
+                    )}
                 </li>
             </ul>
         </div>
