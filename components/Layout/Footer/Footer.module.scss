@@ -87,6 +87,10 @@
     height: 20px;
 }
 
+.ShareBlock {
+    margin-top: 30px;
+}
+
 @media (max-width: 800px) {
     .FooterContent {
         padding-bottom: 32px;
@@ -121,7 +125,10 @@
         display: none;
     }
     .Social {
-        margin: 0;
+        margin: 0 auto;
+    }
+    .ShareBlock {
+        margin-top: 18px;
     }
     .FooterDescription {
         display: none;

@@ -20,9 +20,8 @@ export const Friend: React.FC<IFriendProps> = ({
     userName,
     id,
 }) => {
-    const router = useRouter();
     const handleSearchGoods = () => {
-        router.push(`/catalog/${id}`);
+        window.location.pathname = `/catalog/${id}`;
     };
 
     return (

@@ -2,10 +2,6 @@ import React, { useEffect, useState } from 'react';
 import SCommon from 'styles/Common.module.scss';
 import { GoodCardComponent } from 'components/Cards/GoodCard/GoodCard.component';
 import { FriendsContainerComponent } from 'components/Layout/FriendContainer/FriendsContainer.component';
-import {
-    ESceletonCardType,
-    SceletonCardComponent,
-} from 'components/Cards/Skeletoncard/SkeletonCard.component';
 import StickyBox from 'react-sticky-box';
 import { BreadcrumbsComponent } from 'components/Breadcrumbs/Breadcrumbs.component';
 import SCatalog from './index.module.scss';
@@ -21,7 +17,6 @@ import { API } from 'utils/api/api.util';
 import { IView } from 'pages';
 import { MainLayoutComponent } from 'components/Layout/MainLayout/MainLayout.component';
 import { getFilters } from 'utils/queries/Filters/Filters.query';
-// import { getAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 import { getMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';
 import { getFriends } from 'utils/queries/Friends/Friends.query';
 import { getOneFriend } from 'utils/queries/Friends/OneFriend.query';
@@ -30,6 +25,8 @@ import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
 import Head from 'next/head';
 import { LoaderComponent } from 'components/Loaders/Loader/Loader.component';
 import { getInfiniteAllGifts } from 'utils/queries/Catalog/AllGifts.query';
+import Script from 'next/script';
+import { ShareBlockComponent } from 'components/UI/ShareBlock/ShareBlock.component';
 
 const CatalogView: React.FC<IView> = ({ isAuth }) => {
     const router = useRouter();
@@ -43,9 +40,6 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
         moreSuitableGifts,
         loadingMoreSuitableGifts,
         allGifts,
-        loadingAllGifts,
-        isFetchingNextPage,
-        skeletonCards,
         friends,
         handleFetchMoreFriends,
         onDislike,
@@ -98,8 +92,9 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                 <meta
                     name="description"
                     content="Шаман подбирает полезные подарки для людей с учетом их интересов. Достаточно указать профиль ВК."
-                ></meta>
+                />
             </Head>
+
             <MainLayoutComponent isAuth={isAuth}>
                 <main
                     className={[SCatalog.Catalog, SCommon.Container].join(' ')}
@@ -191,9 +186,12 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                                 }
                             />
                         )}
-                        <h2 className={SCatalog.Title} id="test">
-                            Все подарки, которые подобрал шаман:
-                        </h2>
+                        <div className={SCatalog.AllGiftsTitleContainer}>
+                            <h2 className={SCatalog.AllGiftsTitle} id="test">
+                                Все подарки, которые подобрал шаман:
+                            </h2>
+                            <ShareBlockComponent />
+                        </div>
                         <ul className={SCatalog.List}>
                             {allGifts?.pages.map((page) =>
                                 page.data.items.map((gift) => (
