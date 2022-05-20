@@ -1,7 +1,6 @@
-import { IFaqResponse } from 'utils/queries/interfaces/Faq/Faq.interface';
+import { IFaqResponse } from 'utils/queries/Faq/Faq.types';
 import React, { useState } from 'react';
 import { AccordionItem } from './AccordionItem/AccordionItem.component';
-
 import SFaqComponent from './Faq.module.scss';
 
 interface IFaqComponentProps {

@@ -46,7 +46,7 @@ export const NavBarComponent: React.FC<INavBarComponentProps> = ({
 
     return (
         <div className={[SNavBarComponent.HeaderNav, className].join(' ')}>
-            <Link href={'/'}>
+            <Link href={'/'} scroll={false}>
                 <a className={SComputedLinkComponent.NavLink}>
                     <img
                         className={SNavBarComponent.Logo}

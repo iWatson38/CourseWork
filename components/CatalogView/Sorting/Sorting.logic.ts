@@ -1,7 +1,7 @@
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { IRangeSliderRef } from 'components/UI/RangeSlider/RangeSlider.component';
-import { IFiltersResponse } from 'utils/queries/interfaces/Filters/Filters.interface';
+import { IFiltersResponse } from 'utils/queries/Filters/Filters.types';
 
 export interface ISortingFields {
     interests: Array<{ id: number; value: boolean }>;

@@ -19,7 +19,7 @@ export const BreadcrumbsComponent: React.FC<IBreadcrumbsComponentProps> = ({
     return (
         <ul className={[SBreadcrumbsComponent.Breadcrumb, className].join(' ')}>
             <li key="MainCrumb" className={SBreadcrumbsComponent.Crumb}>
-                <Link href="/">
+                <Link href="/" scroll={false}>
                     <a
                         className={[
                             SBreadcrumbsComponent.Link,
@@ -39,7 +39,7 @@ export const BreadcrumbsComponent: React.FC<IBreadcrumbsComponentProps> = ({
                     key={`${index}Crumb`}
                     className={SBreadcrumbsComponent.Crumb}
                 >
-                    <Link href={crumb.path}>
+                    <Link href={crumb.path} scroll={false}>
                         <a
                             className={[
                                 SBreadcrumbsComponent.Link,

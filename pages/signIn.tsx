@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { singInMutation } from 'utils/mutations/Auth/SingIn.mutation';
+import { singInMutation } from 'utils/mutations/Auth/SignIn.mutation';
 import { PageLoaderComponent } from 'components/Loaders/PageLoader/PageLoader.component';
 import { useMutation } from 'react-query';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
@@ -30,7 +30,7 @@ const SignInView: React.FC = () => {
                     `${data.data.access_token}`,
                     Number(data.data.expires_in),
                 );
-                router.push('/friends');
+                router.push('/friends', undefined, { scroll: false });
             } else {
                 modals?.toggleErrorModal();
             }
@@ -46,7 +46,7 @@ const SignInView: React.FC = () => {
             !signInInput.expires_in ||
             !signInInput.user_id
         ) {
-            router.push('/');
+            router.push('/', undefined, { scroll: false });
         }
 
         mutate({

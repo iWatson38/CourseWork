@@ -1,11 +1,8 @@
 import { useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
-import { IOneFriendRespose } from '../interfaces/Friends/OneFriend.interface';
+import { IOneFriendRespose } from './Friends.types';
 
-export const getOneFriend = async (
-    vk_friend_id: number,
-    link?: string,
-): Promise<IOneFriendRespose> => {
+export const getOneFriend = async (vk_friend_id: number, link?: string) => {
     const { data } = await API.get<IOneFriendRespose>(
         `api/v1/friend/${vk_friend_id}`,
         {

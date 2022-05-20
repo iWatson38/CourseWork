@@ -3,3 +3,9 @@ export interface IFeedbackOnGoodPostInput {
     product_id: number;
     text: string;
 }
+
+export interface IFeedbackOnGoodPostRespose {
+    success: boolean;
+    data: [];
+    message: string;
+}

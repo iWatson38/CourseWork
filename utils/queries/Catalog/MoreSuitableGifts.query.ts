@@ -1,17 +1,12 @@
 import { useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
-import { IMoreSuitableGiftsResponse } from 'utils/queries/interfaces/Catalog/MoreSuitableGifts.interface';
+import { IMoreSuitableGiftsResponse } from './Catalog.types';
 
-export const getMoreSuitableGifts = async (
-    vk_friend_id: number,
-): Promise<IMoreSuitableGiftsResponse> => {
-    const response = await API.get<IMoreSuitableGiftsResponse>(
+export const getMoreSuitableGifts = async (vk_friend_id: number) => {
+    const { data } = await API.get<IMoreSuitableGiftsResponse>(
         `api/v1/gifts/${vk_friend_id}/generics`,
     );
-    if (response.data.success) {
-        return response.data;
-    }
-    throw new Error('Network response with Error');
+    return data;
 };
 
 export const useGetMoreSuitableGifts = (vk_friend_id: number) => {
@@ -20,6 +15,7 @@ export const useGetMoreSuitableGifts = (vk_friend_id: number) => {
         () => getMoreSuitableGifts(vk_friend_id),
         {
             refetchOnWindowFocus: false,
+            retry: false,
         },
     );
 };

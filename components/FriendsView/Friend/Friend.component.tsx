@@ -4,7 +4,6 @@ import {
     EButtonStyleType,
 } from 'components/UI/Button/Button.component';
 import SFriend from './Friend.module.scss';
-import { useRouter } from 'next/router';
 
 const GiftIcon = '/Friend/Gift.svg';
 const GiftIconActive = '/GoodCard/WhiteGift.svg';
@@ -13,14 +12,17 @@ interface IFriendProps {
     userAvatar: string;
     userName: string;
     id: number;
+    setVisibleLoader: () => void;
 }
 
 export const Friend: React.FC<IFriendProps> = ({
     userAvatar,
     userName,
     id,
+    setVisibleLoader,
 }) => {
     const handleSearchGoods = () => {
+        setVisibleLoader();
         window.location.pathname = `/catalog/${id}`;
     };
 

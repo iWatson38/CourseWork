@@ -66,7 +66,7 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
     useEffect(() => {
         if (friendData?.success) {
             setVisibleLoader((prev) => !prev);
-            router.push(`/catalog/${friendData?.data?.vk_id}`);
+            router.push(`/catalog/${friendData?.data?.vk_id}`, undefined, {scroll: false});
         }
     }, [friendData]);
 
@@ -79,7 +79,7 @@ const MainView: React.FC<IView> = ({ isAuth }) => {
 
     useEffect(() => {
         if (!cookies.access_token) {
-            router.push('/');
+            router.push('/', undefined, {scroll: false});
         }
     }, [cookies]);
 

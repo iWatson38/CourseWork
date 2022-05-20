@@ -22,12 +22,12 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
     const router = useRouter();
     const groupedGiftsRedirect = () => {
         setLoader && setLoader();
-        router.push(`/catalog/${starId}`);
+        router.push(`/catalog/${starId}`, undefined, { scroll: false });
     };
 
     return (
         <div className={[className, SStarCardComponent.Card].join(' ')}>
-            <Link href={`/catalog/${starId}`}>
+            <Link href={`/catalog/${starId}`} scroll={false}>
                 <a>
                     <img
                         src={img}
@@ -36,7 +36,7 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
                     />
                 </a>
             </Link>
-            <Link href={`/catalog/${starId}`}>
+            <Link href={`/catalog/${starId}`} scroll={false}>
                 <a className={SStarCardComponent.Title}>{starName}</a>
             </Link>
             <ButtonComponent

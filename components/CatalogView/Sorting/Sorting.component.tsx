@@ -2,17 +2,14 @@ import {
     ButtonComponent,
     EButtonStyleType,
 } from 'components/UI/Button/Button.component';
-import React, { useRef } from 'react';
-import {
-    IRangeSliderRef,
-    RangeSliderComponent,
-} from 'components/UI/RangeSlider/RangeSlider.component';
+import React from 'react';
+import { RangeSliderComponent } from 'components/UI/RangeSlider/RangeSlider.component';
 import { UseBodyClick } from 'hooks/BodyClick.hook';
 import { LabelComponent } from 'components/UI/Label/Label.component';
 import { CheckboxButton } from 'components/UI/CheckboxButton/CheckboxButton.component';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 import SSorting from './Sorting.module.scss';
-import { IFiltersResponse } from 'utils/queries/interfaces/Filters/Filters.interface';
+import { IFiltersResponse } from 'utils/queries/Filters/Filters.types';
 import { LSortingComponent } from './Sorting.logic';
 
 const Filter = '/Sorting/Filter.svg';

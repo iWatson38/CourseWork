@@ -2,10 +2,10 @@ import { useGetFilters } from '../../utils/queries/Filters/Filters.query';
 import { ICrumb } from 'components/Breadcrumbs/Breadcrumbs.component';
 import { useAuth } from 'components/Providers/AuthProvider/Auth.provider';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { ISortingFields } from 'components/CatalogView/Sorting/Sorting.logic';
-import { useGetFriends } from 'utils/queries/Friends/Friends.query';
+import { useGetFriends } from 'utils/queries/Friends/AllFriends.query';
 import { useGetOneFriend } from 'utils/queries/Friends/OneFriend.query';
 import { useGetInfiniteAllGifts } from 'utils/queries/Catalog/AllGifts.query';
 import { useGetMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';

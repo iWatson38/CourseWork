@@ -67,7 +67,7 @@ export function AuthProvider({ children }: IAuthProvider) {
 
             window.location.href = `https://oauth.vk.com/authorize?${queryParams.toString()}`;
         } else {
-            router.push('/friends');
+            router.push('/friends', undefined, { scroll: false });
         }
     };
 

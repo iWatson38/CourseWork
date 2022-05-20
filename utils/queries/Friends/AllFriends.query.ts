@@ -1,4 +1,4 @@
-import { IFriendsResponse } from '../interfaces/Friends/Friends.interface';
+import { IFriendsResponse } from './Friends.types';
 import { useInfiniteQuery, useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
 
@@ -33,8 +33,8 @@ export const useGetFriends = (name: string, limit: number, page: number) => {
         ['friends', name, limit, page],
         () => getFriends(name, limit, page),
         {
-            retry: false,
             refetchOnWindowFocus: false,
+            retry: false,
         },
     );
 };
