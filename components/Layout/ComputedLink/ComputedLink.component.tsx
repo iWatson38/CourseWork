@@ -31,7 +31,7 @@ export const ComputedLinkComponent: React.FC<IMenuItem> = ({
     const router = useRouter();
     if (scrollIntoView) {
         return (
-            <Link key={to} href={to}>
+            <Link key={to} href={to} scroll={false}>
                 <a
                     className={[
                         className,
@@ -47,7 +47,7 @@ export const ComputedLinkComponent: React.FC<IMenuItem> = ({
         );
     }
     return (
-        <Link key={to} href={to}>
+        <Link key={to} href={to} scroll={false}>
             <a
                 className={[
                     className,

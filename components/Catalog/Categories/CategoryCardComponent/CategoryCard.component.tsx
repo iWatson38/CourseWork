@@ -27,7 +27,9 @@ export const CategoryCardComponent: React.FC<ICategoryCardComponentProps> = ({
     const router = useRouter();
 
     const groupedGiftsRedirect = () => {
-        router.push(`/friends/${vk_friend_id}/${category_id}`);
+        router.push(`/friends/${vk_friend_id}/${category_id}`, undefined, {
+            scroll: false,
+        });
     };
 
     const computeName = (name: string) => {
