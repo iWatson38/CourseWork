@@ -1,17 +1,15 @@
-import { IUserResponse } from './../interfaces/User/User.interface';
+import { IUserResponse } from './User.types';
 import { useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
 
-export const getUser = async (): Promise<IUserResponse> => {
-    const response = await API.get<IUserResponse>('api/v1/auth/me');
-    if (response.data) {
-        return response.data;
-    }
-    throw new Error('Network response with Error');
+export const getUser = async () => {
+    const { data } = await API.get<IUserResponse>('api/v1/auth/me');
+    return data;
 };
 
 export const useGetUser = () => {
     return useQuery<IUserResponse, Error>('user', getUser, {
         refetchOnWindowFocus: false,
+        retry: false,
     });
 };

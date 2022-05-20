@@ -14,14 +14,14 @@ const MainView: React.FC = () => {
     const router = useRouter();
 
     const handleNavigateToHome = () => {
-        router.push('/');
+        router.push('/', undefined, { scroll: false });
     };
 
     return (
         <div className={SErrorView.Main}>
             <div className={SCommon.Container}>
                 <header className={SErrorView.Header}>
-                    <Link href={'/'}>
+                    <Link href={'/'} scroll={false}>
                         <a>
                             <img
                                 src={Logo}

@@ -18,7 +18,7 @@ import { IView } from 'pages';
 import { MainLayoutComponent } from 'components/Layout/MainLayout/MainLayout.component';
 import { getFilters } from 'utils/queries/Filters/Filters.query';
 import { getMoreSuitableGifts } from 'utils/queries/Catalog/MoreSuitableGifts.query';
-import { getFriends } from 'utils/queries/Friends/Friends.query';
+import { getFriends } from 'utils/queries/Friends/AllFriends.query';
 import { getOneFriend } from 'utils/queries/Friends/OneFriend.query';
 import { useCookies } from 'react-cookie';
 import { useModals } from 'components/Providers/ModalsProvider/Modals.provider';
@@ -61,7 +61,7 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
 
     useEffect(() => {
         if (!cookies.access_token) {
-            router.push(`/catalog/${router.query.vk_friend_id}`);
+            router.push(`/catalog/${router.query.vk_friend_id}`, undefined, {scroll: false});
         }
     }, [cookies]);
 

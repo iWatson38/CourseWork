@@ -5,9 +5,9 @@ import {
     IFavoritesErrorResponse,
     IFavoritesResponse,
     IMoreSuitableGiftsContext,
-} from './../interfaces/Favorites/Favorites.interface';
+} from './Favorites.types';
 import { API } from 'utils/api/api.util';
-import { IMoreSuitableGiftsResponse } from 'utils/queries/interfaces/Catalog/MoreSuitableGifts.interface';
+import { IMoreSuitableGiftsResponse } from 'utils/queries/Catalog/Catalog.types';
 
 export const favoritesMutation = async (
     product_id: number,

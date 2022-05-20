@@ -1,8 +1,9 @@
 import { API } from 'utils/api/api.util';
 import { useMutation } from 'react-query';
-import { IFeedbackOnGoodPostInput } from '../interfaces/Feedback/FeedbackOnGoodPost/FeedbackOnGoodPostInput.interface';
-import { IFeedbackOnGoodPostRespose } from '../interfaces/Feedback/FeedbackOnGoodPost/FeedbackOnGoodPostResponse.interface';
-
+import {
+    IFeedbackOnGoodPostInput,
+    IFeedbackOnGoodPostRespose,
+} from './FeedbackOnGood.types';
 const postFeedbackOnGood = async (
     feedbackOnGoodPostInput: IFeedbackOnGoodPostInput,
 ): Promise<boolean> => {

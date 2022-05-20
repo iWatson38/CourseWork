@@ -13,10 +13,7 @@ import {
     getFavorites,
     useGetFavorites,
 } from 'utils/queries/Favorites/Favorites.query';
-import {
-    favoritesMutation,
-    useFavoritesMutation,
-} from 'utils/mutations/Favorites/Favorites.mutation';
+import { favoritesMutation } from 'utils/mutations/Favorites/Favorites.mutation';
 import {
     dehydrate,
     DehydratedState,
@@ -70,7 +67,7 @@ const FavoritesView: React.FC<IView> = ({ isAuth }) => {
 
     useEffect(() => {
         if (!cookies.access_token) {
-            router.push('/');
+            router.push('/', undefined, {scroll: false});
         }
     }, [cookies]);
 

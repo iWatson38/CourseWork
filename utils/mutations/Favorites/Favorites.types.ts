@@ -1,5 +1,7 @@
-import { IAllgiftsResponse } from 'utils/queries/interfaces/Catalog/AllGifts.interface';
-import { IMoreSuitableGiftsResponse } from 'utils/queries/interfaces/Catalog/MoreSuitableGifts.interface';
+import {
+    IAllGiftsResponse,
+    IMoreSuitableGiftsResponse,
+} from 'utils/queries/Catalog/Catalog.types';
 
 export interface IFavoritesResponse {
     success: boolean;
@@ -17,7 +19,7 @@ export interface IMoreSuitableGiftsContext {
 
 export interface IAllGiftsInfiniteResponse {
     pageParams: Array<number | undefined>;
-    pages: Array<IAllgiftsResponse>;
+    pages: Array<IAllGiftsResponse>;
 }
 
 export interface IAllGiftsContext {

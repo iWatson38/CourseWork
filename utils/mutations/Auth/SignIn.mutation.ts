@@ -1,8 +1,5 @@
 import { API } from 'utils/api/api.util';
-import {
-    ISignInInput,
-    ISignInResponse,
-} from '../interfaces/Auth/SingInInput.interface';
+import { ISignInInput, ISignInResponse } from './SignIn.types';
 
 export const singInMutation = async (
     signInInput: ISignInInput,

@@ -1,4 +1,4 @@
-export interface IGenerics {
+export interface IGeneric {
     id: number;
     name: string;
 }
@@ -6,7 +6,7 @@ export interface IGenerics {
 export interface IFilters {
     min_price: number;
     max_price: number;
-    generics: Array<IGenerics>;
+    generics: Array<IGeneric>;
 }
 
 export interface IFiltersResponse {

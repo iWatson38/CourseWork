@@ -1,3 +1,4 @@
+// All friends
 export interface IFriendLinkInput {
     link: string;
 }
@@ -9,14 +10,21 @@ export interface IFriend {
     photo_100: string;
 }
 
-export interface IFriendsList {
+export interface IFriends {
     current_page: number;
     last_page: number;
-    items: Array<IFriend> | [];
+    items: Array<IFriend>;
 }
 
 export interface IFriendsResponse {
     success: boolean;
-    data: IFriendsList;
+    data: IFriends;
+    message: string;
+}
+
+// One friend
+export interface IOneFriendRespose {
+    success: boolean;
+    data: IFriend;
     message: string;
 }

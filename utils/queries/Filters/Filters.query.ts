@@ -1,17 +1,12 @@
 import { useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
-import { IFiltersResponse } from 'utils/queries/interfaces/Filters/Filters.interface';
+import { IFiltersResponse } from './Filters.types';
 
-export const getFilters = async (
-    vk_friend_id: number,
-): Promise<IFiltersResponse> => {
-    const response = await API.get<IFiltersResponse>(
+export const getFilters = async (vk_friend_id: number) => {
+    const { data } = await API.get<IFiltersResponse>(
         `api/v1/gifts/${vk_friend_id}/filters`,
     );
-    if (response.data.success) {
-        return response.data;
-    }
-    throw new Error('Network response with Error');
+    return data;
 };
 
 export const useGetFilters = (vk_friend_id: number) => {
@@ -20,6 +15,7 @@ export const useGetFilters = (vk_friend_id: number) => {
         () => getFilters(vk_friend_id),
         {
             refetchOnWindowFocus: false,
+            retry: false,
         },
     );
 };

@@ -1,8 +1,8 @@
 import { useQuery } from 'react-query';
 import { API } from 'utils/api/api.util';
-import { IFavoritesResponse } from '../interfaces/Favorites/Favorites.interface';
+import { IFavoritesResponse } from './Favorites.types';
 
-export const getFavorites = async (): Promise<IFavoritesResponse> => {
+export const getFavorites = async () => {
     const { data } = await API.get<IFavoritesResponse>('api/v1/favorites');
     return data;
 };
