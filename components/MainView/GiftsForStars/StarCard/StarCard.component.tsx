@@ -28,7 +28,7 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
     return (
         <div className={[className, SStarCardComponent.Card].join(' ')}>
             <Link href={`/catalog/${starId}`} scroll={false}>
-                <a>
+                <a onClick={setLoader}>
                     <img
                         src={img}
                         alt="group"
@@ -37,7 +37,9 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
                 </a>
             </Link>
             <Link href={`/catalog/${starId}`} scroll={false}>
-                <a className={SStarCardComponent.Title}>{starName}</a>
+                <a className={SStarCardComponent.Title} onClick={setLoader}>
+                    {starName}
+                </a>
             </Link>
             <ButtonComponent
                 className={SStarCardComponent.Button}
