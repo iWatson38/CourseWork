@@ -20,10 +20,11 @@ import { dehydrate, DehydratedState, QueryClient } from 'react-query';
 import {
     getInfiniteFriends,
     useGetInfiniteFriends,
-} from 'utils/queries/Friends/Friends.query';
+} from 'utils/queries/Friends/AllFriends.query';
 import { IView } from 'pages';
-import { Friend } from 'components/FriendsView/FriendsArea/Friend/Friend.component';
+import { Friend } from 'components/FriendsView/Friend/Friend.component';
 import { useInView } from 'react-intersection-observer';
+import { LoaderComponent } from 'components/Loaders/Loader/Loader.component';
 
 const FriendsView: React.FC<IView> = ({ isAuth }) => {
     const listRef = useRef<HTMLUListElement>(null);
@@ -62,7 +63,7 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
 
     useEffect(() => {
         if (!cookies.access_token) {
-            router.push('/');
+            router.push('/', undefined, { scroll: false });
         }
     }, [cookies]);
 
@@ -73,8 +74,11 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
         },
     ];
 
+    const [visibleLoader, setVisibleLoader] = useState(false);
+
     return (
         <MainLayoutComponent isAuth={isAuth}>
+            <LoaderComponent visible={visibleLoader} />
             <main className={SFriendsView.Friends}>
                 <div className={SCommon.Container}>
                     <BreadcrumbsComponent
@@ -97,6 +101,9 @@ const FriendsView: React.FC<IView> = ({ isAuth }) => {
                                     key={`${friend.vk_id}${friend.first_name}Friend`}
                                     userAvatar={friend.photo_100}
                                     userName={`${friend.first_name} ${friend.last_name}`}
+                                    setVisibleLoader={() =>
+                                        setVisibleLoader(true)
+                                    }
                                 />
                             )),
                         )}
