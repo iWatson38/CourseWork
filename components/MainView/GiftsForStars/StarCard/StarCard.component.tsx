@@ -1,6 +1,5 @@
 import React from 'react';
 import { ButtonComponent } from 'components/UI/Button/Button.component';
-import { useRouter } from 'next/router';
 import SStarCardComponent from './StarCard.module.scss';
 import Link from 'next/link';
 
@@ -19,10 +18,9 @@ export const StarCardComponent: React.FC<ICategoryCardComponentProps> = ({
     className,
     setLoader,
 }) => {
-    const router = useRouter();
     const groupedGiftsRedirect = () => {
         setLoader && setLoader();
-        router.push(`/catalog/${starId}`, undefined, { scroll: false });
+        window.location.pathname = `/catalog/${starId}`;
     };
 
     return (

@@ -16,7 +16,6 @@
     width: 40px;
     height: 40px;
     position: absolute;
-    top: 184px;
     z-index: 10;
     display: grid;
     justify-items: center;
@@ -25,10 +24,12 @@
 }
 
 .ButtonPrev {
+    top: 184px;
     left: 0;
 }
 
 .ButtonNext {
+    top: 184px;
     right: 0;
 }
 

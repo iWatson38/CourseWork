@@ -1,5 +1,9 @@
 .GiftsForStar {
     margin-bottom: 80px;
+    ul {
+        margin: 0;
+        list-style: none;
+    }
 }
 
 .Title {
@@ -28,6 +32,16 @@
         right: 0;
         bottom: 0;
     }
+}
+
+.ButtonPrev {
+    top: 132px;
+    left: 0;
+}
+
+.ButtonNext {
+    top: 132px;
+    right: 0;
 }
 
 @media (max-width: 768px) {
