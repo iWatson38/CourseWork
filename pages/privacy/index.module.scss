@@ -1,0 +1,92 @@
+.RulesProtectionInformation {
+    box-sizing: border-box;
+    max-width: 776px;
+    width: 100%;
+    margin-top: 88px;
+    margin-bottom: 80px;
+}
+
+.Title {
+    font: $FM300-35-43;
+    color: $main;
+    max-width: 630px;
+    margin: 0;
+}
+
+.MainList {
+    font: $FM500-18-30;
+    color: $main;
+    list-style-type: none;
+    margin: 30px 0 0 0;
+    padding: 0;
+}
+
+.ChildList {
+    font: $FM400-16-20;
+    color: $main;
+    list-style-type: none;
+    padding: 0;
+    margin: 0 0 0 25px;
+}
+
+.PointList {
+    font: $FM400-16-20;
+    color: $main;
+    padding: 0;
+    margin: 0 0 0 25px;
+    list-style-type: disc;
+}
+
+.StandartListElement {
+    margin: 30px 0 0 0;
+}
+
+.PointListElement {
+    margin: 30px 0 0 22px;
+}
+
+.ExtraPaddingListElement {
+    margin: 30px 0 0 44px;
+}
+
+.LetterListElement {
+    margin: 10px 0 0 0;
+}
+
+.LonelyElement {
+    font: $FM400-16-20;
+    color: $main;
+    margin: 30px 0 0 0;
+}
+
+.SimpleText {
+    font: $FM400-16-20;
+    color: $main;
+    margin: 10px 0 0 0;
+}
+
+.Link {
+    font: $FM400-16-20;
+    color: $accent;
+    text-decoration: none;
+}
+
+.SubTitleList {
+    margin: 10px 0 0 25px;
+}
+
+@media (max-width: 768px) {
+    .RulesProtectionInformation {
+        margin-top: 112px;
+        margin-bottom: 60px;
+    }
+    .Title {
+        font: $FM300-20-24;
+    }
+}
+
+@media (max-width: 425px) {
+    .Title {
+        max-width: 276px;
+    }
+}

@@ -13,7 +13,13 @@ module.exports = {
             {
                 userAgent: '*',
                 allow: '/',
-                disallow: ['/singIn', '/favorites', '/friends'],
+                disallow: [
+                    '/singIn',
+                    '/favorites',
+                    '/friends',
+                    '/terms',
+                    '/privacy',
+                ],
             },
         ],
     },
