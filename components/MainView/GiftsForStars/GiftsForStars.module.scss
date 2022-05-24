@@ -1,5 +1,9 @@
 .GiftsForStar {
     margin-bottom: 80px;
+    ul {
+        margin: 0;
+        list-style: none;
+    }
 }
 
 .Title {
@@ -10,17 +14,40 @@
 }
 
 .StarList {
+    position: relative;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: max-content;
     gap: 24px;
     list-style: none;
     padding: 0;
     margin: 0;
+    height: 904px;
+}
+
+.ListItem {
+    &:last-of-type {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+.ButtonPrev {
+    top: 132px;
+    left: 0;
+}
+
+.ButtonNext {
+    top: 132px;
+    right: 0;
 }
 
 @media (max-width: 768px) {
     .StarList {
         grid-template-columns: 1fr 1fr;
+        height: auto;
     }
     .Title {
         font: $FM300-20-24;
