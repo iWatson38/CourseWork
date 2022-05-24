@@ -20,6 +20,14 @@ export const GiftsForStarsComponent: React.FC<IGiftsForStarsComponentProps> = ({
     const breakpoints = {
         320: {
             spaceBetween: 4,
+            slidesPerView: 1,
+            navigation: {
+                nextEl: '.next',
+                prevEl: '.prev',
+                disabledClass: SCarouselComponent.DisabledButton,
+            },
+        },
+        520: {
             slidesPerView: 2,
             navigation: {
                 nextEl: '.next',
