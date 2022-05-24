@@ -1,0 +1,13 @@
+.Title {
+    font: $FM300-35-43;
+    color: $main;
+    max-width: 548px;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .Title {
+        max-width: 276px;
+        font: $FM300-20-24;
+    }
+}
