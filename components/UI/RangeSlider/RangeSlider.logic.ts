@@ -132,14 +132,11 @@ export const LRangeSliderComponent = ({
                         ) {
                             leftKnob.current.style.left = `${percentValue}%`;
                             setValueInPercent((prev) => [
-                                percentValue + leftKnobPercentSize,
+                                percentValue,
                                 prev[1],
                             ]);
 
-                            handleOnChange([
-                                percentValue + leftKnobPercentSize,
-                                valueInPercent[1],
-                            ]);
+                            handleOnChange([percentValue, valueInPercent[1]]);
 
                             leftDvider.current.style.width = `${
                                 clientX - trackOffsetLeft
@@ -201,12 +198,12 @@ export const LRangeSliderComponent = ({
                             rightKnob.current.style.right = `${percentValue}%`;
                             setValueInPercent((prev) => [
                                 prev[0],
-                                100 - percentValue,
+                                100 - percentValue - rightKnobPercentSize,
                             ]);
 
                             handleOnChange([
                                 valueInPercent[0],
-                                100 - percentValue,
+                                100 - percentValue - rightKnobPercentSize,
                             ]);
 
                             rightDvider.current.style.width = `${
@@ -220,7 +217,7 @@ export const LRangeSliderComponent = ({
                                 prev[0],
                                 100 -
                                     (100 -
-                                        leftKnobPercent -
+                                        leftKnobPercent +
                                         rightKnobPercentSize),
                             ]);
 
@@ -228,7 +225,7 @@ export const LRangeSliderComponent = ({
                                 valueInPercent[0],
                                 100 -
                                     (100 -
-                                        leftKnobPercent -
+                                        leftKnobPercent +
                                         rightKnobPercentSize),
                             ]);
 
