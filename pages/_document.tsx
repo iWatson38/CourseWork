@@ -51,6 +51,27 @@ export default function Document() {
                         `,
                     }}
                 />
+
+                {/* VKontakte retargeting pixel */}
+                <script
+                    type="text/javascript"
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                        !function(){var t=document.createElement("script");t.type="text/javascript",t.async=!0,t.src='https://vk.com/js/api/openapi.js?169',t.onload=function(){VK.Retargeting.Init("VK-RTRG-1418741-rX3F"),VK.Retargeting.Hit()},document.head.appendChild(t)}();
+                        `,
+                    }}
+                />
+                <noscript
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                        <img
+                            src="https://vk.com/rtrg?p=VK-RTRG-1418741-rX3F"
+                            style="position:fixed; left:-999px;"
+                            alt=""
+                        />
+                    `,
+                    }}
+                />
             </Head>
             <body>
                 <Main />
