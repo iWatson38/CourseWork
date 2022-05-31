@@ -44,7 +44,14 @@ export const SortingComponent: React.FC<ISortingComponentProps> = ({
             <ButtonComponent
                 styleType={EButtonStyleType.WHITE}
                 className={SSorting.ButtonFilters}
-                onClick={!isActive ? toggleIsActive : undefined}
+                onClick={
+                    !isActive
+                        ? (e) => {
+                              e.stopPropagation();
+                              toggleIsActive();
+                          }
+                        : undefined
+                }
             >
                 Фильтры
                 <img className={SSorting.Filter} src={Filter} alt="filter" />

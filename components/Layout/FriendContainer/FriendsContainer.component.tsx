@@ -33,7 +33,14 @@ export const FriendsContainerComponent: React.FC<
                         className={SFiendsContainer.ButtonFriends}
                         type="submit"
                         styleType={EButtonStyleType.WHITE}
-                        onClick={!isActive ? toggleIsActive : undefined}
+                        onClick={
+                            !isActive
+                                ? (e) => {
+                                      e.stopPropagation();
+                                      toggleIsActive();
+                                  }
+                                : undefined
+                        }
                     >
                         <img
                             className={SFiendsContainer.SmallArrow}
