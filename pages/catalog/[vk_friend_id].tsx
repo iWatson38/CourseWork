@@ -54,14 +54,16 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
     // FIX FILTERS ON SMALL DEVICES
     const computeOffsetTop = () => {
         if (typeof window !== 'undefined' && window.innerWidth <= 768) {
-            return 83;
+            return 108;
         }
         return 0;
     };
 
     useEffect(() => {
         if (!cookies.access_token) {
-            router.push(`/catalog/${router.query.vk_friend_id}`, undefined, {scroll: false});
+            router.push(`/catalog/${router.query.vk_friend_id}`, undefined, {
+                scroll: false,
+            });
         }
     }, [cookies]);
 

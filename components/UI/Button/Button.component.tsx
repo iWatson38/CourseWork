@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes } from 'react';
+import { ButtonHTMLAttributes, MouseEventHandler } from 'react';
 import SButtonComponent from './Button.module.scss';
 
 export enum EButtonStyleType {
@@ -10,7 +10,7 @@ interface IButtonComponentProps {
     className?: string;
     type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
     styleType?: EButtonStyleType;
-    onClick?: () => void;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
 export const ButtonComponent: React.FC<IButtonComponentProps> = ({
