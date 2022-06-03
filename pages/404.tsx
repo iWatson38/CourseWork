@@ -10,7 +10,7 @@ import SCommon from 'styles/Common.module.scss';
 const Illustration = '/404/MainBg.svg';
 const Logo = '/404/ShamanLogo.svg';
 
-const MainView: React.FC = () => {
+const ErrorView: React.FC = () => {
     const router = useRouter();
 
     const handleNavigateToHome = () => {
@@ -52,4 +52,4 @@ const MainView: React.FC = () => {
     );
 };
 
-export default MainView;
+export default ErrorView;
