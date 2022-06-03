@@ -125,11 +125,6 @@ export const getServerSideProps: GetServerSideProps = async (
         dehydratedState: DehydratedState;
     };
 }> => {
-    if (context.req.cookies.access_token) {
-        API.defaults.headers.common[
-            'Authorization'
-        ] = `Bearer ${context.req.cookies.access_token}`;
-    }
     const queryClient = new QueryClient();
     await queryClient.prefetchQuery('user', getUser);
     await queryClient.prefetchInfiniteQuery(
