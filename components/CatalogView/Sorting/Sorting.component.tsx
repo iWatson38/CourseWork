@@ -36,8 +36,14 @@ export const SortingComponent: React.FC<ISortingComponentProps> = ({
     const { isActive, toggleIsActive } = UseBodyClick();
     const currencySign = '₽';
 
-    const { handleSubmit, handleReset, control, rangeSliderRef } =
-        LSortingComponent({ filters, onSubmit });
+    const {
+        handleSubmit,
+        handleReset,
+        control,
+        rangeSliderRef,
+        resetStatus,
+        setResetStatus,
+    } = LSortingComponent({ filters, onSubmit });
 
     return (
         <>
@@ -70,7 +76,7 @@ export const SortingComponent: React.FC<ISortingComponentProps> = ({
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <p className={SSorting.TitleFilters}>Интересы</p>
                     <div className={SSorting.BlokFilter}>
-                        {filters?.generics.map((generic) => (
+                        {filters.generics.map((generic) => (
                             <LabelComponent
                                 key={`${generic.id}LabelCheckboxButton`}
                                 className={SSorting.Label}
@@ -116,11 +122,13 @@ export const SortingComponent: React.FC<ISortingComponentProps> = ({
                             name="range"
                             render={({ field }) => (
                                 <RangeSliderComponent
-                                    min={filters?.min_price || 0}
-                                    max={filters?.max_price || 20000}
+                                    min={filters.min_price}
+                                    max={filters.max_price}
                                     currency={currencySign}
                                     {...field}
                                     ref={rangeSliderRef}
+                                    resetStatus={resetStatus}
+                                    setResetStatus={setResetStatus}
                                 />
                             )}
                         />

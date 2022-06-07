@@ -24,6 +24,9 @@ export const InputComponent = React.forwardRef<HTMLInputElement, IInputProps>(
             onBlur,
             onFocus,
             name,
+            value,
+            min,
+            max,
         },
         ref,
     ) => {
@@ -36,14 +39,17 @@ export const InputComponent = React.forwardRef<HTMLInputElement, IInputProps>(
                     onBlur={onBlur}
                     onFocus={onFocus}
                     className={[
-                        className,
                         SInput.Input,
                         styleType === 'gray' && SInput.Input_Gray,
                         iconLeft && SInput.Input_IconLeft,
                         error && SInput.Input_Error,
+                        className,
                     ].join(' ')}
                     type={type}
                     placeholder={placeholder}
+                    value={value}
+                    max={max}
+                    min={min}
                 />
                 {iconLeft && (
                     <img

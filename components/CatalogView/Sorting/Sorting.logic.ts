@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { IRangeSliderRef } from 'components/UI/RangeSlider/RangeSlider.component';
 import { IFiltersResponse } from 'utils/queries/Filters/Filters.types';
@@ -29,10 +29,7 @@ export const LSortingComponent = ({ filters, onSubmit }: LSortingComponent) => {
     const handleFiltersReset = handleSubmit(async () => {
         onSubmit({
             interests: [],
-            range: [
-                filters ? filters.min_price.toString() : '0',
-                filters ? filters.max_price.toString() : '100',
-            ],
+            range: [filters.min_price.toString(), filters.max_price.toString()],
         });
     });
 
@@ -42,8 +39,10 @@ export const LSortingComponent = ({ filters, onSubmit }: LSortingComponent) => {
     };
 
     const rangeSliderRef = useRef<IRangeSliderRef>(null);
+    const [resetStatus, setResetStatus] = useState(false);
     const handleReset = () => {
         rangeSliderRef.current?.reset();
+        setResetStatus(true);
         onReset();
     };
 
@@ -54,5 +53,7 @@ export const LSortingComponent = ({ filters, onSubmit }: LSortingComponent) => {
         control,
         reset,
         rangeSliderRef,
+        resetStatus,
+        setResetStatus,
     };
 };

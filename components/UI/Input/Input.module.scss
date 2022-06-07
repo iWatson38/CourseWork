@@ -1,11 +1,8 @@
 .Input {
     font: $FM400-14-17;
-    border-radius: 10px;
     box-sizing: border-box;
     color: $main;
     border: 1px solid $accent;
-    height: 45px;
-    padding-left: 16px;
     &::placeholder {
         color: $gray;
     }
