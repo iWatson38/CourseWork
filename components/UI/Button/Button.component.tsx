@@ -11,6 +11,7 @@ interface IButtonComponentProps {
     type?: ButtonHTMLAttributes<HTMLButtonElement>['type'];
     styleType?: EButtonStyleType;
     onClick?: MouseEventHandler<HTMLButtonElement>;
+    disabled?: boolean;
 }
 
 export const ButtonComponent: React.FC<IButtonComponentProps> = ({
@@ -19,8 +20,10 @@ export const ButtonComponent: React.FC<IButtonComponentProps> = ({
     type,
     styleType,
     onClick,
+    disabled,
 }) => (
     <button
+        disabled={disabled}
         onClick={onClick}
         className={[
             className,
