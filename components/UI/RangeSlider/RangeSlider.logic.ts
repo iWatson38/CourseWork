@@ -1,20 +1,31 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from 'react';
+import { string } from 'yup';
 import { IRangeSliderRef } from './RangeSlider.component';
 
 interface ILRangeSliderComponentProps {
     min: number;
     max: number;
     ref: React.ForwardedRef<IRangeSliderRef>;
-    minFromInput: number;
-    maxFromInput: number;
+    rangeInPercent: { min: string; max: string };
+    setRangeInPercent: React.Dispatch<
+        React.SetStateAction<{
+            min: string;
+            max: string;
+        }>
+    >;
+    resetStatus: boolean;
+    setResetStatus: (state: boolean) => void;
 }
 
 export const LRangeSliderComponent = ({
     max,
     min,
     ref,
-    minFromInput,
-    maxFromInput,
+    rangeInPercent,
+
+    setRangeInPercent,
+    resetStatus,
+    setResetStatus,
 }: ILRangeSliderComponentProps) => {
     const [leftKnobMoving, setLeftKnobMoving] = useState(false);
     const [rightKnobMoving, setRightKnobMoving] = useState(false);
@@ -67,6 +78,78 @@ export const LRangeSliderComponent = ({
         setRightKnobMoving(false);
     };
 
+    const handleMinInputOnChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        if (
+            Number(event.target.value) <= Number(rangeInPercent.max) &&
+            Number(event.target.value) >= 0
+        ) {
+            setRangeInPercent({
+                min: event.target.value,
+                max: rangeInPercent.max,
+            });
+        }
+    };
+
+    const handleMaxinputOnBlur = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        if (Number(event.target.value) < Number(rangeInPercent.min)) {
+            setRangeInPercent({
+                min: rangeInPercent.min,
+                max: rangeInPercent.min,
+            });
+        }
+    };
+
+    const handleMaxInputOnChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        if (Number(event.target.value) <= max) {
+            setRangeInPercent({
+                min: rangeInPercent.min,
+                max: event.target.value,
+            });
+        } else if (Number(event.target.value) > max) {
+            setRangeInPercent({
+                min: rangeInPercent.min,
+                max: max.toString(),
+            });
+        }
+    };
+
+    // EFFECTS
+    // Input value change when move knobs
+    useEffect(() => {
+        if (leftKnobMoving) {
+            setRangeInPercent((prev) => ({
+                min: Math.round(
+                    ((max - min) / 100) * valueInPercent[0] + min,
+                ).toString(),
+                max: prev.max,
+            }));
+        }
+        if (rightKnobMoving) {
+            setRangeInPercent((prev) => ({
+                min: prev.min,
+                max: Math.round(
+                    ((max - min) / 100) * valueInPercent[1] + min,
+                ).toString(),
+            }));
+        }
+    }, [valueInPercent, leftKnobMoving, rightKnobMoving]);
+
+    // Range value change in inputs when reset
+    useEffect(() => {
+        setRangeInPercent({
+            min: min.toString(),
+            max: max.toString(),
+        });
+        setResetStatus(false);
+    }, [resetStatus]);
+
+    // Left knob movement when chenged min input
     useEffect(() => {
         if (
             leftKnob.current &&
@@ -81,7 +164,7 @@ export const LRangeSliderComponent = ({
             const rightKnobPercent = Number(
                 rightKnob.current.style.right.replace('%', ''),
             );
-            const leftKnobPercent = (minFromInput * 100) / max;
+            const leftKnobPercent = (Number(rangeInPercent.min) * 100) / max;
 
             if (leftKnobPercent <= 100 - rightKnobPercent) {
                 const leftKnobPercentValue =
@@ -99,8 +182,9 @@ export const LRangeSliderComponent = ({
                 }px`;
             }
         }
-    }, [minFromInput]);
+    }, [rangeInPercent.min]);
 
+    // Right knob movement when chenged max input
     useEffect(() => {
         if (
             rightKnob.current &&
@@ -110,13 +194,14 @@ export const LRangeSliderComponent = ({
         ) {
             const trackWidth = track.current.clientWidth;
             const rightKnobWidth = rightKnob.current.clientWidth;
-            const rightKnobPercent = 100 - (maxFromInput * 100) / max;
+            const rightKnobPercent =
+                100 - (Number(rangeInPercent.max) * 100) / max;
             const dviderWidth =
                 (track.current.clientWidth / 100) * rightKnobPercent;
             const rightKnobPercentSize =
                 ((rightKnobWidth + 4) * 100) / trackWidth;
 
-            if (minFromInput <= maxFromInput) {
+            if (Number(rangeInPercent.min) <= Number(rangeInPercent.max)) {
                 if (rightKnobPercent < rightKnobPercentSize) {
                     leftKnob.current.style.zIndex = '9';
                     rightKnob.current.style.zIndex = '10';
@@ -132,9 +217,9 @@ export const LRangeSliderComponent = ({
                 }
             }
         }
-    }, [maxFromInput]);
+    }, [rangeInPercent.max]);
 
-    // EFFECTS
+    // Knobs movement when drag and drop with mouse
     useEffect(() => {
         const handleMouseMove = (e: MouseEvent | TouchEvent) => {
             if (
@@ -281,7 +366,8 @@ export const LRangeSliderComponent = ({
         rightKnob,
         handleStartMove,
         valueInPercent,
-        leftKnobMoving,
-        rightKnobMoving,
+        handleMinInputOnChange,
+        handleMaxinputOnBlur,
+        handleMaxInputOnChange,
     };
 };

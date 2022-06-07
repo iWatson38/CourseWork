@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import SRangeSliderComponent from './RangeSlider.module.scss';
 import { LRangeSliderComponent } from './RangeSlider.logic';
 import { InputComponent } from '../Input/Input.component';
@@ -8,6 +8,8 @@ export interface IRangeSliderProps {
     max: number;
     currency: string;
     onChange?: (newValue: [string, string]) => void;
+    resetStatus: boolean;
+    setResetStatus: (state: boolean) => void;
 }
 
 export interface IRangeSliderRef {
@@ -17,7 +19,7 @@ export interface IRangeSliderRef {
 export const RangeSliderComponent = React.forwardRef<
     IRangeSliderRef,
     IRangeSliderProps
->(({ min, max, currency, onChange }, ref) => {
+>(({ min, max, currency, onChange, resetStatus, setResetStatus }, ref) => {
     const [rangeInPercent, setRangeInPercent] = useState({
         min: min.toString(),
         max: max.toString(),
@@ -31,34 +33,18 @@ export const RangeSliderComponent = React.forwardRef<
         rightKnob,
         track,
         valueInPercent,
-        leftKnobMoving,
-        rightKnobMoving,
+        handleMinInputOnChange,
+        handleMaxinputOnBlur,
+        handleMaxInputOnChange,
     } = LRangeSliderComponent({
         min,
         max,
         ref,
-        minFromInput: Number(rangeInPercent.min),
-        maxFromInput: Number(rangeInPercent.max),
+        rangeInPercent,
+        setRangeInPercent,
+        resetStatus,
+        setResetStatus,
     });
-
-    useEffect(() => {
-        if (leftKnobMoving) {
-            setRangeInPercent({
-                min: Math.round(
-                    ((max - min) / 100) * valueInPercent[0] + min,
-                ).toString(),
-                max: rangeInPercent.max,
-            });
-        }
-        if (rightKnobMoving) {
-            setRangeInPercent({
-                min: rangeInPercent.min,
-                max: Math.round(
-                    ((max - min) / 100) * valueInPercent[1] + min,
-                ).toString(),
-            });
-        }
-    }, [valueInPercent, leftKnobMoving, rightKnobMoving]);
 
     useEffect(() => {
         if (onChange) {
@@ -113,18 +99,7 @@ export const RangeSliderComponent = React.forwardRef<
                         styleType="gray"
                         className={SRangeSliderComponent.RangeInput}
                         value={rangeInPercent.min}
-                        onChange={(event) => {
-                            if (
-                                Number(event.target.value) <=
-                                    Number(rangeInPercent.max) &&
-                                Number(event.target.value) >= 0
-                            ) {
-                                setRangeInPercent({
-                                    min: event.target.value,
-                                    max: rangeInPercent.max,
-                                });
-                            }
-                        }}
+                        onChange={handleMinInputOnChange}
                     />
                 </div>
                 <div className={SRangeSliderComponent.InputContainer}>
@@ -134,30 +109,8 @@ export const RangeSliderComponent = React.forwardRef<
                         styleType="gray"
                         className={SRangeSliderComponent.RangeInput}
                         value={rangeInPercent.max}
-                        onBlur={(event) => {
-                            if (
-                                Number(event.target.value) <
-                                Number(rangeInPercent.min)
-                            ) {
-                                setRangeInPercent({
-                                    min: rangeInPercent.min,
-                                    max: rangeInPercent.min,
-                                });
-                            }
-                        }}
-                        onChange={(event) => {
-                            if (Number(event.target.value) <= max) {
-                                setRangeInPercent({
-                                    min: rangeInPercent.min,
-                                    max: event.target.value,
-                                });
-                            } else if (Number(event.target.value) > max) {
-                                setRangeInPercent({
-                                    min: rangeInPercent.min,
-                                    max: max.toString(),
-                                });
-                            }
-                        }}
+                        onBlur={handleMaxinputOnBlur}
+                        onChange={handleMaxInputOnChange}
                     />
                 </div>
             </div>

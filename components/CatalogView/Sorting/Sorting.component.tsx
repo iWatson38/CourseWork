@@ -36,8 +36,14 @@ export const SortingComponent: React.FC<ISortingComponentProps> = ({
     const { isActive, toggleIsActive } = UseBodyClick();
     const currencySign = '₽';
 
-    const { handleSubmit, handleReset, control, rangeSliderRef } =
-        LSortingComponent({ filters, onSubmit });
+    const {
+        handleSubmit,
+        handleReset,
+        control,
+        rangeSliderRef,
+        resetStatus,
+        setResetStatus,
+    } = LSortingComponent({ filters, onSubmit });
 
     return (
         <>
@@ -121,6 +127,8 @@ export const SortingComponent: React.FC<ISortingComponentProps> = ({
                                     currency={currencySign}
                                     {...field}
                                     ref={rangeSliderRef}
+                                    resetStatus={resetStatus}
+                                    setResetStatus={setResetStatus}
                                 />
                             )}
                         />
