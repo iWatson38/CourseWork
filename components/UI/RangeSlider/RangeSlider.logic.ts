@@ -6,30 +6,26 @@ interface ILRangeSliderComponentProps {
     min: number;
     max: number;
     ref: React.ForwardedRef<IRangeSliderRef>;
-    rangeInPercent: { min: string; max: string };
-    setRangeInPercent: React.Dispatch<
-        React.SetStateAction<{
-            min: string;
-            max: string;
-        }>
-    >;
     resetStatus: boolean;
     setResetStatus: (state: boolean) => void;
+    onChange?: (newValue: [string, string]) => void;
 }
 
 export const LRangeSliderComponent = ({
     max,
     min,
     ref,
-    rangeInPercent,
-
-    setRangeInPercent,
     resetStatus,
     setResetStatus,
+    onChange,
 }: ILRangeSliderComponentProps) => {
     const [leftKnobMoving, setLeftKnobMoving] = useState(false);
     const [rightKnobMoving, setRightKnobMoving] = useState(false);
     const [valueInPercent, setValueInPercent] = useState([0, 100]);
+    const [rangeInPercent, setRangeInPercent] = useState({
+        min: min.toString(),
+        max: max.toString(),
+    });
 
     // REFS
     const track = useRef<HTMLDivElement>(null);
@@ -120,6 +116,16 @@ export const LRangeSliderComponent = ({
     };
 
     // EFFECTS
+    // Range change in filters
+    useEffect(() => {
+        if (onChange) {
+            onChange([
+                rangeInPercent.min.replace(/\s/g, ''),
+                rangeInPercent.max.replace(/\s/g, ''),
+            ]);
+        }
+    }, [rangeInPercent]);
+
     // Input value change when move knobs
     useEffect(() => {
         if (leftKnobMoving) {
@@ -369,5 +375,6 @@ export const LRangeSliderComponent = ({
         handleMinInputOnChange,
         handleMaxinputOnBlur,
         handleMaxInputOnChange,
+        rangeInPercent,
     };
 };

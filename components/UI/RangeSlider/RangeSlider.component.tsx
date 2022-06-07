@@ -20,11 +20,6 @@ export const RangeSliderComponent = React.forwardRef<
     IRangeSliderRef,
     IRangeSliderProps
 >(({ min, max, currency, onChange, resetStatus, setResetStatus }, ref) => {
-    const [rangeInPercent, setRangeInPercent] = useState({
-        min: min.toString(),
-        max: max.toString(),
-    });
-
     const {
         handleStartMove,
         leftDvider,
@@ -36,24 +31,15 @@ export const RangeSliderComponent = React.forwardRef<
         handleMinInputOnChange,
         handleMaxinputOnBlur,
         handleMaxInputOnChange,
+        rangeInPercent,
     } = LRangeSliderComponent({
         min,
         max,
         ref,
-        rangeInPercent,
-        setRangeInPercent,
         resetStatus,
         setResetStatus,
+        onChange,
     });
-
-    useEffect(() => {
-        if (onChange) {
-            onChange([
-                rangeInPercent.min.replace(/\s/g, ''),
-                rangeInPercent.max.replace(/\s/g, ''),
-            ]);
-        }
-    }, [rangeInPercent]);
 
     return (
         <>
