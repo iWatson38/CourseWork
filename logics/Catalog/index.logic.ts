@@ -73,15 +73,11 @@ export const LCatalogView = (friendId: number) => {
         const parameters: Array<string> = [];
         if (filters.range[0]) {
             const minPrice = Number(filters.range[0].replaceAll(/\s/g, ''));
-            if (minPrice !== filtersData?.data.min_price) {
-                parameters.push(`filters[min_price]=${minPrice}`);
-            }
+            parameters.push(`filters[min_price]=${minPrice}`);
         }
         if (filters.range[1]) {
             const maxPrice = Number(filters.range[1].replaceAll(/\s/g, ''));
-            if (maxPrice !== filtersData?.data.max_price) {
-                parameters.push(`filters[max_price]=${maxPrice}`);
-            }
+            parameters.push(`filters[max_price]=${maxPrice}`);
         }
         if (filters.interests) {
             const interestsList = Object.entries(filters.interests)
