@@ -29,10 +29,7 @@ export const LSortingComponent = ({ filters, onSubmit }: LSortingComponent) => {
     const handleFiltersReset = handleSubmit(async () => {
         onSubmit({
             interests: [],
-            range: [
-                filters ? filters.min_price.toString() : '0',
-                filters ? filters.max_price.toString() : '100',
-            ],
+            range: [filters.min_price.toString(), filters.max_price.toString()],
         });
     });
 

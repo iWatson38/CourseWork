@@ -137,7 +137,7 @@ const CatalogView: React.FC<IView> = ({ isAuth }) => {
                                 filters={
                                     filters || {
                                         min_price: 0,
-                                        max_price: 100,
+                                        max_price: 20000,
                                         generics: [],
                                     }
                                 }

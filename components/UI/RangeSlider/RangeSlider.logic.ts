@@ -179,7 +179,6 @@ export const LRangeSliderComponent = ({
                           leftKnobPercentSize -
                           rightKnobPercent
                         : leftKnobPercent;
-                console.log(leftKnobPercentValue);
                 leftKnob.current.style.left = `${leftKnobPercentValue}%`;
                 leftKnob.current.style.zIndex = '10';
                 rightKnob.current.style.zIndex = '9';
