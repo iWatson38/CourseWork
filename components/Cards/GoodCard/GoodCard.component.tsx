@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     ButtonComponent,
     EButtonStyleType,
@@ -36,6 +36,7 @@ export const GoodCardComponent: React.FC<IGoodCardComponentProps> = ({
     className,
 }) => {
     const currencySign = '₽';
+    const [descriptionVisible, setDescriptionVisible] = useState(false);
 
     const handleGift = () => {
         window.open(link, '_blank');
@@ -54,15 +55,31 @@ export const GoodCardComponent: React.FC<IGoodCardComponentProps> = ({
                 className={SGoodCardComponent.HeartIcon}
             />
 
-            <div className={SGoodCardComponent.ImageContainer}>
-                <div className={SGoodCardComponent.FrontSide}>
+            <div
+                className={SGoodCardComponent.ImageContainer}
+                onTouchStart={() => setDescriptionVisible((prev) => !prev)}
+            >
+                <div
+                    className={[
+                        SGoodCardComponent.FrontSide,
+                        descriptionVisible &&
+                            SGoodCardComponent.MobileFrontSide,
+                    ].join(' ')}
+                >
                     <img
                         className={SGoodCardComponent.Image}
                         src={image}
                         alt={title}
                     />
                 </div>
-                <p className={SGoodCardComponent.Description}>{description}</p>
+                <p
+                    className={[
+                        SGoodCardComponent.Description,
+                        descriptionVisible && SGoodCardComponent.MobileBackSide,
+                    ].join(' ')}
+                >
+                    {description}
+                </p>
             </div>
             <h5 className={SGoodCardComponent.Title} title={title}>
                 {title}
