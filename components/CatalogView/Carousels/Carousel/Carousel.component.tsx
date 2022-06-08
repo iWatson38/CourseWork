@@ -16,6 +16,8 @@ interface ICarouselComponent {
     loading: boolean;
     onDislike: (id: number) => void;
     onLike: (id: number) => void;
+    prevButtonRef?: React.RefObject<HTMLButtonElement>;
+    nextButtonRef?: React.RefObject<HTMLButtonElement>;
 }
 
 SwiperCore.use([Navigation]);
@@ -25,6 +27,8 @@ export const CarouselComponent: React.FC<ICarouselComponent> = ({
     loading,
     onDislike,
     onLike,
+    prevButtonRef,
+    nextButtonRef,
 }) => {
     const breakpoints = {
         320: {
@@ -54,7 +58,7 @@ export const CarouselComponent: React.FC<ICarouselComponent> = ({
             <Swiper
                 wrapperTag="ul"
                 breakpoints={breakpoints}
-                speed={600}
+                speed={800}
                 className="mySwiper"
             >
                 {loading
@@ -85,6 +89,7 @@ export const CarouselComponent: React.FC<ICarouselComponent> = ({
                           </SwiperSlide>
                       ))}
                 <button
+                    ref={prevButtonRef}
                     className={[
                         'prev',
                         SCarouselComponent.ButtonPrev,
@@ -98,6 +103,7 @@ export const CarouselComponent: React.FC<ICarouselComponent> = ({
                     />
                 </button>
                 <button
+                    ref={nextButtonRef}
                     className={[
                         'next',
                         SCarouselComponent.ButtonNext,
