@@ -6,53 +6,68 @@ interface ILinksRulesProtectionInformationProps {
     className?: string;
 }
 
-export const LinksRulesProtectionInformation: React.FC<ILinksRulesProtectionInformationProps> =
-    ({ className }) => {
-        return (
-            <ul
+export const LinksRulesProtectionInformation: React.FC<
+    ILinksRulesProtectionInformationProps
+> = ({ className }) => {
+    return (
+        <ul
+            className={[
+                className,
+                SLinksRulesProtectionInformation.InformationForUser,
+                SCommon.Container,
+            ].join(' ')}
+        >
+            <li className={SLinksRulesProtectionInformation.LeftGridArea}>
+                <a
+                    className={SLinksRulesProtectionInformation.LinkForUser}
+                    href="/privacy"
+                >
+                    <span
+                        className={
+                            SLinksRulesProtectionInformation.LinkUnderLine
+                        }
+                    >
+                        Правила защиты информации о пользователях сайта
+                    </span>
+                </a>
+            </li>
+
+            <li
                 className={[
-                    className,
-                    SLinksRulesProtectionInformation.InformationForUser,
-                    SCommon.Container,
+                    SLinksRulesProtectionInformation.CopyRight,
+                    SLinksRulesProtectionInformation.CenterGridArea,
                 ].join(' ')}
             >
-                <li className={SLinksRulesProtectionInformation.LeftGridArea}>
-                    <a
-                        className={SLinksRulesProtectionInformation.LinkForUser}
-                        href="/privacy"
-                    >
-                        <span
-                            className={
-                                SLinksRulesProtectionInformation.LinkUnderLine
-                            }
-                        >
-                            Правила защиты информации о пользователях сайта
-                        </span>
-                    </a>
-                </li>
-
-                <li
-                    className={[
-                        SLinksRulesProtectionInformation.CopyRight,
-                        SLinksRulesProtectionInformation.CenterGridArea,
-                    ].join(' ')}
+                Все права защищены 2021
+            </li>
+            <li className={SLinksRulesProtectionInformation.BottomGridArea}>
+                <a
+                    className={SLinksRulesProtectionInformation.LinkForUser}
+                    href="https://capu.st/shaman.to"
                 >
-                    Все права защищены 2021
-                </li>
-                <li className={SLinksRulesProtectionInformation.RightGridArea}>
-                    <a
-                        className={SLinksRulesProtectionInformation.LinkForUser}
-                        href="/terms"
+                    <span
+                        className={
+                            SLinksRulesProtectionInformation.LinkUnderLine
+                        }
                     >
-                        <span
-                            className={
-                                SLinksRulesProtectionInformation.LinkUnderLine
-                            }
-                        >
-                            Пользователькое соглашение
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        );
-    };
+                        Поддержать проект
+                    </span>
+                </a>
+            </li>
+            <li className={SLinksRulesProtectionInformation.RightGridArea}>
+                <a
+                    className={SLinksRulesProtectionInformation.LinkForUser}
+                    href="/terms"
+                >
+                    <span
+                        className={
+                            SLinksRulesProtectionInformation.LinkUnderLine
+                        }
+                    >
+                        Пользователькое соглашение
+                    </span>
+                </a>
+            </li>
+        </ul>
+    );
+};

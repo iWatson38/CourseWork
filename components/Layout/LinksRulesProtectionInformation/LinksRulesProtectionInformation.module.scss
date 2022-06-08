@@ -3,7 +3,9 @@
     box-sizing: border-box;
     position: relative;
     display: grid;
-    grid-template-areas: 'left center right';
+    grid-template-areas:
+        'left center right'
+        'left bottom right';
     grid-template-columns: 230px 1fr 220px;
     max-width: 1142px;
     margin: 0 auto;
@@ -21,6 +23,12 @@
     font: $FM400-14-17;
     color: white;
     margin: 2px auto 0 auto;
+}
+
+.BottomGridArea {
+    grid-area: bottom;
+    padding: 0;
+    margin: 2px auto;
 }
 
 .RightGridArea {
@@ -44,6 +52,7 @@
     .InformationForUser {
         grid-template-areas:
             'center'
+            'bottom'
             'left'
             'right';
         grid-template-columns: 230px;
