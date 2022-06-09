@@ -22,12 +22,14 @@
     display: grid;
     align-items: center;
     width: 100%;
-    &:hover {
-        .FrontSide {
-            transform: rotate3d(0, 1, 0, 180deg);
-        }
-        .Description {
-            transform: rotate3d(0, 1, 0, 0);
+    @media (hover: hover) {
+        &:hover {
+            .FrontSide {
+                transform: rotate3d(0, 1, 0, 180deg);
+            }
+            .Description {
+                transform: rotate3d(0, 1, 0, 0);
+            }
         }
     }
 }
@@ -38,6 +40,10 @@
     backface-visibility: hidden;
     display: grid;
     align-items: center;
+}
+
+.MobileFrontSide {
+    transform: rotate3d(0, 1, 0, 180deg);
 }
 
 .Image {
@@ -68,6 +74,10 @@
     backface-visibility: hidden;
     transition: 0.8s ease;
     padding-top: 10px;
+}
+
+.MobileBackSide {
+    transform: rotate3d(0, 1, 0, 0);
 }
 
 .Price {
